@@ -25,5 +25,5 @@ export default defineConfig({
   plugins: [react()],
   // Uncomment this line in case, you would like to run Vite dev server using HTTPS and in case,
   // you have key and certificate.
-  // server: getServerOptions(),
+  server: getServerOptions(),
 });

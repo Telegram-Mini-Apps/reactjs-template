@@ -1,39 +1,49 @@
-import { useEffect, useMemo, useState, type PropsWithChildren } from 'react';
-import { SDKProvider, useSDK, useMainButton, useBackButton, useInitData } from '@tma.js/sdk-react';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  SDKProvider,
+  useMainButton,
+  useBackButton,
+  useInitData,
+  DisplayGate,
+} from '@tma.js/sdk-react';
 
-function MainButtonTest() {
-  const mainButton = useMainButton();
-  const backButton = useBackButton();
+function MainButton() {
+  const mb = useMainButton();
+  const bb = useBackButton();
 
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const onMainButtonClick = () => setCount((prevCount) => prevCount + 1);
-    const onBackButtonClick = () => setCount((prevCount) => prevCount - 1);
-
-    mainButton.enable().show();
-    mainButton.on('click', onMainButtonClick);
-    backButton.on('click', onBackButtonClick);
+    const removeMainButtonClick = mb.on('click', () => {
+      setCount((prevCount) => prevCount + 1);
+    });
+    const removeBackButtonClick = bb.on('click', () => {
+      setCount((prevCount) => prevCount - 1)
+    });
 
     return () => {
-      mainButton.off('click', onMainButtonClick);
-      mainButton.hide();
-      backButton.off('click', onBackButtonClick);
+      removeMainButtonClick();
+      removeBackButtonClick();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // When component mounted, display Main Button.
   useEffect(() => {
-    mainButton.setText(`Count is ${count}`);
-  }, [mainButton, count]);
+    mb.enable().show();
+  }, [])
+
+  useEffect(() => {
+    mb.setText(`Count is ${count}`);
+  }, [mb, count]);
 
   useEffect(() => {
     if (count === 0) {
-      backButton.hide();
+      bb.hide();
       return;
     }
-    backButton.show();
-  }, [backButton, count]);
+    bb.show();
+  }, [bb, count]);
 
   return null;
 }
@@ -71,52 +81,31 @@ function InitData() {
   );
 }
 
-/**
- * This component is the layer controlling the application display. It displays
- * application in case, the SDK is initialized, displays an error if something
- * went wrong, and a loader if the SDK is warming up.
- */
-function DisplayGate({ children }: PropsWithChildren) {
-  const { didInit, components, error } = useSDK();
-  const errorMessage = useMemo<null | string>(() => {
-    if (!error) {
-      return null;
-    }
+interface SDKProviderErrorProps {
+  error: unknown;
+}
 
-    return error instanceof Error ? error.message : 'Unknown error';
-  }, [error]);
+function SDKProviderError({ error }: SDKProviderErrorProps) {
+  return (
+    <div>
+      Oops. Something went wrong.
+      <blockquote>
+        <code>
+          {error instanceof Error
+            ? error.message
+            : JSON.stringify(error)}
+        </code>
+      </blockquote>
+    </div>
+  );
+}
 
-  // There were no calls of SDK's init function. It means, we did not
-  // even try to do it.
-  if (!didInit) {
-    return <div>SDK init function is not yet called.</div>;
-  }
+function SDKProviderLoading() {
+  return <div>SDK is loading.</div>;
+}
 
-  // Error occurred during SDK init.
-  if (error !== null) {
-    return (
-      <>
-        <p>
-          SDK was unable to initialize. Probably, current application is being used
-          not in Telegram Web Apps environment.
-        </p>
-        <blockquote>
-          <p>{errorMessage}</p>
-        </blockquote>
-      </>
-    );
-  }
-
-  // If components is null, it means, SDK is not ready at the
-  // moment and currently initializing. Usually, it takes like
-  // several milliseconds or something like that, but we should
-  // have this check.
-  if (components === null) {
-    return <div>Loading..</div>;
-  }
-
-  // Safely render application.
-  return children;
+function SDKInitialState() {
+  return <div>Waiting for initialization to start.</div>;
 }
 
 /**
@@ -124,10 +113,14 @@ function DisplayGate({ children }: PropsWithChildren) {
  */
 export function Root() {
   return (
-    <SDKProvider initOptions={{ debug: true, cssVars: true }}>
-      <DisplayGate>
-        <InitData />
-        <MainButtonTest />
+    <SDKProvider options={{ acceptCustomStyles: true, cssVars: true, async: true }}>
+      <DisplayGate
+        error={SDKProviderError}
+        loading={SDKProviderLoading}
+        initial={SDKInitialState}
+      >
+        <MainButton/>
+        <InitData/>
       </DisplayGate>
     </SDKProvider>
   );
