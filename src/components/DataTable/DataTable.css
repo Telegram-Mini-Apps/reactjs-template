@@ -1,0 +1,9 @@
+.data-table {
+  font-size: 0.95em;
+}
+
+.data-table__title {
+  font-weight: bold;
+  font-size: 1.8em;
+  padding-bottom: 10px;
+}
