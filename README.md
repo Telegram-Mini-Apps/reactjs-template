@@ -36,3 +36,13 @@ To run a script, use the `pnpm run` command:
 pnpm run {script}
 # Example: pnpm run build
 ```
+
+## TON Connect
+
+This boilerplate uses the [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
+project to showcase how developers could integrate TON cryptocurrency related functionality.
+
+The TON Connect manifest used in this boilerplate is located in the `public` folder with all
+publicly available static files. Don't forget
+to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this file according to your
+project information.
