@@ -1,0 +1,12 @@
+.index-page__links {
+  list-style: none;
+  padding-left: 0;
+}
+
+.index-page__link {
+  font-weight: bold;
+}
+
+.index-page__link + .index-page__link {
+  margin-top: 10px;
+}
