@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tma.js/sdk": "^1.4.7",
-    "@tma.js/sdk-react": "^1.2.0",
+    "@tma.js/sdk": "^1.4.8",
+    "@tma.js/sdk-react": "^1.2.1",
+    "@tonconnect/ui-react": "^2.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
