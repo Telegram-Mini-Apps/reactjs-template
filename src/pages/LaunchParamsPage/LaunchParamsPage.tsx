@@ -1,11 +1,11 @@
-import { FC, useMemo } from 'react';
 import { useLaunchParams } from '@tma.js/sdk-react';
+import type { FC } from 'react';
+import { useMemo } from 'react';
 
-import { Page } from '../../components/Page';
-
-import { RowProps } from '../../components/DataTable/Row';
 import { DataTable } from '../../components/DataTable';
+import type { RowProps } from '../../components/DataTable/Row';
 import { Link } from '../../components/Link';
+import { Page } from '../../components/Page';
 
 export const LaunchParamsPage: FC = () => {
   const lp = useLaunchParams();
@@ -22,7 +22,7 @@ export const LaunchParamsPage: FC = () => {
 
   return (
     <Page title="Launch Params">
-      <DataTable rows={rows}/>
+      <DataTable rows={rows} />
     </Page>
   );
 };

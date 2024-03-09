@@ -1,18 +1,19 @@
-import { FC, useMemo } from 'react';
+import type { FC } from 'react';
+import { useMemo } from 'react';
 import {
-  Route,
-  Routes,
   Navigate,
+  Route,
   Router,
+  Routes,
 } from 'react-router-dom';
 
-import { createNavigator, useNavigator, routes } from '../../navigation';
+import { createNavigator, routes, useNavigator } from '../../navigation';
 
 const Inner: FC = () => {
   return (
     <Routes>
-      {routes.map(route => <Route key={route.path} {...route}/>)}
-      <Route path="*" element={<Navigate to="/"/>}/>
+      {routes.map((route) => <Route key={route.path} {...route} />)}
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };
@@ -23,7 +24,7 @@ export const App: FC = () => {
 
   return (
     <Router location={location} navigator={navigator}>
-      <Inner/>
+      <Inner />
     </Router>
   );
 };

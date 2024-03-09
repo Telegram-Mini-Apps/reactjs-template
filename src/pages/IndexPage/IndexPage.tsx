@@ -1,11 +1,10 @@
-import { FC } from 'react';
+import './IndexPage.css';
 
-import { routes } from '../../navigation';
+import type { FC } from 'react';
 
 import { Link } from '../../components/Link';
 import { Page } from '../../components/Page';
-
-import './IndexPage.css';
+import { routes } from '../../navigation';
 
 export const IndexPage: FC = () => {
   return (
@@ -15,7 +14,7 @@ export const IndexPage: FC = () => {
         pages with their own functionality.
       </p>
       <ul className="index-page__links">
-        {routes.map(({path, title}) => title && (
+        {routes.map(({ path, title }) => title && (
           <li className="index-page__link" key={path}>
             <Link to={path}>{title}</Link>
           </li>

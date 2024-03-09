@@ -1,8 +1,10 @@
-import { FC, useEffect, useMemo } from 'react';
-import { DisplayGate, SDKProvider } from '@tma.js/sdk-react';
-import { App } from '../App';
-import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { setDebug } from '@tma.js/sdk';
+import { DisplayGate, SDKProvider } from '@tma.js/sdk-react';
+import { TonConnectUIProvider } from '@tonconnect/ui-react';
+import type { FC } from 'react';
+import { useEffect, useMemo } from 'react';
+
+import { App } from '../App';
 
 const Err: FC<{ error: unknown }> = ({ error }) => {
   return (
@@ -39,7 +41,7 @@ export const Root: FC = () => {
     <TonConnectUIProvider manifestUrl={manifestUrl}>
       <SDKProvider options={{ acceptCustomStyles: true, cssVars: true, complete: true }}>
         <DisplayGate error={Err} loading={Loading} initial={Loading}>
-          <App/>
+          <App />
         </DisplayGate>
       </SDKProvider>
     </TonConnectUIProvider>

@@ -1,4 +1,5 @@
-import { HashNavigator, HashNavigatorOptions, isPageReload } from '@tma.js/sdk';
+import type { HashNavigatorOptions } from '@tma.js/sdk';
+import { HashNavigator, isPageReload } from '@tma.js/sdk';
 
 /**
  * Creates Telegram Mini Apps navigator.

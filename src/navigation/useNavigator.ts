@@ -1,7 +1,7 @@
-import { Location, Navigator, Path } from 'react-router-dom';
-import { HashNavigator } from '@tma.js/sdk';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { HashNavigator } from '@tma.js/sdk';
 import { useBackButton } from '@tma.js/sdk-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { Location, Navigator, Path } from 'react-router-dom';
 
 export function useNavigator(tmaNavigator: HashNavigator): [Location, Navigator] {
   const bb = useBackButton();
@@ -41,7 +41,7 @@ export function useNavigator(tmaNavigator: HashNavigator): [Location, Navigator]
       setLocation(createLocation());
       setCanGoBack(tmaNavigator.canGoBack);
     });
-  }, [tmaNavigator]);
+  }, [tmaNavigator, createLocation]);
 
   // When button
   useEffect(() => {
@@ -50,11 +50,13 @@ export function useNavigator(tmaNavigator: HashNavigator): [Location, Navigator]
     } else {
       bb.hide();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canGoBack]);
 
   // When user presses the Back Button, we navigate back.
   useEffect(() => {
     return bb.on('click', () => tmaNavigator.back());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return [location, navigator];

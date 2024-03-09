@@ -1,11 +1,11 @@
-import { FC, useMemo } from 'react';
-import { Chat, User } from '@tma.js/sdk';
+import type { Chat, User } from '@tma.js/sdk';
 import { useInitData, useInitDataRaw } from '@tma.js/sdk-react';
+import type { FC } from 'react';
+import { useMemo } from 'react';
 
-import { Page } from '../../components/Page';
-
-import { RowProps } from '../../components/DataTable/Row';
 import { DataTable } from '../../components/DataTable';
+import type { RowProps } from '../../components/DataTable/Row';
+import { Page } from '../../components/Page';
 
 function getUserRows(user: User): RowProps[] {
   return [
@@ -66,7 +66,7 @@ export const InitDataPage: FC = () => {
   return (
     <Page title="Init Data">
       {rows
-        ? <DataTable rows={rows}/>
+        ? <DataTable rows={rows} />
         : <i>Application was launched with missing init data</i>}
     </Page>
   );

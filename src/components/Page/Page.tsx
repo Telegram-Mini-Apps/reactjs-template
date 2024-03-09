@@ -1,6 +1,6 @@
-import { FC, PropsWithChildren } from 'react';
-
 import './Page.css';
+
+import type { FC, PropsWithChildren } from 'react';
 
 export const Page: FC<PropsWithChildren<{ title: string }>> = ({ title, children }) => {
   return (

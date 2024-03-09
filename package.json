@@ -8,7 +8,8 @@
     "deploy": "gh-pages -d build",
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview",
     "predeploy": "pnpm run build"
   },
@@ -27,6 +28,8 @@
     "@vitejs/plugin-react-swc": "^3.6.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
     "gh-pages": "^6.1.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.5"

@@ -1,9 +1,10 @@
-import { FC } from 'react';
-import { Link as RouterLink, LinkProps } from 'react-router-dom';
-import { classNames } from '@tma.js/sdk';
-
 import './Link.css';
 
-export const Link: FC<LinkProps> = (props) => {
-  return <RouterLink {...props} className={classNames(props.className, 'link')}/>;
+import { classNames } from '@tma.js/sdk';
+import type { FC } from 'react';
+import type { LinkProps } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+
+export const Link: FC<LinkProps> = ({ className, ...rest }) => {
+  return <RouterLink {...rest} className={classNames(className, 'link')} />;
 };

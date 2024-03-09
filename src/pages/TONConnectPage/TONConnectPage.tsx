@@ -1,12 +1,12 @@
-import { FC, ReactNode } from 'react';
-import { useTonWallet, TonConnectButton } from '@tonconnect/ui-react';
-
-import { Page } from '../../components/Page';
-
 import './TONConnectPage.css';
+
+import { useUtils } from '@tma.js/sdk-react';
+import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
+import type { FC, ReactNode } from 'react';
+
 import { DataTable } from '../../components/DataTable';
 import { Link } from '../../components/Link';
-import { useUtils } from '@tma.js/sdk-react';
+import { Page } from '../../components/Page';
 
 export const TONConnectPage: FC = () => {
   const wallet = useTonWallet();
@@ -14,7 +14,6 @@ export const TONConnectPage: FC = () => {
   let content: ReactNode;
 
   if (wallet) {
-    console.log(wallet);
     const {
       chain,
       publicKey,
@@ -26,14 +25,15 @@ export const TONConnectPage: FC = () => {
           <div className="ton-connect-page__provider">
             <img
               className="ton-connect-page__provider-image"
-              alt="Provide image"
+              alt="Provider logo"
               src={wallet.imageUrl}
               width={60}
               height={60}
             />
             <div className="ton-connect-page__provider-meta">
               <p className="ton-connect-page__provider-wallet-name">
-                {wallet.name}&nbsp;
+                {wallet.name}
+                &nbsp;
                 <span className="ton-connect-page__provider-app-name">
                   ({wallet.appName})
                 </span>
@@ -71,7 +71,7 @@ export const TONConnectPage: FC = () => {
     <Page title="TON Connect">
       {content}
       <div className="ton-connect-page__button-container">
-        <TonConnectButton/>
+        <TonConnectButton />
       </div>
     </Page>
   );

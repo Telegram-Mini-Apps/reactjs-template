@@ -1,10 +1,10 @@
-import { FC, ReactNode } from 'react';
+import './Row.css';
+
 import { isRGB } from '@tma.js/sdk';
+import type { FC, ReactNode } from 'react';
 
 import { DataTable } from '../DataTable.tsx';
 import { RGB } from '../RGB';
-
-import './Row.css';
 
 export type RowLineValue = ReactNode | RowProps[];
 
@@ -14,25 +14,23 @@ export interface RowProps {
 }
 
 function valueToNode(value: ReactNode): ReactNode {
-  if (value === undefined || value === null) {
-    return <i>empty</i>;
-  }
-
   switch (typeof value) {
     case 'string':
-      return <code>{isRGB(value) ? <RGB color={value}/> : value}</code>;
+      return <code>{isRGB(value) ? <RGB color={value} /> : value}</code>;
     case 'boolean':
       return <code>{value ? 'Yes' : 'No'}</code>;
+    default:
+      return value === undefined || value === null
+        ? <i>empty</i>
+        : value;
   }
-
-  return value;
 }
 
 export const Row: FC<RowProps> = ({ title, value }) => {
   return (
     <div className="data-table__row">
       {Array.isArray(value)
-        ? <DataTable title={title} rows={value}/>
+        ? <DataTable title={title} rows={value} />
         : (
           <>
             <div className="data-table__row-title">{title}</div>

@@ -1,9 +1,9 @@
-import { ComponentType } from 'react';
+import type { ComponentType } from 'react';
 
 import { IndexPage } from '../pages/IndexPage';
 import { InitDataPage } from '../pages/InitDataPage';
-import { ThemeParamsPage } from '../pages/ThemeParamsPage';
 import { LaunchParamsPage } from '../pages/LaunchParamsPage';
+import { ThemeParamsPage } from '../pages/ThemeParamsPage';
 import { TONConnectPage } from '../pages/TONConnectPage';
 
 interface Route {
