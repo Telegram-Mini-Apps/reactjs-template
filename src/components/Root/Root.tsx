@@ -29,7 +29,7 @@ const Loading: FC = () => {
 
 export const Root: FC = () => {
   const manifestUrl = useMemo(() => {
-    return new URL('/tonconnect-manifest.json', window.location.href).toString();
+    return new URL('tonconnect-manifest.json', window.location.href).toString();
   }, []);
 
   // Enable debug mode to see all the methods sent and events received.
