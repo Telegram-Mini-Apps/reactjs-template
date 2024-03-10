@@ -51,21 +51,47 @@ project information.
 ## Deploying Application
 
 This boilerplate uses GitHub Pages as the way to host the application externally. Before deploying
-your application, ensure that you have replaced the `homepage` value in `package.json`. The GitHub
-Pages deploy tool uses this value to determine the related project.
+your application, ensure that you have done the following:
 
-If your GitHub username is `vladislav` and the repository name is `store`, the value in
-the `homepage` field should be the following:
+1. Replaced the `homepage` value in `package.json`. The GitHub Pages deploy tool uses this value to
+   determine the related project.
+2. Replaced the `base` value in `vite.config.ts` and have set it to the name of your GitHub
+   repository. Vite will use this value when creating paths to static assets.
+
+For instance, if your GitHub username is `telegram-mini-apps` and the repository name
+is `is-awesome`, the value in the `homepage` field should be the following:
 
 ```
-https://vladislav.github.io/store
+https://telegram-mini-apps.github.io/is-awesome
 ```
 
-To run the deployment, use the `deploy` script:
+And `vite.config.ts` should have this content:
+
+```ts
+export default defineConfig({
+  base: '/is-awesome/',
+  // ...
+});
+```
+
+### Running
+
+Before deploying the application, make sure that you've built it and going to deploy the fresh
+static files:
+
+```bash
+pnpm run build
+```
+
+Then, run the deployment process, using the `deploy` script:
 
 ```Bash
 pnpm run deploy
 ```
 
-The package manager will firstly run the `predeploy` script building
-your app, and then run the deployment itself.
+After the deployment completed successfully, visit the page with data according to your
+username and repository name. Here is the page link example using the data mentioned above:
+
+```
+https://telegram-mini-apps.github.io/is-awesome
+```
