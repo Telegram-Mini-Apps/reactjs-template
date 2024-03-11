@@ -45,24 +45,31 @@ project to showcase how developers could integrate TON cryptocurrency-related fu
 
 The TON Connect manifest used in this boilerplate is located in the `public` folder along with all
 publicly available static files. Don't forget
-to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this file according to your
+to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this file according to your 
 project information.
 
 ## Deploying Application
 
-This boilerplate uses GitHub Pages as the way to host the application externally. Before deploying
-your application, ensure that you have done the following:
+This boilerplate uses GitHub Pages as the way to host the application externally. GitHub Pages provides a CDN
+which will let your users receive the application rapidly. Alternatively, you could use such services 
+as [Heroku](https://www.heroku.com/) or [Vercel](https://vercel.com).
+
+### Configuring
+
+Before deploying your application, ensure that you have done the following:
 
 1. Replaced the `homepage` value in `package.json`. The GitHub Pages deploy tool uses this value to
-   determine the related project.
+   determine the related GitHub project.
 2. Replaced the `base` value in `vite.config.ts` and have set it to the name of your GitHub
    repository. Vite will use this value when creating paths to static assets.
 
 For instance, if your GitHub username is `telegram-mini-apps` and the repository name
 is `is-awesome`, the value in the `homepage` field should be the following:
 
-```
-https://telegram-mini-apps.github.io/is-awesome
+```json
+{
+  "homepage": "https://telegram-mini-apps.github.io/is-awesome"
+}
 ```
 
 And `vite.config.ts` should have this content:
@@ -74,7 +81,10 @@ export default defineConfig({
 });
 ```
 
-### Running
+You can find more information on configuring the deployment in the `gh-pages` 
+[docs](https://github.com/tschaub/gh-pages?tab=readme-ov-file#github-pages-project-sites).
+
+### Before Deploying
 
 Before deploying the application, make sure that you've built it and going to deploy the fresh
 static files:
@@ -91,7 +101,4 @@ pnpm run deploy
 
 After the deployment completed successfully, visit the page with data according to your
 username and repository name. Here is the page link example using the data mentioned above:
-
-```
 https://telegram-mini-apps.github.io/is-awesome
-```
