@@ -41,11 +41,8 @@ jobs:
         uses: pnpm/action-setup@v2
         id: pnpm-install
         with:
-          version: 7
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm i
+          version: 8
+          run_install: true
 
       - name: Build
         run: pnpm run build
