@@ -1,3 +1,9 @@
+import {
+  createNavigator,
+  useBackButtonIntegration,
+  useNavigatorIntegration,
+} from '@tma.js/react-router-integration';
+import { useBackButton } from '@tma.js/sdk-react';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import {
@@ -7,7 +13,7 @@ import {
   Routes,
 } from 'react-router-dom';
 
-import { createNavigator, routes, useNavigator } from '../../navigation';
+import { routes } from '../../navigation/routes.ts';
 
 const Inner: FC = () => {
   return (
@@ -20,7 +26,10 @@ const Inner: FC = () => {
 
 export const App: FC = () => {
   const tmaNavigator = useMemo(createNavigator, []);
-  const [location, navigator] = useNavigator(tmaNavigator);
+  const [location, navigator] = useNavigatorIntegration(tmaNavigator);
+  const backButton = useBackButton();
+
+  useBackButtonIntegration(tmaNavigator, backButton);
 
   return (
     <Router location={location} navigator={navigator}>

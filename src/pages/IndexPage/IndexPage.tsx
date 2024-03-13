@@ -4,7 +4,7 @@ import type { FC } from 'react';
 
 import { Link } from '../../components/Link';
 import { Page } from '../../components/Page';
-import { routes } from '../../navigation';
+import { routes } from '../../navigation/routes.ts';
 
 export const IndexPage: FC = () => {
   return (
