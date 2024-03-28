@@ -12,12 +12,6 @@ Mini Apps platform using the following technologies:
 > This boilerplate was created using [pnpm](https://pnpm.io/). Therefore, it is required to use
 > it for this project as well.
 
-## Useful Links
-
-- [Platform documentation](https://docs.telegram-mini-apps.com/)
-- [@tma.js/sdk-react documentation](https://docs.telegram-mini-apps.com/packages/tma-js-sdk-react)
-- [Telegram developers community chat](https://t.me/devs)
-
 ## First Start
 
 If you have just cloned this template, you should install the project dependencies using the
@@ -43,16 +37,6 @@ To run a script, use the `pnpm run` command:
 pnpm run {script}
 # Example: pnpm run build
 ```
-
-## TON Connect
-
-This boilerplate uses the [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
-project to showcase how developers could integrate TON cryptocurrency-related functionality.
-
-The TON Connect manifest used in this boilerplate is located in the `public` folder along with all
-publicly available static files. Don't forget
-to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this file according to your
-project information.
 
 ## Running
 
@@ -153,3 +137,19 @@ pnpm run deploy
 After the deployment completed successfully, visit the page with data according to your
 username and repository name. Here is the page link example using the data mentioned above:
 https://telegram-mini-apps.github.io/is-awesome
+
+## TON Connect
+
+This boilerplate uses the [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
+project to showcase how developers could integrate TON cryptocurrency-related functionality.
+
+The TON Connect manifest used in this boilerplate is located in the `public` folder along with all
+publicly available static files. Don't forget
+to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this file according to your
+project information.
+
+## Useful Links
+
+- [Platform documentation](https://docs.telegram-mini-apps.com/)
+- [@tma.js/sdk-react documentation](https://docs.telegram-mini-apps.com/packages/tma-js-sdk-react)
+- [Telegram developers community chat](https://t.me/devs)
