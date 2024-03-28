@@ -12,6 +12,12 @@ Mini Apps platform using the following technologies:
 > This boilerplate was created using [pnpm](https://pnpm.io/). Therefore, it is required to use
 > it for this project as well.
 
+## Useful Links
+
+- [Platform documentation](https://docs.telegram-mini-apps.com/)
+- [@tma.js/sdk-react documentation](https://docs.telegram-mini-apps.com/packages/tma-js-sdk-react)
+- [Telegram developers community chat](https://t.me/devs)
+
 ## First Start
 
 If you have just cloned this template, you should install the project dependencies using the
@@ -48,7 +54,26 @@ publicly available static files. Don't forget
 to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this file according to your
 project information.
 
-## Deploying Application
+## Running
+
+The first important thing to note here is that the application should always be launched in the
+context of Telegram application. You can't just run the application and open it directly in your 
+browser via `http://localhost:3000`. Opening application this way will surely lead to errors, as long
+as this environment does not provide the required Telegram Mini Apps functionality.
+
+Telegram Mini Apps enviornment could be any specified
+in the [documentation](https://docs.telegram-mini-apps.com/platform/about#supported-applications).
+
+So, before starting the application, make sure you have already created it in the Telegram
+system. Here is the [guide](https://docs.telegram-mini-apps.com/platform/creating-new-app) how to do it.
+
+When application is created successfully, run it using the `dev` script and open inside Telegram:
+
+```Bash
+pnpm run dev
+```
+
+## Deploying
 
 This boilerplate uses GitHub Pages as the way to host the application externally. GitHub Pages provides a CDN
 which will let your users receive the application rapidly. Alternatively, you could use such services
