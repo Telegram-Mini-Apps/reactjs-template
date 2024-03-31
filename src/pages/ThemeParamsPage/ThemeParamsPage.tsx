@@ -1,31 +1,31 @@
-import { useLaunchParams } from '@tma.js/sdk-react';
+import { useThemeParams } from '@tma.js/sdk-react';
 import type { FC } from 'react';
-import { useMemo } from 'react';
 
-import { DataTable } from '../../components/DataTable';
-import type { RowProps } from '../../components/DataTable/Row';
 import { Page } from '../../components/Page';
+import { RGB } from '../../components/RGB';
+
+import './ThemeParamsPage.css';
 
 export const ThemeParamsPage: FC = () => {
-  const { themeParams } = useLaunchParams();
-  const rows = useMemo<RowProps[]>(() => {
-    const result: RowProps[] = [];
-
-    for (const key in themeParams) {
-      result.push({
-        title: key
-          .replace(/[a-z][A-Z]/g, (match) => `${match[0]} ${match[1]}`)
-          .replace(/^[a-z]/, (match) => match.toUpperCase()),
-        value: themeParams[key],
-      });
-    }
-
-    return result;
-  }, [themeParams]);
+  const themeParams = useThemeParams();
 
   return (
     <Page title="Theme Params">
-      <DataTable rows={rows} />
+      <blockquote className="theme-params-page__disclaimer">
+        This page displays current theme parameters. It is reactive, so, changing theme
+        externally will lead to this page updates.
+      </blockquote>
+      {Object
+        .entries(themeParams.getState())
+        .map(([title, value]) => (
+          <div className="theme-params-page__line" key={title}>
+            <span className="theme-params-page__line-title">
+              {title
+                .replace(/[A-Z]/g, (m) => `_${m.toLowerCase()}`)}
+            </span>
+            {value ? <RGB color={value} /> : <i>empty</i>}
+          </div>
+        ))}
     </Page>
   );
 };
