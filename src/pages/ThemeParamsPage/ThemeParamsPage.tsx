@@ -21,7 +21,8 @@ export const ThemeParamsPage: FC = () => {
           <div className="theme-params-page__line" key={title}>
             <span className="theme-params-page__line-title">
               {title
-                .replace(/[A-Z]/g, (m) => `_${m.toLowerCase()}`)}
+                .replace(/[A-Z]/g, (m) => `_${m.toLowerCase()}`)
+                .replace(/background/, 'bg')}
             </span>
             {value ? <RGB color={value} /> : <i>empty</i>}
           </div>
