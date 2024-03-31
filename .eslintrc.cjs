@@ -58,6 +58,7 @@ module.exports = {
     'no-nested-ternary': 0,
     // Sometimes we need to write "void promise".
     'no-void': 0,
+    'no-duplicate-imports': 'error',
     'object-curly-newline': ['error', { consistent: true }],
 
     'operator-linebreak': 0,
@@ -85,7 +86,7 @@ module.exports = {
 
         // Tsconfig alias.
         // ~/helpers
-        regexp(/^~\/(?!components)/),
+        regexp(/^~\//),
 
         // Parent imports.
         // ../Typography.js
@@ -96,9 +97,8 @@ module.exports = {
         regexp(/^\.\/.+\.(?!s?css)/),
 
         // Styles.
-        // ./Typography.scss
         // ./Typography.css
-        [/\.s?css$/.source],
+        [/\.css$/.source],
       ],
     }],
   },
