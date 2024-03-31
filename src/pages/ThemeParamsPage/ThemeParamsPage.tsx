@@ -1,32 +1,38 @@
 import { useThemeParams } from '@tma.js/sdk-react';
 import type { FC } from 'react';
 
-import { Page } from '../../components/Page';
-import { RGB } from '../../components/RGB';
-
-import './ThemeParamsPage.css';
+import { DisplayData } from '../../components/DisplayData/DisplayData.tsx';
+import { Link } from '../../components/Link';
+import { Page } from '../../components/Page/Page';
 
 export const ThemeParamsPage: FC = () => {
   const themeParams = useThemeParams();
 
   return (
-    <Page title="Theme Params">
-      <blockquote className="theme-params-page__disclaimer">
-        This page displays current theme parameters. It is reactive, so, changing theme
-        externally will lead to this page updates.
-      </blockquote>
-      {Object
-        .entries(themeParams.getState())
-        .map(([title, value]) => (
-          <div className="theme-params-page__line" key={title}>
-            <span className="theme-params-page__line-title">
-              {title
+    <Page
+      title="Theme Params"
+      disclaimer={(
+        <>
+          This page displays current{' '}
+          <Link to="https://docs.telegram-mini-apps.com/platform/theming">
+            theme parameters
+          </Link>.
+          It is reactive, so, changing theme externally will lead to this page updates.
+        </>
+      )}
+    >
+      <DisplayData
+        rows={
+          Object
+            .entries(themeParams.getState())
+            .map(([title, value]) => ({
+              title: title
                 .replace(/[A-Z]/g, (m) => `_${m.toLowerCase()}`)
-                .replace(/background/, 'bg')}
-            </span>
-            {value ? <RGB color={value} /> : <i>empty</i>}
-          </div>
-        ))}
+                .replace(/background/, 'bg'),
+              value,
+            }))
+        }
+      />
     </Page>
   );
 };

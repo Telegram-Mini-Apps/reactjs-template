@@ -14,9 +14,9 @@
     "predeploy": "pnpm run build"
   },
   "dependencies": {
-    "@tma.js/react-router-integration": "^0.1.1",
-    "@tma.js/sdk": "^1.5.0",
-    "@tma.js/sdk-react": "^2.0.0",
+    "@tma.js/react-router-integration": "^0.1.2",
+    "@tma.js/sdk": "^1.5.1",
+    "@tma.js/sdk-react": "^2.0.1",
     "@tonconnect/ui-react": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

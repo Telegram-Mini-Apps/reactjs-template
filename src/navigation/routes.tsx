@@ -1,10 +1,10 @@
 import type { JSX, ComponentType } from 'react';
 
-import { IndexPage } from '../pages/IndexPage';
-import { InitDataPage } from '../pages/InitDataPage';
-import { LaunchParamsPage } from '../pages/LaunchParamsPage';
-import { ThemeParamsPage } from '../pages/ThemeParamsPage';
-import { TONConnectPage } from '../pages/TONConnectPage';
+import { IndexPage } from '../pages/IndexPage/IndexPage';
+import { InitDataPage } from '../pages/InitDataPage/InitDataPage';
+import { LaunchParamsPage } from '../pages/LaunchParamsPage/LaunchParamsPage.tsx';
+import { ThemeParamsPage } from '../pages/ThemeParamsPage/ThemeParamsPage.tsx';
+import { TONConnectPage } from '../pages/TONConnectPage/TONConnectPage';
 
 interface Route {
   path: string;

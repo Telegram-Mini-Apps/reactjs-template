@@ -4,9 +4,9 @@ import { useUtils } from '@tma.js/sdk-react';
 import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
 import type { FC, ReactNode } from 'react';
 
-import { DataTable } from '../../components/DataTable';
+import { DisplayData } from '../../components/DisplayData/DisplayData.tsx';
 import { Link } from '../../components/Link';
-import { Page } from '../../components/Page';
+import { Page } from '../../components/Page/Page';
 
 export const TONConnectPage: FC = () => {
   const wallet = useTonWallet();
@@ -50,7 +50,7 @@ export const TONConnectPage: FC = () => {
             </div>
           </div>
         )}
-        <DataTable
+        <DisplayData
           rows={[
             { title: 'Address', value: address },
             { title: 'Chain', value: chain },
