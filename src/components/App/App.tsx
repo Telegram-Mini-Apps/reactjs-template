@@ -13,7 +13,7 @@ import {
   Routes,
 } from 'react-router-dom';
 
-import { routes } from '../../navigation/routes.ts';
+import { routes } from '../../navigation/routes.tsx';
 
 const Inner: FC = () => {
   return (

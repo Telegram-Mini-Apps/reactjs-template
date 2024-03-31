@@ -5,8 +5,19 @@
 
 .index-page__link {
   font-weight: bold;
+  display: inline-flex;
+  gap: 5px;
 }
 
-.index-page__link + .index-page__link {
+.index-page__link-item + .index-page__link-item {
   margin-top: 10px;
+}
+
+.index-page__link-icon {
+  width: 20px;
+  display: block;
+}
+
+.index-page__link-icon svg {
+  display: block;
 }
