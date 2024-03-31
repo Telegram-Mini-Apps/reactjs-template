@@ -1,11 +1,10 @@
-import type { User } from '@tma.js/sdk';
 import { useInitData, useInitDataRaw } from '@tma.js/sdk-react';
-import type { FC, ReactNode } from 'react';
-import { useMemo } from 'react';
+import { type FC, type ReactNode, useMemo } from 'react';
+import type { User } from '@tma.js/sdk';
 
-import { DisplayData, type DisplayDataRow } from '../../components/DisplayData/DisplayData.tsx';
-import { Link } from '../../components/Link';
-import { Page } from '../../components/Page/Page';
+import { DisplayData, type DisplayDataRow } from '~/components/DisplayData/DisplayData.tsx';
+import { Link } from '~/components/Link/Link.tsx';
+import { Page } from '~/components/Page/Page.tsx';
 
 import './InitDataPage.css';
 
@@ -116,10 +115,12 @@ export const InitDataPage: FC = () => {
       title="Init Data"
       disclaimer={(
         <>
-          This page displays application{' '}
+          This page displays application
+          {' '}
           <Link to="https://docs.telegram-mini-apps.com/platform/launch-parameters">
             init data
-          </Link>.
+          </Link>
+          .
         </>
       )}
     >

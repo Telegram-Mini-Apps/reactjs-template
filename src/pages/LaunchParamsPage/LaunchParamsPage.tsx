@@ -1,9 +1,9 @@
 import { useLaunchParams } from '@tma.js/sdk-react';
 import type { FC } from 'react';
 
-import { DisplayData } from '../../components/DisplayData/DisplayData.tsx';
-import { Link } from '../../components/Link';
-import { Page } from '../../components/Page/Page';
+import { DisplayData } from '~/components/DisplayData/DisplayData.tsx';
+import { Link } from '~/components/Link/Link.tsx';
+import { Page } from '~/components/Page/Page.tsx';
 
 export const LaunchParamsPage: FC = () => {
   const lp = useLaunchParams();
@@ -13,10 +13,12 @@ export const LaunchParamsPage: FC = () => {
       title="Launch Params"
       disclaimer={(
         <>
-          This page displays application{' '}
+          This page displays application
+          {' '}
           <Link to="https://docs.telegram-mini-apps.com/platform/launch-parameters">
             launch parameters
-          </Link>.
+          </Link>
+          .
         </>
       )}
     >

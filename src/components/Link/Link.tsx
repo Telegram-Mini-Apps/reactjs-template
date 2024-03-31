@@ -1,9 +1,7 @@
 import { classNames } from '@tma.js/sdk';
 import { useUtils } from '@tma.js/sdk-react';
-import type { FC, MouseEventHandler } from 'react';
-import { useCallback } from 'react';
-import type { LinkProps } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
+import { type FC, type MouseEventHandler, useCallback } from 'react';
+import { Link as RouterLink, type LinkProps } from 'react-router-dom';
 
 import './Link.css';
 

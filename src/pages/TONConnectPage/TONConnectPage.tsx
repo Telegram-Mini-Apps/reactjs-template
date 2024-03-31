@@ -1,12 +1,12 @@
-import './TONConnectPage.css';
-
 import { useUtils } from '@tma.js/sdk-react';
 import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
 import type { FC, ReactNode } from 'react';
 
-import { DisplayData } from '../../components/DisplayData/DisplayData.tsx';
-import { Link } from '../../components/Link';
-import { Page } from '../../components/Page/Page';
+import { DisplayData } from '~/components/DisplayData/DisplayData.tsx';
+import { Link } from '~/components/Link/Link.tsx';
+import { Page } from '~/components/Page/Page.tsx';
+
+import './TONConnectPage.css';
 
 export const TONConnectPage: FC = () => {
   const wallet = useTonWallet();
@@ -35,7 +35,9 @@ export const TONConnectPage: FC = () => {
                 {wallet.name}
                 &nbsp;
                 <span className="ton-connect-page__provider-app-name">
-                  ({wallet.appName})
+                  (
+                  {wallet.appName}
+                  )
                 </span>
               </p>
               <Link

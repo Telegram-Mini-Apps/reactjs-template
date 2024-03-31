@@ -1,8 +1,7 @@
-import type { RGB as RGBType } from '@tma.js/sdk';
-import { isRGB } from '@tma.js/sdk';
+import { isRGB, type RGB as RGBType } from '@tma.js/sdk';
 import type { FC, ReactNode } from 'react';
 
-import { RGB } from '../RGB';
+import { RGB } from '~/components/RGB/RGB.tsx';
 
 import './DisplayData.css';
 

@@ -1,9 +1,9 @@
 import { useThemeParams } from '@tma.js/sdk-react';
 import type { FC } from 'react';
 
-import { DisplayData } from '../../components/DisplayData/DisplayData.tsx';
-import { Link } from '../../components/Link';
-import { Page } from '../../components/Page/Page';
+import { DisplayData } from '~/components/DisplayData/DisplayData.tsx';
+import { Link } from '~/components/Link/Link.tsx';
+import { Page } from '~/components/Page/Page.tsx';
 
 export const ThemeParamsPage: FC = () => {
   const themeParams = useThemeParams();
@@ -13,11 +13,12 @@ export const ThemeParamsPage: FC = () => {
       title="Theme Params"
       disclaimer={(
         <>
-          This page displays current{' '}
+          This page displays current
+          {' '}
           <Link to="https://docs.telegram-mini-apps.com/platform/theming">
             theme parameters
-          </Link>.
-          It is reactive, so, changing theme externally will lead to this page updates.
+          </Link>
+          . It is reactive, so, changing theme externally will lead to this page updates.
         </>
       )}
     >
