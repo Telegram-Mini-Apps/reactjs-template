@@ -38,17 +38,26 @@ pnpm run {script}
 # Example: pnpm run build
 ```
 
-## TON Connect
+## Running
 
-This boilerplate uses the [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
-project to showcase how developers could integrate TON cryptocurrency-related functionality.
+The first important thing to note here is that the application should always be launched in the
+context of Telegram application. You can't just run the application and open it directly in your 
+browser via `http://localhost:3000`. Opening application this way will surely lead to errors, as long
+as this environment does not provide the required Telegram Mini Apps functionality.
 
-The TON Connect manifest used in this boilerplate is located in the `public` folder along with all
-publicly available static files. Don't forget
-to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this file according to your
-project information.
+Telegram Mini Apps enviornment could be any specified
+in the [documentation](https://docs.telegram-mini-apps.com/platform/about#supported-applications).
 
-## Deploying Application
+So, before starting the application, make sure you have already created it in the Telegram
+system. Here is the [guide](https://docs.telegram-mini-apps.com/platform/creating-new-app) how to do it.
+
+When application is created successfully, run it using the `dev` script and open inside Telegram:
+
+```Bash
+pnpm run dev
+```
+
+## Deploying
 
 This boilerplate uses GitHub Pages as the way to host the application externally. GitHub Pages provides a CDN
 which will let your users receive the application rapidly. Alternatively, you could use such services
@@ -128,3 +137,19 @@ pnpm run deploy
 After the deployment completed successfully, visit the page with data according to your
 username and repository name. Here is the page link example using the data mentioned above:
 https://telegram-mini-apps.github.io/is-awesome
+
+## TON Connect
+
+This boilerplate uses the [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
+project to showcase how developers could integrate TON cryptocurrency-related functionality.
+
+The TON Connect manifest used in this boilerplate is located in the `public` folder along with all
+publicly available static files. Don't forget
+to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this file according to your
+project information.
+
+## Useful Links
+
+- [Platform documentation](https://docs.telegram-mini-apps.com/)
+- [@tma.js/sdk-react documentation](https://docs.telegram-mini-apps.com/packages/tma-js-sdk-react)
+- [Telegram developers community chat](https://t.me/devs)
