@@ -45,7 +45,7 @@ context of Telegram application. You can't just run the application and open it 
 browser via `http://localhost:3000`. Opening application this way will surely lead to errors, as long
 as this environment does not provide the required Telegram Mini Apps functionality.
 
-Telegram Mini Apps enviornment could be any specified
+Telegram Mini Apps environment could be any specified
 in the [documentation](https://docs.telegram-mini-apps.com/platform/about#supported-applications).
 
 So, before starting the application, make sure you have already created it in the Telegram
