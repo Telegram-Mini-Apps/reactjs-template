@@ -14,15 +14,6 @@ import {
 
 import { routes } from '~/navigation/routes.tsx';
 
-const Inner: FC = () => {
-  return (
-    <Routes>
-      {routes.map((route) => <Route key={route.path} {...route} />)}
-      <Route path="*" element={<Navigate to="/" />} />
-    </Routes>
-  );
-};
-
 export const App: FC = () => {
   const tmaNavigator = useMemo(createNavigator, []);
   const [location, navigator] = useNavigatorIntegration(tmaNavigator);
@@ -32,7 +23,10 @@ export const App: FC = () => {
 
   return (
     <Router location={location} navigator={navigator}>
-      <Inner />
+      <Routes>
+        {routes.map((route) => <Route key={route.path} {...route} />)}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </Router>
   );
 };
