@@ -18,7 +18,6 @@
 .ton-connect-page__provider-meta {
   display: flex;
   flex-direction: column;
-  /*gap: 15px;*/
 }
 
 .ton-connect-page__provider-wallet-name {
