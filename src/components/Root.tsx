@@ -61,10 +61,8 @@ const Inner: FC = () => {
   );
 };
 
-export const Root: FC = () => {
-  return (
-    <ErrorBoundary fallback={ErrorBoundaryError}>
-      <Inner />
-    </ErrorBoundary>
-  );
-};
+export const Root: FC = () => (
+  <ErrorBoundary fallback={ErrorBoundaryError}>
+    <Inner />
+  </ErrorBoundary>
+);
