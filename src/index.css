@@ -6,7 +6,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
 
-  background: var(--tg-theme-secondary-background-color, white);
+  background: var(--tg-theme-secondary-bg-color, white);
   color: var(--tg-theme-text-color, black);
 }
 

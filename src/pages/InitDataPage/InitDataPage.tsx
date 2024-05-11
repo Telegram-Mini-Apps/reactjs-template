@@ -1,10 +1,10 @@
-import { useInitData, useInitDataRaw } from '@tma.js/sdk-react';
+// import { useInitData, useInitDataRaw } from '@tma.js/sdk-react';
 import { type FC, type ReactNode, useMemo } from 'react';
-import type { User } from '@tma.js/sdk';
+import { useInitData, useLaunchParams, type User } from '@tma.js/sdk-react';
 
-import { DisplayData, type DisplayDataRow } from '~/components/DisplayData/DisplayData.tsx';
-import { Link } from '~/components/Link/Link.tsx';
-import { Page } from '~/components/Page/Page.tsx';
+import { DisplayData, type DisplayDataRow } from '@/components/DisplayData/DisplayData.tsx';
+import { Link } from '@/components/Link/Link.tsx';
+import { Page } from '@/components/Page/Page.tsx';
 
 import './InitDataPage.css';
 
@@ -20,8 +20,8 @@ function getUserRows(user: User): DisplayDataRow[] {
 }
 
 export const InitDataPage: FC = () => {
+  const initDataRaw = useLaunchParams().initDataRaw;
   const initData = useInitData();
-  const initDataRaw = useInitDataRaw();
 
   const initDataRows = useMemo<DisplayDataRow[] | undefined>(() => {
     if (!initData || !initDataRaw) {

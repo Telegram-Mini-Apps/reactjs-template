@@ -1,42 +1,27 @@
-import { setDebug } from '@tma.js/sdk';
-import { DisplayGate, SDKProvider, useLaunchParams } from '@tma.js/sdk-react';
+import { retrieveLaunchParams, SDKProvider } from '@tma.js/sdk-react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { type FC, useEffect, useMemo } from 'react';
 
-import { App } from '~/components/App.tsx';
-import { ErrorBoundary } from '~/components/ErrorBoundary.tsx';
-
-const DisplayError: FC<{ error: unknown }> = ({ error }) => (
-  <blockquote>
-    <code>
-      {error instanceof Error
-        ? error.message
-        : JSON.stringify(error)}
-    </code>
-  </blockquote>
-);
+import { App } from '@/components/App.tsx';
+import { ErrorBoundary } from '@/components/ErrorBoundary.tsx';
 
 const ErrorBoundaryError: FC<{ error: unknown }> = ({ error }) => (
   <div>
     <p>An unhandled error occurred:</p>
-    <DisplayError error={error} />
+    <blockquote>
+      <code>
+        {error instanceof Error
+          ? error.message
+          : typeof error === 'string'
+            ? error
+            : JSON.stringify(error)}
+      </code>
+    </blockquote>
   </div>
 );
-
-const ErrorBoundarySDK: FC<{ error: unknown }> = ({ error }) => (
-  <div>
-    <p>
-      An error occurred while initializing the SDK. You are probably running the application
-      outside of Telegram (in usual browser, for example).
-    </p>
-    <DisplayError error={error} />
-  </div>
-);
-
-const Loading: FC = () => <div>Application is loading</div>;
 
 const Inner: FC = () => {
-  const launchParams = useLaunchParams();
+  const debug = retrieveLaunchParams().startParam === 'debug'
 
   const manifestUrl = useMemo(() => {
     return new URL('tonconnect-manifest.json', window.location.href).toString();
@@ -44,18 +29,15 @@ const Inner: FC = () => {
 
   // Enable debug mode to see all the methods sent and events received.
   useEffect(() => {
-    if (launchParams.startParam === 'debug') {
-      setDebug(true);
+    if (debug) {
       import('eruda').then((lib) => lib.default.init());
     }
-  }, [launchParams]);
+  }, [debug]);
 
   return (
     <TonConnectUIProvider manifestUrl={manifestUrl}>
-      <SDKProvider options={{ acceptCustomStyles: true, cssVars: true, complete: true }}>
-        <DisplayGate error={ErrorBoundarySDK} loading={Loading} initial={Loading}>
-          <App />
-        </DisplayGate>
+      <SDKProvider acceptCustomStyles debug={debug}>
+        <App/>
       </SDKProvider>
     </TonConnectUIProvider>
   );
@@ -63,6 +45,6 @@ const Inner: FC = () => {
 
 export const Root: FC = () => (
   <ErrorBoundary fallback={ErrorBoundaryError}>
-    <Inner />
+    <Inner/>
   </ErrorBoundary>
 );

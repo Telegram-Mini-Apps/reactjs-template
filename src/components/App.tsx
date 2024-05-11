@@ -1,10 +1,14 @@
+import { useIntegration } from '@tma.js/react-router-integration';
 import {
-  createNavigator,
-  useBackButtonIntegration,
-  useNavigatorIntegration,
-} from '@tma.js/react-router-integration';
-import { useBackButton } from '@tma.js/sdk-react';
-import { type FC, useMemo } from 'react';
+  bindMiniAppCSSVars,
+  bindThemeParamsCSSVars,
+  bindViewportCSSVars,
+  initNavigator,
+  useMiniApp,
+  useThemeParams,
+  useViewport,
+} from '@tma.js/sdk-react';
+import { type FC, useEffect, useMemo } from 'react';
 import {
   Navigate,
   Route,
@@ -12,20 +16,47 @@ import {
   Routes,
 } from 'react-router-dom';
 
-import { routes } from '~/navigation/routes.tsx';
+import { routes } from '@/navigation/routes.tsx';
 
 export const App: FC = () => {
-  const tmaNavigator = useMemo(createNavigator, []);
-  const [location, navigator] = useNavigatorIntegration(tmaNavigator);
-  const backButton = useBackButton();
+  const miniApp = useMiniApp();
+  const themeParams = useThemeParams();
+  const viewport = useViewport();
 
-  useBackButtonIntegration(tmaNavigator, backButton);
+  useEffect(() => {
+    return bindMiniAppCSSVars(miniApp, themeParams);
+  }, [miniApp, themeParams]);
+
+  useEffect(() => {
+    return bindThemeParamsCSSVars(themeParams);
+  }, [themeParams]);
+
+  useEffect(() => {
+    if (viewport) {
+      return bindViewportCSSVars(viewport);
+    }
+  }, [viewport]);
+
+  // Create new application navigator and attach it to the browser history, so it could modify
+  // it and listen to its changes.
+  const navigator = useMemo(() => initNavigator(
+    'app-navigation-state',
+    { hashMode: 'default' },
+  ), []);
+  const [location, reactNavigator] = useIntegration(navigator);
+
+  // Don't forget to attach the navigator to allow it to control the BackButton state as well
+  // as browser history.
+  useEffect(() => {
+    navigator.attach();
+    return () => navigator.detach();
+  }, [navigator]);
 
   return (
-    <Router location={location} navigator={navigator}>
+    <Router location={location} navigator={reactNavigator}>
       <Routes>
         {routes.map((route) => <Route key={route.path} {...route} />)}
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path='*' element={<Navigate to='/'/>}/>
       </Routes>
     </Router>
   );
