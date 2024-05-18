@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@tma.js/react-router-integration':
-        specifier: ^1.0.0
-        version: 1.0.0(@tma.js/sdk-react@2.1.0(@types/react@18.3.2)(react@18.3.1))(@types/react@18.3.2)(react-router-dom@6.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        specifier: ^2.0.0
+        version: 2.0.0(@tma.js/sdk@2.1.0)(@types/react@18.3.2)(react-router-dom@6.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@tma.js/sdk-react':
-        specifier: ^2.1.0
-        version: 2.1.0(@types/react@18.3.2)(react@18.3.1)
+        specifier: ^2.1.4
+        version: 2.1.4(@types/react@18.3.2)(react@18.3.1)
       '@tonconnect/ui-react':
         specifier: ^2.0.2
         version: 2.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -420,10 +420,10 @@ packages:
   '@swc/types@0.1.6':
     resolution: {integrity: sha512-/JLo/l2JsT/LRd80C3HfbmVpxOAJ11FO2RCEslFrgzLltoP9j8XIbsyDcfCt2WWyX+CM96rBoNM+IToAkFOugg==}
 
-  '@tma.js/react-router-integration@1.0.0':
-    resolution: {integrity: sha512-sd5Kz3PWKW3Ca5O2XKP+vNU2CpaOO4s5zhzDvGGwFRP2NrBnBHfK2vWO7d9l3SqkPjtrk0xJsNpXuSv5/8dwJw==}
+  '@tma.js/react-router-integration@2.0.0':
+    resolution: {integrity: sha512-bFDDIH0IRaMbE/IB5YKXH8zP8Hd2vHQrWxG4hXJ0Y7IGQhtjIrQOybVrdyQEe+FWcZzfLCgrX9f8taxNt2zdfA==}
     peerDependencies:
-      '@tma.js/sdk-react': 2.1.0
+      '@tma.js/sdk': 2.1.0
       '@types/react': ^17.0.0 || ^18.0.0
       react: ^17.0.0 || ^18.0.0
       react-router-dom: ^6.22.3
@@ -433,8 +433,8 @@ packages:
       react-router-dom:
         optional: true
 
-  '@tma.js/sdk-react@2.1.0':
-    resolution: {integrity: sha512-0Iaa6QGGx/APxzxv+fT2Ckp2FqIvCGglOm8sJfTemuD1J3WRYE/rS+7U2uaKy8tWCxvliOJhqM85a1bWGabG1w==}
+  '@tma.js/sdk-react@2.1.4':
+    resolution: {integrity: sha512-eIR4eQ3EDO/vxNpUhVDOdIDHkjBjYztl5lwxm2rona1p/xGPmV+jDjP45Cwj4gcWm/+FTyGurWi2XrJ13Yk0Ug==}
     peerDependencies:
       '@types/react': ^17.0.0 || ^18.0.0
       react: ^17.0.0 || ^18.0.0
@@ -442,8 +442,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@tma.js/sdk@2.0.0':
-    resolution: {integrity: sha512-fj63SpZLONXZAIz+O8UuwxQ/pMxeqyWvjbY6MnefpFETaoqCLPezmlDVreejzGh9zPtLCzLIW2Fjvawtucpd4w==}
+  '@tma.js/sdk@2.1.0':
+    resolution: {integrity: sha512-jCHkqoNlEECBCf8ZjoSlHS5Yvs9Z4IrhI0BuJ88i9/RBhmUy/GF87cIQbLUFb5P+4BvsKCLtAM6HPtVVdAkVMQ==}
 
   '@tonconnect/isomorphic-eventsource@0.0.2':
     resolution: {integrity: sha512-B4UoIjPi0QkvIzZH5fV3BQLWrqSYABdrzZQSI9sJA9aA+iC0ohOzFwVVGXanlxeDAy1bcvPbb29f6sVUk0UnnQ==}
@@ -1844,22 +1844,22 @@ snapshots:
     dependencies:
       '@swc/counter': 0.1.3
 
-  '@tma.js/react-router-integration@1.0.0(@tma.js/sdk-react@2.1.0(@types/react@18.3.2)(react@18.3.1))(@types/react@18.3.2)(react-router-dom@6.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+  '@tma.js/react-router-integration@2.0.0(@tma.js/sdk@2.1.0)(@types/react@18.3.2)(react-router-dom@6.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@tma.js/sdk-react': 2.1.0(@types/react@18.3.2)(react@18.3.1)
+      '@tma.js/sdk': 2.1.0
       react: 18.3.1
     optionalDependencies:
       '@types/react': 18.3.2
       react-router-dom: 6.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  '@tma.js/sdk-react@2.1.0(@types/react@18.3.2)(react@18.3.1)':
+  '@tma.js/sdk-react@2.1.4(@types/react@18.3.2)(react@18.3.1)':
     dependencies:
-      '@tma.js/sdk': 2.0.0
+      '@tma.js/sdk': 2.1.0
       react: 18.3.1
     optionalDependencies:
       '@types/react': 18.3.2
 
-  '@tma.js/sdk@2.0.0': {}
+  '@tma.js/sdk@2.1.0': {}
 
   '@tonconnect/isomorphic-eventsource@0.0.2':
     dependencies:
