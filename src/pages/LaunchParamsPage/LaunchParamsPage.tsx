@@ -9,6 +9,31 @@ export const LaunchParamsPage: FC = () => {
   const lp = useLaunchParams();
 
   return (
+    <DisplayData
+      header="Launch Params"
+      footer={
+        <>
+          This page displays application
+          {' '}
+          <Link to="https://docs.telegram-mini-apps.com/platform/launch-parameters">
+            launch parameters
+          </Link>
+          .
+        </>
+      }
+      rows={[
+        { title: 'tgWebAppPlatform', value: lp.platform },
+        { title: 'tgWebAppShowSettings', value: lp.showSettings },
+        { title: 'tgWebAppVersion', value: lp.version },
+        { title: 'tgWebAppBotInline', value: lp.botInline },
+        { title: 'tgWebAppStartParam', value: lp.showSettings },
+        { title: 'tgWebAppData', type: 'link', value: '/init-data' },
+        { title: 'tgWebAppThemeParams', type: 'link', value: '/theme-params' },
+      ]}
+    />
+  );
+
+  return (
     <Page
       title="Launch Params"
       disclaimer={(

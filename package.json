@@ -14,6 +14,7 @@
     "predeploy": "pnpm run build"
   },
   "dependencies": {
+    "@telegram-apps/telegram-ui": "^2.1.3",
     "@tma.js/react-router-integration": "^2.0.0",
     "@tma.js/sdk-react": "^2.1.4",
     "@tonconnect/ui-react": "^2.0.2",
