@@ -1,6 +1,6 @@
 import { type FC, useMemo } from 'react';
 import { useInitData, useLaunchParams, type User } from '@tma.js/sdk-react';
-import { Placeholder } from '@telegram-apps/telegram-ui';
+import { List, Placeholder } from '@telegram-apps/telegram-ui';
 
 import { DisplayData, type DisplayDataRow } from '@/components/DisplayData/DisplayData.tsx';
 
@@ -91,11 +91,11 @@ export const InitDataPage: FC = () => {
     )
   }
   return (
-    <>
-      <DisplayData header={'InitData'} rows={initDataRows}/>
+    <List>
+      <DisplayData header={'Init Data'} rows={initDataRows}/>
       {userRows && <DisplayData header={'User'} rows={userRows}/>}
       {receiverRows && <DisplayData header={'Receiver'} rows={receiverRows}/>}
       {chatRows && <DisplayData header={'Chat'} rows={chatRows}/>}
-    </>
+    </List>
   )
 };

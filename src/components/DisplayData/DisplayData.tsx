@@ -21,8 +21,7 @@ export interface DisplayDataProps {
 }
 
 export const DisplayData: FC<DisplayDataProps> = ({ header, rows }) => (
-  <Section>
-    {header && <Section.Header className='display-data__header'>{header}</Section.Header>}
+  <Section header={header}>
     {rows.map((item, idx) => {
       let valueNode: ReactNode;
 
