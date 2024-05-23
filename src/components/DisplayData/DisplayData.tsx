@@ -1,10 +1,5 @@
 import { isRGB } from '@tma.js/sdk-react';
-import {
-  Checkbox,
-  Section,
-  Subheadline,
-  Text,
-} from '@telegram-apps/telegram-ui';
+import { Cell, Checkbox, Section } from '@telegram-apps/telegram-ui';
 import type { FC, ReactNode } from 'react';
 
 import { RGB } from '@/components/RGB/RGB.tsx';
@@ -27,9 +22,7 @@ export interface DisplayDataProps {
 
 export const DisplayData: FC<DisplayDataProps> = ({ header, rows }) => (
   <Section>
-    {header && <Section.Header className="display-data__header">
-      {header}
-    </Section.Header>}
+    {header && <Section.Header className='display-data__header'>{header}</Section.Header>}
     {rows.map((item, idx) => {
       let valueNode: ReactNode;
 
@@ -50,10 +43,17 @@ export const DisplayData: FC<DisplayDataProps> = ({ header, rows }) => (
       }
 
       return (
-        <div className="display-data__line" key={idx}>
-          <Subheadline className="display-data__line-title" level={'2'}>{item.title}</Subheadline>
-          <Text className="display-data__line-value">{valueNode}</Text>
-        </div>
+        <Cell
+          className='display-data__line'
+          subhead={item.title}
+          readOnly
+          multiline={true}
+          key={idx}
+        >
+          <span className='display-data__line-value'>
+            {valueNode}
+          </span>
+        </Cell>
       );
     })}
   </Section>
