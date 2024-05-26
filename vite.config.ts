@@ -27,7 +27,6 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 443,
     host: 'tma.internal',
     // Uncomment the next lines in case, you would like to run Vite dev server using HTTPS and in
     // case, you have trusted key and certificate. You retrieve your certificate and key
