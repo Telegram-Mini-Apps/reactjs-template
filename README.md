@@ -10,7 +10,7 @@ Mini Apps platform using the following technologies and libraries:
 - [Telegram UI](https://github.com/Telegram-Mini-Apps/TelegramUI)
 - [Vite](https://vitejs.dev/)
 
-> This boilerplate was created using [pnpm](https://pnpm.io/). Therefore, it is required to use
+> This boilerplate was created using [npm](https://www.npmjs.com/). Therefore, it is required to use
 > it for this project as well. Using other package managers, you will receive a corresponding error.
 
 ## Install Dependencies
