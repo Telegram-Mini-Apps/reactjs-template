@@ -11,7 +11,7 @@ Mini Apps platform using the following technologies and libraries:
 - [Vite](https://vitejs.dev/)
 
 > This boilerplate was created using [pnpm](https://pnpm.io/). Therefore, it is required to use
-> it for this project as well.
+> it for this project as well. Using other package managers, you will receive a corresponding error.
 
 ## Install Dependencies
 
@@ -48,9 +48,11 @@ context of Telegram application. You can't just run the application and open it 
 browser via `http://localhost:3000`. Launching application this way will  lead to errors, as long
 as this environment does not provide the required Telegram Mini Apps API.
 
+
 Before you start make sure you have already created Telegram Bot. Here is the [comprehensive guide](https://docs.telegram-mini-apps.com/platform/creating-new-app) how to do it.
 
-When application is created successfully, run it using the `dev` script and open inside web version of [Telegram](https://web.telegram.org/k/). Web version is the most conviniet way to develop Telegram Mini App right away:
+When application is created successfully, run it using the `dev` script and open inside web version of [Telegram](https://web.telegram.org/k/). 
+Web version is the most convinient way to develop Telegram Mini App right away.
 
 ```Bash
 npm run dev
@@ -73,35 +75,38 @@ in the [documentation](https://docs.telegram-mini-apps.com/platform/about#suppor
 
 ## Deploy
 
-This boilerplate uses GitHub Pages as the way to host the application externally. GitHub Pages provides a CDN
-which will let your users receive the application rapidly. Alternatively, you could use such services
-as [Heroku](https://www.heroku.com/) or [Vercel](https://vercel.com).
+This boilerplate uses GitHub Pages as the way to host the application externally. GitHub Pages
+provides a CDN which will let your users receive the application rapidly. Alternatively, you could
+use such services as [Heroku](https://www.heroku.com/) or [Vercel](https://vercel.com).
 
 ### GitHub Workflow
 
 To simplify the process of deployment, this boilerplate contains already
-written [GitHub workflow](.github/workflows/github-pages-deploy.yml) to deploy the project automatically in case, some
-content was pushed to the `master` branch.
+written [GitHub workflow](.github/workflows/github-pages-deploy.yml) to deploy the project
+automatically in case, some content was pushed to the `master` branch.
 
-To let this workflow work properly, it is required create a new environment (or edit the existing one) in the GitHub
-repository Settings with the name `github-pages`. Then, add the `master` branch to the list of deployment branches.
+To let this workflow work properly, it is required create a new environment (or edit the existing
+one) in the GitHub repository Settings with the name `github-pages`. Then, add the `master` branch
+to the list of deployment branches.
 
-Environments settings could be find using this URL: `https://github.com/{username}/{repository}/settings/environments`
+Environments settings could be find using this
+URL: `https://github.com/{username}/{repository}/settings/environments`
 
 ![img.png](.github/deployment-branches.png)
 
-In case, you don't want to do it automatically, or you don't use GitHub as the project codebase, just remove the
-`.github` directory.
+In case, you don't want to do it automatically, or you don't use GitHub as the project codebase,
+just remove the `.github` directory.
 
 ### GitHub Web Interface
 
-Alternatively, developers are able to configure the automatic deployment using GitHub web interface. To use it,
-follow the link: `https://github.com/{username}/{repository}/settings/pages`.
+Alternatively, developers are able to configure the automatic deployment using GitHub web interface.
+To use it, follow the link: `https://github.com/{username}/{repository}/settings/pages`.
 
 ### Manual Deployment
 
-This boilerplate uses the [gh-pages](https://www.npmjs.com/package/gh-pages) tool, which allows deploying your 
-application right from your PC. 
+This boilerplate uses the [gh-pages](https://www.npmjs.com/package/gh-pages) tool, which allows
+deploying your
+application right from your PC.
 
 #### Configuring
 
@@ -117,7 +122,7 @@ is `is-awesome`, the value in the `homepage` field should be the following:
 
 ```json
 {
-    "homepage": "https://telegram-mini-apps.github.io/is-awesome"
+  "homepage": "https://telegram-mini-apps.github.io/is-awesome"
 }
 ```
 
@@ -125,8 +130,8 @@ And `vite.config.ts` should have this content:
 
 ```ts
 export default defineConfig({
-    base: '/is-awesome/',
-    // ...
+  base: '/is-awesome/',
+  // ...
 });
 ```
 
