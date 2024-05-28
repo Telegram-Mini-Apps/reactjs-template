@@ -27,10 +27,12 @@ export default defineConfig({
     }),
   ],
   server: {
-    host: 'tma.internal',
-    // Uncomment the next lines in case, you would like to run Vite dev server using HTTPS and in
-    // case, you have trusted key and certificate. You retrieve your certificate and key
-    // using mkcert.
+    // Specifying this property makes Vite dev server to start at the specified host. As long
+    // as this is a custom host, you must specify it in your hosts file.
+    // host: 'tma.internal',
+
+    // Uncomment the next lines if you would like to run Vite dev server using HTTPS and if you
+    // have a trusted key and certificate. You retrieve your certificate and key using mkcert.
     // Learn more: https://docs.telegram-mini-apps.com/platform/getting-app-link#mkcert
     // https: {
     //   cert: readFileSync(resolve('certificates/tma.internal.pem')),
