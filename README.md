@@ -84,29 +84,6 @@ This boilerplate uses GitHub Pages as the way to host the application externally
 provides a CDN which will let your users receive the application rapidly. Alternatively, you could
 use such services as [Heroku](https://www.heroku.com/) or [Vercel](https://vercel.com).
 
-### GitHub Workflow
-
-To simplify the process of deployment, this boilerplate contains already
-written [GitHub workflow](.github/workflows/github-pages-deploy.yml) to deploy the project
-automatically in case, some content was pushed to the `master` branch.
-
-To let this workflow work properly, it is required create a new environment (or edit the existing
-one) in the GitHub repository Settings with the name `github-pages`. Then, add the `master` branch
-to the list of deployment branches.
-
-Environments settings could be find using this
-URL: `https://github.com/{username}/{repository}/settings/environments`
-
-![img.png](.github/deployment-branches.png)
-
-In case, you don't want to do it automatically, or you don't use GitHub as the project codebase,
-just remove the `.github` directory.
-
-### GitHub Web Interface
-
-Alternatively, developers are able to configure the automatic deployment using GitHub web interface.
-To use it, follow the link: `https://github.com/{username}/{repository}/settings/pages`.
-
 ### Manual Deployment
 
 This boilerplate uses the [gh-pages](https://www.npmjs.com/package/gh-pages) tool, which allows
@@ -160,6 +137,29 @@ npm run deploy
 After the deployment completed successfully, visit the page with data according to your
 username and repository name. Here is the page link example using the data mentioned above:
 https://telegram-mini-apps.github.io/is-awesome
+
+### GitHub Workflow
+
+To simplify the process of deployment, this boilerplate contains already
+written [GitHub workflow](.github/workflows/github-pages-deploy.yml) to deploy the project
+automatically in case, some content was pushed to the `master` branch.
+
+To let this workflow work properly, it is required create a new environment (or edit the existing
+one) in the GitHub repository Settings with the name `github-pages`. Then, add the `master` branch
+to the list of deployment branches.
+
+Environments settings could be find using this
+URL: `https://github.com/{username}/{repository}/settings/environments`
+
+![img.png](.github/deployment-branches.png)
+
+In case, you don't want to do it automatically, or you don't use GitHub as the project codebase,
+just remove the `.github` directory.
+
+### GitHub Web Interface
+
+Alternatively, developers are able to configure the automatic deployment using GitHub web interface.
+To use it, follow the link: `https://github.com/{username}/{repository}/settings/pages`.
 
 ## TON Connect
 
