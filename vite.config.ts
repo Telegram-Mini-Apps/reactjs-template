@@ -23,7 +23,6 @@ export default defineConfig({
     // https://www.npmjs.com/package/@vitejs/plugin-basic-ssl
     basicSsl({
       certDir: resolve('certificates'),
-      domains: ['tma.internal'],
     }),
   ],
   server: {
