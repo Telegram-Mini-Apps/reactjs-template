@@ -69,7 +69,7 @@ VITE ready in 275 ms
 To view the application, you need to open the `Local`
 link (`http://localhost:5173/reactjs-template` in this example) in your browser:
 
-<img src="assets/application.png" style="max-width: 600px; border-radius: 10px" />
+![Application](assets/application.png)
 
 It is important to note that some libraries in this template, such as `@tma.js/sdk`, are not
 intended for use outside of Telegram.
@@ -107,7 +107,7 @@ VITE ready in 331 ms
 Visiting the `Local` link (`https://localhost:5173/reactjs-template` in this example) in your
 browser, you will see the following warning:
 
-<img src="assets/ssl-warning.png" style="max-width: 600px; border-radius: 10px" />
+![SSL Warning](assets/ssl-warning.png)
 
 This browser warning is normal and can be safely ignored as long as the site is secure. Click
 the `Proceed to localhost (unsafe)` button to continue and view the application.
