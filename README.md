@@ -1,6 +1,6 @@
-# Telegram Mini Apps React Boilerplate
+# Telegram Mini Apps React Template
 
-This boilerplate demonstrates how developers can implement a single-page application on the Telegram
+This template demonstrates how developers can implement a single-page application on the Telegram
 Mini Apps platform using the following technologies and libraries:
 
 - [React](https://react.dev/)
@@ -10,7 +10,7 @@ Mini Apps platform using the following technologies and libraries:
 - [Telegram UI](https://github.com/Telegram-Mini-Apps/TelegramUI)
 - [Vite](https://vitejs.dev/)
 
-> This boilerplate was created using [npm](https://www.npmjs.com/). Therefore, it is required to use
+> The template was created using [npm](https://www.npmjs.com/). Therefore, it is required to use
 > it for this project as well. Using other package managers, you will receive a corresponding error.
 
 ## Install Dependencies
@@ -42,18 +42,16 @@ npm run {script}
 ## Create Bot and Mini App
 
 Before you start, make sure you have already created a Telegram Bot. Here is
-the [comprehensive guide](https://docs.telegram-mini-apps.com/platform/creating-new-app) on how to
+a [comprehensive guide](https://docs.telegram-mini-apps.com/platform/creating-new-app) on how to
 do it.
 
 ## Run
 
-Despite the fact that Mini Apps are intended to be opened
-inside [Telegram applications](https://docs.telegram-mini-apps.com/platform/about#supported-applications),
-you can still develop them outside of Telegram during the development process. Nevertheless, opening
-them inside Telegram will provide the most accurate expectation of how they will function in the
-real world.
+Although Mini Apps are designed to be opened
+within [Telegram applications](https://docs.telegram-mini-apps.com/platform/about#supported-applications),
+you can still develop and test them outside of Telegram during the development process.
 
-Once the application is created successfully, run it using the `dev` script:
+To run the application in the development mode, use the `dev` script:
 
 ```bash
 npm run dev
@@ -64,19 +62,90 @@ After this, you will see a similar message in your terminal:
 ```bash
 VITE ready in 275 ms
 
-➜  Local:   https://localhost:5173/reactjs-template
-➜  Network: https://192.168.0.1:5173/reactjs-template
+➜  Local:   http://localhost:5173/reactjs-template
 ➜  press h + enter to show help
 ```
 
-To open the application, you need to copy the `Network`
-link (`https://192.168.0.1:5173/reactjs-template` in this example) and choose one of the following:
+To view the application, you need to open the `Local`
+link (`http://localhost:5173/reactjs-template` in this example) in your browser:
 
-1. Open it directly in your browser and start developing. Note that in this case, you will be
-   slightly restricted in allowed functionality and may see some behavior different from the
-   Telegram application.
-2. Submit it as the Mini App link to @BotFather. Then go to https://web.telegram.org/k/, find your
-   bot, and launch the Telegram Mini App. This way, you will get the full development experience.
+![Application](assets/application.png)
+
+It is important to note that some libraries in this template, such as `@tma.js/sdk`, are not
+intended for use outside of Telegram.
+
+Nevertheless, they appear to function properly. This is because the `src/mockEnv.ts` file, which is
+imported in the application's entry point (`src/index.ts`), employs the `mockTelegramEnv` function
+to simulate the Telegram environment. This trick convinces the application that it is running in a
+Telegram-based environment. Therefore, be cautious not to use this function in production mode
+unless you fully understand its implications.
+
+### Run Inside Telegram
+
+Although it is possible to run the application outside of Telegram, it is recommended to develop it
+within Telegram for the most accurate representation of its real-world functionality.
+
+To run the application inside Telegram, [@BotFather](https://t.me/botfather) requires an HTTPS link.
+
+This template already provides a solution.
+
+Navigate to the `vite.config.ts` file and uncomment the usage of the `basicSsl` function. This
+function utilizes
+the [@vitejs/plugin-basic-ssl](https://www.npmjs.com/package/@vitejs/plugin-basic-ssl) plugin, which
+enables the creation of an HTTPS link. Note that this plugin generates a self-signed certificate,
+which browsers will recognize as unsafe, resulting in a warning when accessing the app.
+
+After uncommenting the function, run the `dev` script again and observe the output in your terminal:
+
+```bash
+VITE ready in 331 ms
+
+➜  Local:   https://localhost:5173/reactjs-template
+➜  press h + enter to show help
+```
+
+Visiting the `Local` link (`https://localhost:5173/reactjs-template` in this example) in your
+browser, you will see the following warning:
+
+![SSL Warning](assets/ssl-warning.png)
+
+This browser warning is normal and can be safely ignored as long as the site is secure. Click
+the `Proceed to localhost (unsafe)` button to continue and view the application.
+
+Once the application is displayed correctly, submit this link as the Mini App link
+to [@BotFather](https://t.me/botfather). Then, navigate
+to [https://web.telegram.org/k/](https://web.telegram.org/k/), find your bot, and launch the
+Telegram Mini App. This approach provides the full development experience.
+
+### Expose Dev Server
+
+Sometimes, you might want to view the application on other devices.
+
+To expose your development server to local network devices, go to the `vite.config.ts` file and
+uncomment the line defining the `host` option.
+
+Alternatively, you can achieve this by running the command `vite --host`.
+
+Here is an example of the output you will see:
+
+```bash
+VITE v5.2.12  ready in 257 ms
+
+➜  Local:   https://localhost:5173/reactjs-template
+➜  Network: https://172.27.224.1:5173/reactjs-template
+➜  Network: https://172.19.32.1:5173/reactjs-template
+➜  Network: https://192.168.0.171:5173/reactjs-template
+```
+
+All `Network` links listed here are accessible to devices on the same network. Using these links,
+those devices will be able to view the application.
+
+> **Important**
+>
+> Because we are using self-signed SSL certificates, the Android and iOS Telegram applications will
+> not be able to display the application. These operating systems enforce stricter security
+> measures, preventing the Mini App from loading. To address this issue, refer
+> to [this guide](https://docs.telegram-mini-apps.com/platform/getting-app-link#remote).
 
 ## Deploy
 
@@ -140,36 +209,36 @@ https://telegram-mini-apps.github.io/is-awesome
 
 ### GitHub Workflow
 
-To simplify the process of deployment, this boilerplate contains already
-written [GitHub workflow](.github/workflows/github-pages-deploy.yml) to deploy the project
-automatically in case, some content was pushed to the `master` branch.
+To simplify the deployment process, this template includes a
+pre-configured [GitHub workflow](.github/workflows/github-pages-deploy.yml) that automatically
+deploys the project when changes are pushed to the `master` branch.
 
-To let this workflow work properly, it is required create a new environment (or edit the existing
-one) in the GitHub repository Settings with the name `github-pages`. Then, add the `master` branch
-to the list of deployment branches.
+To enable this workflow, create a new environment (or edit the existing one) in the GitHub
+repository settings and name it `github-pages`. Then, add the `master` branch to the list of
+deployment branches.
 
-Environments settings could be find using this
-URL: `https://github.com/{username}/{repository}/settings/environments`
+You can find the environment settings using this
+URL: `https://github.com/{username}/{repository}/settings/environments`.
 
 ![img.png](.github/deployment-branches.png)
 
 In case, you don't want to do it automatically, or you don't use GitHub as the project codebase,
-just remove the `.github` directory.
+remove the `.github` directory.
 
 ### GitHub Web Interface
 
-Alternatively, developers are able to configure the automatic deployment using GitHub web interface.
-To use it, follow the link: `https://github.com/{username}/{repository}/settings/pages`.
+Alternatively, developers can configure automatic deployment using the GitHub web interface. To do
+this, follow the link: `https://github.com/{username}/{repository}/settings/pages`.
 
 ## TON Connect
 
-This boilerplate uses the [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
-project to showcase how developers could integrate TON cryptocurrency-related functionality.
+This boilerplate utilizes the [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
+project to demonstrate how developers can integrate functionality related to TON cryptocurrency.
 
-The TON Connect manifest used in this boilerplate is located in the `public` folder along with all
-publicly available static files. Don't forget
+The TON Connect manifest used in this boilerplate is stored in the `public` folder, where all
+publicly accessible static files are located. Remember
 to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this file according to your
-project information.
+project's information.
 
 ## Useful Links
 
