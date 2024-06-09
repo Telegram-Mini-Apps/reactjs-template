@@ -14,10 +14,10 @@
     "predeploy": "pnpm run build"
   },
   "dependencies": {
-    "@telegram-apps/telegram-ui": "^2.1.3",
-    "@tma.js/react-router-integration": "^4.0.0",
-    "@tma.js/sdk-react": "^2.2.1",
-    "@tonconnect/ui-react": "^2.0.2",
+    "@telegram-apps/telegram-ui": "^2.1.4",
+    "@tma.js/react-router-integration": "^4.0.2",
+    "@tma.js/sdk-react": "^2.2.3",
+    "@tonconnect/ui-react": "^2.0.5",
     "eruda": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
