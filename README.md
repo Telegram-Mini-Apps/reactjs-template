@@ -209,36 +209,36 @@ https://telegram-mini-apps.github.io/is-awesome
 
 ### GitHub Workflow
 
-To simplify the process of deployment, this boilerplate contains already
-written [GitHub workflow](.github/workflows/github-pages-deploy.yml) to deploy the project
-automatically in case, some content was pushed to the `master` branch.
+To simplify the deployment process, this template includes a
+pre-configured [GitHub workflow](.github/workflows/github-pages-deploy.yml) that automatically
+deploys the project when changes are pushed to the `master` branch.
 
-To let this workflow work properly, it is required create a new environment (or edit the existing
-one) in the GitHub repository Settings with the name `github-pages`. Then, add the `master` branch
-to the list of deployment branches.
+To enable this workflow, create a new environment (or edit the existing one) in the GitHub
+repository settings and name it `github-pages`. Then, add the `master` branch to the list of
+deployment branches.
 
-Environments settings could be find using this
-URL: `https://github.com/{username}/{repository}/settings/environments`
+You can find the environment settings using this
+URL: `https://github.com/{username}/{repository}/settings/environments`.
 
 ![img.png](.github/deployment-branches.png)
 
 In case, you don't want to do it automatically, or you don't use GitHub as the project codebase,
-just remove the `.github` directory.
+remove the `.github` directory.
 
 ### GitHub Web Interface
 
-Alternatively, developers are able to configure the automatic deployment using GitHub web interface.
-To use it, follow the link: `https://github.com/{username}/{repository}/settings/pages`.
+Alternatively, developers can configure automatic deployment using the GitHub web interface. To do
+this, follow the link: `https://github.com/{username}/{repository}/settings/pages`.
 
 ## TON Connect
 
-This boilerplate uses the [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
-project to showcase how developers could integrate TON cryptocurrency-related functionality.
+This boilerplate utilizes the [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
+project to demonstrate how developers can integrate functionality related to TON cryptocurrency.
 
-The TON Connect manifest used in this boilerplate is located in the `public` folder along with all
-publicly available static files. Don't forget
+The TON Connect manifest used in this boilerplate is stored in the `public` folder, where all
+publicly accessible static files are located. Remember
 to [configure](https://docs.ton.org/develop/dapps/ton-connect/manifest) this file according to your
-project information.
+project's information.
 
 ## Useful Links
 
