@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { isGraphqlError, TelegramWebAppDataUserInput } from '@/utils';
 import { gql, useMutation } from '@apollo/client';
 
-interface AccessTokenParams {
+export interface AccessTokenParams {
   query_id: string;
   user: TelegramWebAppDataUserInput;
   auth_date: number;
@@ -35,7 +35,7 @@ const useAccessToken = (webAppData: AccessTokenParams) => {
       })
         .then(async (result) => {
           if (result.data) {
-            setSessionToken(result.data.getAccessToken.token);
+            setSessionToken(result.data.telegramUserLogin.access_token);
           }
         })
         .catch(async (error) => {

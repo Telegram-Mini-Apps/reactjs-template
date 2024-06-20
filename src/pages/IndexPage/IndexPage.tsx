@@ -7,21 +7,31 @@ import tonSvg from './ton.svg';
 
 import './IndexPage.css';
 import { useInitData, useLaunchParams } from '@tma.js/sdk-react';
-import useAccessToken from '@/hooks/useAccessToken.ts';
+import useAccessToken, { AccessTokenParams } from '@/hooks/useAccessToken.ts';
 import { TelegramWebAppDataUserInput, transformInitData } from '@/utils';
 
 export const IndexPage: FC = () => {
   const initDataRaw = useLaunchParams().initDataRaw;
 
   const initData = useInitData();
+  const transformedAuthDate = initData?.authDate ? Math.floor(initData.authDate.getTime() / 1000) : 0;
 
-  useAccessToken({
-    query_id: initData?.queryId ?? '',
-    user: (initData?.user ?? {}) as TelegramWebAppDataUserInput,
-    auth_date: initData?.authDate.getTime() ?? 0,
-    hash: initData?.hash ?? '',
+  const data: AccessTokenParams = {
+    auth_date: transformedAuthDate, // Use the transformed value
     checkDataString: (initDataRaw && transformInitData(initDataRaw)) ?? '',
-  });
+    hash: initData?.hash ?? '',
+    query_id: initData?.queryId ?? '',
+    user: {
+      id: initData?.user?.id,
+      first_name: initData?.user?.firstName,
+      last_name: initData?.user?.lastName,
+      username: initData?.user?.username || "",
+      language_code: initData?.user?.languageCode,
+      allows_write_to_pm: initData?.user?.allowsWriteToPm,
+    } as TelegramWebAppDataUserInput,
+  };
+
+  const { sessionToken } = useAccessToken(data);
 
   return (
     <List>
@@ -29,6 +39,8 @@ export const IndexPage: FC = () => {
         header="Features"
         footer="You can use these pages to learn more about features, provided by Telegram Mini Apps and other useful projects"
       >
+        <p> TOKEN {sessionToken} </p>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
         <Link to="/ton-connect">
           <Cell
             before={<Image src={tonSvg} style={{ backgroundColor: '#007AFF' }} />}
