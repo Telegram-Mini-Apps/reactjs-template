@@ -88,7 +88,7 @@ export const InitDataPage: FC = () => {
           style={{ display: 'block', width: '144px', height: '144px' }}
         />
       </Placeholder>
-    )
+    );
   }
   return (
     <List>
@@ -97,5 +97,5 @@ export const InitDataPage: FC = () => {
       {receiverRows && <DisplayData header={'Receiver'} rows={receiverRows}/>}
       {chatRows && <DisplayData header={'Chat'} rows={chatRows}/>}
     </List>
-  )
+  );
 };
