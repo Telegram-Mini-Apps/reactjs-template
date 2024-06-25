@@ -19,7 +19,6 @@
     "@tma.js/react-router-integration": "^4.0.2",
     "@tma.js/sdk-react": "^2.2.3",
     "@tonconnect/ui-react": "^2.0.5",
-    "axios": "^1.7.2",
     "eruda": "^3.0.1",
     "graphql": "^16.8.2",
     "react": "^18.2.0",

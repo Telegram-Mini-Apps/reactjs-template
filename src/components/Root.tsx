@@ -5,7 +5,8 @@ import { type FC, useEffect, useMemo } from 'react';
 import { App } from '@/components/App.tsx';
 import { ErrorBoundary } from '@/components/ErrorBoundary.tsx';
 import { ApolloProvider } from '@apollo/client';
-import client from '../../apolloClient.ts';
+import client from '@/apolloClient.ts';
+import { SessionProvider } from '@/providers';
 
 const ErrorBoundaryError: FC<{ error: unknown }> = ({ error }) => (
   <div>
@@ -33,7 +34,9 @@ const Inner: FC = () => {
     <ApolloProvider client={client}>
       <TonConnectUIProvider manifestUrl={manifestUrl}>
         <SDKProvider acceptCustomStyles debug={debug}>
-          <App />
+          <SessionProvider>
+            <App />
+          </SessionProvider>
         </SDKProvider>
       </TonConnectUIProvider>
     </ApolloProvider>
