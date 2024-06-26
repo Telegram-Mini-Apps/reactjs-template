@@ -5,6 +5,10 @@ import { InitDataPage } from '@/pages/InitDataPage/InitDataPage';
 import { LaunchParamsPage } from '@/pages/LaunchParamsPage/LaunchParamsPage.tsx';
 import { ThemeParamsPage } from '@/pages/ThemeParamsPage/ThemeParamsPage.tsx';
 import { TONConnectPage } from '@/pages/TONConnectPage/TONConnectPage';
+import InvitePage from "@/pages/InvitePage/InvitePage.tsx";
+import LeaderboardPage from "@/pages/LeaderboardPage/LeaderboardPage.tsx";
+import BoostersPage from "@/pages/BoostersPage/BoostersPage.tsx";
+import HomePage from "@/pages/HomePage/HomePage.tsx";
 
 interface Route {
   path: string;
@@ -18,6 +22,10 @@ export const routes: Route[] = [
   { path: '/init-data', Component: InitDataPage, title: 'Init Data' },
   { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
   { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },
+  { path: '/home', Component: HomePage, title: 'Home Page' },
+  { path: '/invite', Component: InvitePage, title: 'Invite Page' },
+  { path: '/leaderboard', Component: LeaderboardPage, title: 'Leaderboard' },
+  { path: '/boosters', Component: BoostersPage, title: 'Boosters' },
   {
     path: '/ton-connect',
     Component: TONConnectPage,

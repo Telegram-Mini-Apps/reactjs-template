@@ -17,7 +17,7 @@ export const IndexPage: FC = () => {
         header="Features"
         footer="You can use these pages to learn more about features, provided by Telegram Mini Apps and other useful projects"
       >
-        <p> TOKEN {sessionToken}</p>
+        {/*<p> TOKEN {sessionToken}</p>*/}
         <Link to="/ton-connect">
           <Cell
             before={<Image src={tonSvg} style={{ backgroundColor: '#007AFF' }} />}

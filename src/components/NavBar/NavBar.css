@@ -1,0 +1,30 @@
+.navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: #2c3e50;
+    padding: 10px 0;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+    font-family: sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    color: #3498db;
+}
+
+.nav-button span {
+    margin-top: 5px;
+}

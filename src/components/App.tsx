@@ -18,6 +18,7 @@ import {
 } from 'react-router-dom';
 
 import { routes } from '@/navigation/routes.tsx';
+import NavBar from "@/components/NavBar/NavBar.tsx";
 
 export const App: FC = () => {
   const lp = useLaunchParams();
@@ -59,6 +60,8 @@ export const App: FC = () => {
           {routes.map((route) => <Route key={route.path} {...route} />)}
           <Route path='*' element={<Navigate to='/'/>}/>
         </Routes>
+
+        <NavBar />
       </Router>
     </AppRoot>
   );
