@@ -1,5 +1,5 @@
 import { createContext, FC, useEffect, useState } from 'react';
-import { isGraphqlError, TelegramWebAppDataUserInput, transformInitData } from '@/utils';
+import { isGraphqlError, transformInitData } from '@/utils';
 import { useMutation } from '@apollo/client';
 import { useInitData, useLaunchParams } from '@tma.js/sdk-react';
 import { AccessTokenParams, LOGIN_WITH_ACCESS_TOKEN, SessionContextProps, SessionProviderProps } from '@/providers';
