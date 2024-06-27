@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './TapArea.css';
+import { useGameData } from '@/hooks';
 
 interface Tap {
   id: number;
@@ -15,6 +16,7 @@ interface Props {
 const TapArea: FC<Props> = ({ disabled }) => {
   const [taps, setTaps] = useState<Tap[]>([]);
   const [tapCount, setTapCount] = useState(0);
+  const { setCount } = useGameData();
 
   const handleTap = (e: React.TouchEvent<HTMLDivElement>) => {
     if (disabled) return;
@@ -28,6 +30,8 @@ const TapArea: FC<Props> = ({ disabled }) => {
 
     setTaps((prevTaps) => [...prevTaps, ...newTaps]);
     setTapCount((prevCount) => prevCount + e.touches.length);
+    setCount(prev => prev + 1);
+    // call onUserTap()
 
     navigator.vibrate(50);
   };
@@ -39,7 +43,7 @@ const TapArea: FC<Props> = ({ disabled }) => {
   return (
     <div className="container">
       <div className="tap-area" onTouchStart={handleTap}>
-        <span className="tap-count">{tapCount}</span>
+        <span className="tap-count">Tap</span>
 
         <AnimatePresence>
           {taps.map((tap) => (

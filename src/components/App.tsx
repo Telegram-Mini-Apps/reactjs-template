@@ -3,22 +3,18 @@ import {
   bindMiniAppCSSVars,
   bindThemeParamsCSSVars,
   bindViewportCSSVars,
-  initNavigator, useLaunchParams,
+  initNavigator,
+  useLaunchParams,
   useMiniApp,
   useThemeParams,
   useViewport,
 } from '@tma.js/sdk-react';
 import { AppRoot } from '@telegram-apps/telegram-ui';
 import { type FC, useEffect, useMemo } from 'react';
-import {
-  Navigate,
-  Route,
-  Router,
-  Routes,
-} from 'react-router-dom';
+import { Navigate, Route, Router, Routes } from 'react-router-dom';
 
 import { routes } from '@/navigation/routes.tsx';
-import NavBar from "@/components/NavBar/NavBar.tsx";
+import { NavBar } from '@/components';
 
 export const App: FC = () => {
   const lp = useLaunchParams();
@@ -57,8 +53,10 @@ export const App: FC = () => {
     >
       <Router location={location} navigator={reactNavigator}>
         <Routes>
-          {routes.map((route) => <Route key={route.path} {...route} />)}
-          <Route path='*' element={<Navigate to='/'/>}/>
+          {routes.map((route) => (
+            <Route key={route.path} {...route} />
+          ))}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
 
         <NavBar />
