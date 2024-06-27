@@ -2,6 +2,9 @@ import { createContext, FC, PropsWithChildren, useCallback, useEffect, useState 
 import { BusinessLogicContextProps } from '@/providers/BusinessLogicProvider/types.ts';
 
 export const BusinessLogicContext = createContext<BusinessLogicContextProps | undefined>({
+  earned: 0,
+  setEarned: () => undefined,
+
   count: 0,
   setCount: () => undefined,
 
@@ -24,6 +27,7 @@ export const BusinessLogicContext = createContext<BusinessLogicContextProps | un
 });
 
 const BusinessLogicProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [earned, setEarned] = useState(0);
   const [count, setCount] = useState(0);
   const [energy, setEnergy] = useState(15); // TODO: get value from API or any config
   const [maxEnergy, setMaxEnergy] = useState(15); // TODO: get value from API or any config
@@ -32,11 +36,14 @@ const BusinessLogicProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isTapAreaDisabled, setIsTapAreaDisabled] = useState(false);
 
   const onUserTap = useCallback(() => {
-    setCount(prev => prev + 1);
+    setCount((prev) => prev + 1);
+    setEarned((prev) => prev + 1);
     setEnergy((prev) => prev - 1);
   }, [energy, count]);
 
-  const providerData = {
+  const providerData: BusinessLogicContextProps = {
+    earned,
+    setEarned,
     count,
     setCount,
     energy,
@@ -69,11 +76,7 @@ const BusinessLogicProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }, [energy]);
 
-  return (
-    <BusinessLogicContext.Provider value={providerData}>
-      {children}
-    </BusinessLogicContext.Provider>
-  );
+  return <BusinessLogicContext.Provider value={providerData}>{children}</BusinessLogicContext.Provider>;
 };
 
 export default BusinessLogicProvider;

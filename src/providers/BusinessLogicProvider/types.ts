@@ -3,6 +3,9 @@ import React from "react";
 type setFunctionType<T> = React.Dispatch<React.SetStateAction<T>>;
 
 export interface BusinessLogicContextProps {
+  earned: number;
+  setEarned: setFunctionType<number>;
+
   count: number;
   setCount: setFunctionType<number>;
 
