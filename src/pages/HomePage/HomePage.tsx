@@ -1,9 +1,13 @@
 import { FC } from 'react';
+import TapArea from "@/components/TapArea/TapArea.tsx";
+import './HomePage.css'
 
 const HomePage: FC = () => {
   return (
-    <div className="container">
-      <h1>Home page</h1>
+    <div>
+      <h1 className='title'>Home page</h1>
+
+      <TapArea />
     </div>
   );
 };
