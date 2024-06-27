@@ -18,12 +18,12 @@ const TapProgress: FC = () => {
   }, [count]);
 
   return (
-    <div className="container">
-      <span className="progress-level">{progressLevel}</span>
+    <div className="tap-progress-container">
+      <span className="tap-progress-progress-level">{progressLevel}</span>
 
-      <div className="progress-bar">
-        <div className="progress" style={progressStyles} />
-        <span className="progress-status">
+      <div className="tap-progress-progress-bar">
+        <div className="tap-progress-progress" style={progressStyles} />
+        <span className="tap-progress-progress-status">
           {count}/{levelLimit}
         </span>
       </div>

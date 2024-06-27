@@ -9,17 +9,13 @@ interface Tap {
   y: number;
 }
 
-interface Props {
-  disabled?: boolean;
-}
-
-const TapArea: FC<Props> = ({ disabled }) => {
+const TapArea: FC = () => {
   const [taps, setTaps] = useState<Tap[]>([]);
   const [tapCount, setTapCount] = useState(0);
-  const { setCount } = useGameData();
+  const { isTapAreaDisabled, onUserTap } = useGameData();
 
   const handleTap = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (disabled) return;
+    if (isTapAreaDisabled) return;
 
     const boundingRect = e.currentTarget.getBoundingClientRect();
     const newTaps = Array.from(e.touches).map((touch, index) => ({
@@ -30,8 +26,7 @@ const TapArea: FC<Props> = ({ disabled }) => {
 
     setTaps((prevTaps) => [...prevTaps, ...newTaps]);
     setTapCount((prevCount) => prevCount + e.touches.length);
-    setCount(prev => prev + 1);
-    // call onUserTap()
+    onUserTap()
 
     navigator.vibrate(50);
   };
@@ -41,7 +36,7 @@ const TapArea: FC<Props> = ({ disabled }) => {
   };
 
   return (
-    <div className="container">
+    <div className="tap-area-container">
       <div className="tap-area" onTouchStart={handleTap}>
         <span className="tap-count">Tap</span>
 

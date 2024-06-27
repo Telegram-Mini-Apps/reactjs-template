@@ -9,6 +9,9 @@ export interface BusinessLogicContextProps {
   energy: number;
   setEnergy: setFunctionType<number>;
 
+  maxEnergy: number;
+  setMaxEnergy: setFunctionType<number>;
+
   loading: boolean;
   setLoading: setFunctionType<boolean>;
 
@@ -16,4 +19,7 @@ export interface BusinessLogicContextProps {
   setError: setFunctionType<string>;
 
   onUserTap: () => void;
+
+  isTapAreaDisabled: boolean;
+  setIsTapAreaDisabled: setFunctionType<boolean>;
 }

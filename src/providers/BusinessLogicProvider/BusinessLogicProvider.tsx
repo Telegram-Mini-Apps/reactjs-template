@@ -8,6 +8,9 @@ export const BusinessLogicContext = createContext<BusinessLogicContextProps | un
   energy: 0,
   setEnergy: () => undefined,
 
+  maxEnergy: 0,
+  setMaxEnergy: () => undefined,
+
   loading: false,
   setLoading: () => undefined,
 
@@ -15,26 +18,38 @@ export const BusinessLogicContext = createContext<BusinessLogicContextProps | un
   setError: () => undefined,
 
   onUserTap: () => undefined,
+
+  isTapAreaDisabled: false,
+  setIsTapAreaDisabled: () => undefined,
 });
 
 const BusinessLogicProvider: FC<PropsWithChildren> = ({ children }) => {
   const [count, setCount] = useState(0);
-  const [energy, setEnergy] = useState(0);
+  const [energy, setEnergy] = useState(15); // TODO: get value from API or any config
+  const [maxEnergy, setMaxEnergy] = useState(15); // TODO: get value from API or any config
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isTapAreaDisabled, setIsTapAreaDisabled] = useState(false);
 
-  const onUserTap = useCallback(() => {}, []);
+  const onUserTap = useCallback(() => {
+    setCount(prev => prev + 1);
+    setEnergy((prev) => prev - 1);
+  }, [energy, count]);
 
   const providerData = {
     count,
     setCount,
     energy,
     setEnergy,
+    maxEnergy,
+    setMaxEnergy,
     loading,
     setLoading,
     error,
     setError,
     onUserTap,
+    isTapAreaDisabled,
+    setIsTapAreaDisabled,
   };
 
   useEffect(() => {
@@ -45,6 +60,14 @@ const BusinessLogicProvider: FC<PropsWithChildren> = ({ children }) => {
     //
     // return () => clearInterval(fetchData)
   }, []);
+
+  useEffect(() => {
+    if (energy <= 0) {
+      setIsTapAreaDisabled(true);
+    } else {
+      setIsTapAreaDisabled(false);
+    }
+  }, [energy]);
 
   return (
     <BusinessLogicContext.Provider value={providerData}>
