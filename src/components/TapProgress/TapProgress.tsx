@@ -22,7 +22,7 @@ const TapProgress: FC = () => {
       <span className={styles.tapProgressLevel}>{progressLevel}</span>
 
       <div className={styles.tapProgressBar}>
-        <div className={styles.tapProgressBar} style={progressStyles} />
+        <div className={styles.tapProgress} style={progressStyles} />
         <span className={styles.tapProgressStatus}>
           {count}/{levelLimit}
         </span>
