@@ -1,4 +1,4 @@
-.tap-area-container {
+.tapAreaContainer {
     width: 100%;
     height: 300px;
     display: block;
@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.tap-area {
+.tapArea {
     margin: 0 auto;
     position: relative;
     display: flex;
@@ -20,12 +20,12 @@
     border-radius: 100%;
 }
 
-.tap-count {
+.tapCount {
     font-size: 32px;
     color: #000;
 }
 
-.tap-indicator {
+.tapIndicator {
     position: absolute;
     color: #00960d;
     font-size: 24px;

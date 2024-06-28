@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import './TapArea.css';
+import styles from './TapArea.module.css';
 import { useGameData } from '@/hooks';
 
 interface Tap {
@@ -36,15 +36,15 @@ const TapArea: FC = () => {
   };
 
   return (
-    <div className="tap-area-container">
-      <div className="tap-area" onTouchStart={handleTap}>
-        <span className="tap-count">Tap</span>
+    <div className={styles.tapAreaContainer}>
+      <div className={styles.tapArea} onTouchStart={handleTap}>
+        <span className={styles.tapCount}>Tap</span>
 
         <AnimatePresence>
           {taps.map((tap) => (
             <motion.div
               key={tap.id}
-              className="tap-indicator"
+              className={styles.tapIndicator}
               initial={{ opacity: 1, scale: 1 }}
               animate={{ opacity: 0, scale: 2, y: -50 }}
               exit={{ opacity: 0 }}

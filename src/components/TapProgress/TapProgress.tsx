@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useGameData } from '@/hooks';
-import './TapProgress.css';
+import styles from './TapProgress.module.css';
 
 const TapProgress: FC = () => {
   const [progressLevel, setProgressLevel] = useState(1);
@@ -18,12 +18,12 @@ const TapProgress: FC = () => {
   }, [count]);
 
   return (
-    <div className="tap-progress-container">
-      <span className="tap-progress-progress-level">{progressLevel}</span>
+    <div className={styles.tapProgressContainer}>
+      <span className={styles.tapProgressLevel}>{progressLevel}</span>
 
-      <div className="tap-progress-progress-bar">
-        <div className="tap-progress-progress" style={progressStyles} />
-        <span className="tap-progress-progress-status">
+      <div className={styles.tapProgressBar}>
+        <div className={styles.tapProgressBar} style={progressStyles} />
+        <span className={styles.tapProgressStatus}>
           {count}/{levelLimit}
         </span>
       </div>

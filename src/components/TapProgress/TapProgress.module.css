@@ -1,4 +1,4 @@
-.tap-progress-container {
+.tapProgressContainer {
     box-sizing: border-box;
     padding: 0 .5rem;
     display: flex;
@@ -7,7 +7,7 @@
     gap: 0.5rem;
 }
 
-.tap-progress-progress-bar {
+.tapProgressBar {
     position: relative;
     width: 100%;
     height: 30px;
@@ -17,18 +17,18 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.tap-progress-progress-level {
+.tapProgressLevel {
     font-size: 24px;
 }
 
-.tap-progress-progress {
+.tapProgress {
     height: 100%;
     background: linear-gradient(to right, #ffecd2, #fcb69f, #ff7e5f, #d83367, #4b134f);
     border-radius: 15px 0 0 15px;
     transition: width 0.3s ease-in-out;
 }
 
-.tap-progress-progress-status {
+.tapProgressStatus {
     position: absolute;
     color: #000;
     top: 50%;

@@ -8,7 +8,7 @@
     padding: 10px 0;
 }
 
-.nav-button {
+.navButton {
     background: none;
     border: none;
     color: #ecf0f1;
@@ -21,10 +21,10 @@
     cursor: pointer;
 }
 
-.nav-button:hover {
+.navButton:hover {
     color: #3498db;
 }
 
-.nav-button span {
+.navButton span {
     margin-top: 5px;
 }

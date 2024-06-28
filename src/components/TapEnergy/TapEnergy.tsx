@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo } from 'react';
 import { useGameData } from '@/hooks';
-import './TapEnegry.css';
+import styles from './TapEnegry.module.css';
 
 const TapEnergy: FC = () => {
   const { energy, setEnergy, maxEnergy } = useGameData();
@@ -14,13 +14,13 @@ const TapEnergy: FC = () => {
   }, []);
 
   return (
-    <div className="energy-container">
-      <span className="label">Energy:</span>
+    <div className={styles.energyContainer}>
+      <span className={styles.label}>Energy:</span>
 
-      <div className="energy-progress-bar">
-        <div className="energy-progress" style={progressStyles} />
+      <div className={styles.energyProgressBar}>
+        <div className={styles.energyProgress} style={progressStyles} />
 
-        <span className="energy-progress-status">
+        <span className={styles.energyProgressStatus}>
           {energy}/{maxEnergy}
         </span>
       </div>
