@@ -1,17 +1,17 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react-swc';
 // import basicSsl from '@vitejs/plugin-basic-ssl';
 
-const env = loadEnv('mode', process.cwd(), '');
+// const env = loadEnv('mode', process.cwd(), '');
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '.',
-  define: {
-    // TODO: migrate to import.meta.env.VITE_API_URL or import.meta.env.VITE_GRAPHQL_URL
-    'process.env.APPOLO_CLIENT_URL': JSON.stringify(env.APPOLO_CLIENT_URL),
-  },
+  // define: {
+  //   // TODO: migrate to import.meta.env.VITE_API_URL or import.meta.env.VITE_GRAPHQL_URL
+  //   'process.env.APPOLO_CLIENT_URL': JSON.stringify(env.APPOLO_CLIENT_URL),
+  // },
   plugins: [
     // Allows using React dev server along with building a React application with Vite.
     // https://npmjs.com/package/@vitejs/plugin-react-swc

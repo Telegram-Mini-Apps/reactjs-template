@@ -59,18 +59,19 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
           variables: {
             webAppData,
           },
-        })
+        });
 
         if (!response.data) {
-          throw new Error('Failed load session data')
+          throw new Error('Failed load session data');
         }
 
         setSessionToken(`Bearer ${response.data.telegramUserLogin.access_token}`);
         localStorage.setItem('access_token', response.data.telegramUserLogin.access_token);
-      } catch (error: any) {
-        setError(isGraphqlError(error, 'FULL_MAINTENANCE') ?? error.message);
+      } catch (error) {
+        const errorMessage = isGraphqlError(error, 'FULL_MAINTENANCE') ?? (error as unknown as Error).message;
+        setError(errorMessage);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     };
 
