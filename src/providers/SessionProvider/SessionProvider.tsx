@@ -1,5 +1,5 @@
 import { createContext, FC, useEffect, useState } from 'react';
-import { isGraphqlError, TelegramWebAppDataUserInput, transformInitData } from '@/utils';
+import { isGraphqlError, transformInitData } from '@/utils';
 import { useMutation } from '@apollo/client';
 import { useInitData, useLaunchParams } from '@tma.js/sdk-react';
 import { AccessTokenParams, LOGIN_WITH_ACCESS_TOKEN, SessionContextProps, SessionProviderProps } from '@/providers';
@@ -28,13 +28,13 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
     hash: initData?.hash ?? '',
     query_id: initData?.queryId ?? '',
     user: {
-      id: initData?.user?.id,
-      first_name: initData?.user?.firstName,
-      last_name: initData?.user?.lastName,
+      id: initData?.user?.id || 0,
+      first_name: initData?.user?.firstName || '',
+      last_name: initData?.user?.lastName || '',
       username: initData?.user?.username || '',
-      language_code: initData?.user?.languageCode,
-      allows_write_to_pm: initData?.user?.allowsWriteToPm,
-    } as TelegramWebAppDataUserInput,
+      language_code: initData?.user?.languageCode || '',
+      allows_write_to_pm: initData?.user?.allowsWriteToPm || false,
+    },
   };
 
   useEffect(() => {
@@ -54,21 +54,24 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
         return;
       }
 
-      await request({
-        variables: {
-          webAppData,
-        },
-      })
-        .then(async (result) => {
-          if (result.data) {
-            setSessionToken(`Bearer ${result.data.telegramUserLogin.access_token}`);
-            localStorage.setItem('access_token', result.data.telegramUserLogin.access_token);
-          }
+      try {
+        const response = await request({
+          variables: {
+            webAppData,
+          },
         })
-        .catch(async (error) => {
-          setError(isGraphqlError(error, 'FULL_MAINTENANCE') ?? error.message);
-        })
-        .finally(() => setIsLoading(false));
+
+        if (!response.data) {
+          throw new Error('Failed load session data')
+        }
+
+        setSessionToken(`Bearer ${response.data.telegramUserLogin.access_token}`);
+        localStorage.setItem('access_token', response.data.telegramUserLogin.access_token);
+      } catch (error: any) {
+        setError(isGraphqlError(error, 'FULL_MAINTENANCE') ?? error.message);
+      } finally {
+        setIsLoading(false)
+      }
     };
 
     handleRequest(data);

@@ -1,0 +1,11 @@
+.container {
+  height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  margin-top: 1rem;
+  text-align: center;
+}

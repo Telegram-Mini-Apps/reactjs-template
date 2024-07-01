@@ -20,6 +20,7 @@
     "@tma.js/sdk-react": "^2.2.3",
     "@tonconnect/ui-react": "^2.0.5",
     "eruda": "^3.0.1",
+    "framer-motion": "^11.2.12",
     "graphql": "^16.8.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

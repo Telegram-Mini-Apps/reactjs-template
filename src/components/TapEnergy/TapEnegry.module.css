@@ -1,0 +1,38 @@
+.energyContainer {
+  box-sizing: border-box;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.energyProgressBar {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background-color: #e0e0e0;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.label {
+  font-size: 24px;
+}
+
+.energyProgress {
+  height: 100%;
+  background: linear-gradient(to right, #fffacd, #ffe135, #ffd700, #ffb700, #ff8c00);;
+  border-radius: 15px 0 0 15px;
+  transition: width 0.3s ease-in-out;
+}
+
+.energyProgressStatus {
+  position: absolute;
+  color: #000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

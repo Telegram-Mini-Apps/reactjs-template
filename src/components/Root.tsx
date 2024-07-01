@@ -6,7 +6,7 @@ import { App } from '@/components/App.tsx';
 import { ErrorBoundary } from '@/components/ErrorBoundary.tsx';
 import { ApolloProvider } from '@apollo/client';
 import client from '@/apolloClient.ts';
-import { SessionProvider } from '@/providers';
+import { BusinessLogicProvider, SessionProvider } from '@/providers';
 
 const ErrorBoundaryError: FC<{ error: unknown }> = ({ error }) => (
   <div>
@@ -35,7 +35,9 @@ const Inner: FC = () => {
       <TonConnectUIProvider manifestUrl={manifestUrl}>
         <SDKProvider acceptCustomStyles debug={debug}>
           <SessionProvider>
-            <App />
+            <BusinessLogicProvider>
+              <App />
+            </BusinessLogicProvider>
           </SessionProvider>
         </SDKProvider>
       </TonConnectUIProvider>
