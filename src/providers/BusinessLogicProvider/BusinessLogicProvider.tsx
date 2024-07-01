@@ -33,8 +33,8 @@ const BusinessLogicProvider: FC<PropsWithChildren> = ({ children }) => {
   const [tapWeight, setTapWeight] = useState(1);
   const [earned, setEarned] = useState(0);
   const [count, setCount] = useState(0);
-  const [energy, setEnergy] = useState(15); // TODO: get value from API or any config
-  const [maxEnergy, setMaxEnergy] = useState(15); // TODO: get value from API or any config
+  const [energy, setEnergy] = useState(1000); // TODO: get value from API or any config
+  const [maxEnergy, setMaxEnergy] = useState(1000); // TODO: get value from API or any config
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [isTapAreaDisabled, setIsTapAreaDisabled] = useState(false);
