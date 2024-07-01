@@ -9,7 +9,7 @@ const env = loadEnv('mode', process.cwd(), '');
 export default defineConfig({
   base: '/reactjs-template',
   define: {
-    'process.env.APPOLO_CLIENT_URL': JSON.stringify(env.APPOLO_CLIENT_URL)
+    'process.env.APPOLO_CLIENT_URL': JSON.stringify(env.APPOLO_CLIENT_URL),
   },
   plugins: [
     // Allows using React dev server along with building a React application with Vite.
@@ -24,9 +24,9 @@ export default defineConfig({
   ],
   publicDir: './public',
   server: {
+    port: 3000,
     // Uncomment this line if you want to expose your dev server and access it from the devices
     // in the same network.
     // host: true,
   },
 });
-
