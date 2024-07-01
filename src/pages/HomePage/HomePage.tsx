@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import styles from './HomePage.module.css';
 import { useGameData } from '@/hooks';
 import { TapArea, TapProgress, TapEnergy } from '@/components';
+import styles from './HomePage.module.css';
 
 const HomePage: FC = () => {
   const { earned } = useGameData();

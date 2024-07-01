@@ -2,6 +2,9 @@ import { createContext, FC, PropsWithChildren, useCallback, useEffect, useState 
 import { BusinessLogicContextProps } from '@/providers/BusinessLogicProvider/types.ts';
 
 export const BusinessLogicContext = createContext<BusinessLogicContextProps | undefined>({
+  tapWeight: 0,
+  setTapWeight: () => undefined,
+
   earned: 0,
   setEarned: () => undefined,
 
@@ -27,6 +30,7 @@ export const BusinessLogicContext = createContext<BusinessLogicContextProps | un
 });
 
 const BusinessLogicProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [tapWeight, setTapWeight] = useState(1);
   const [earned, setEarned] = useState(0);
   const [count, setCount] = useState(0);
   const [energy, setEnergy] = useState(15); // TODO: get value from API or any config
@@ -42,6 +46,8 @@ const BusinessLogicProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [energy, count]);
 
   const providerData: BusinessLogicContextProps = {
+    tapWeight,
+    setTapWeight,
     earned,
     setEarned,
     count,

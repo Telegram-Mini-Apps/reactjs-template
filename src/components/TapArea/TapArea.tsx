@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import styles from './TapArea.module.css';
 import { useGameData } from '@/hooks';
+import styles from './TapArea.module.css';
 
 interface Tap {
   id: number;
@@ -12,7 +12,7 @@ interface Tap {
 const TapArea: FC = () => {
   const [taps, setTaps] = useState<Tap[]>([]);
   const [tapCount, setTapCount] = useState(0);
-  const { isTapAreaDisabled, onUserTap } = useGameData();
+  const { tapWeight, isTapAreaDisabled, onUserTap } = useGameData();
 
   const handleTap = (e: React.TouchEvent<HTMLDivElement>) => {
     if (isTapAreaDisabled) return;
@@ -52,7 +52,7 @@ const TapArea: FC = () => {
               style={{ top: tap.y - 40, left: tap.x - 10 }}
               onAnimationComplete={() => handleAnimationComplete(tap.id)}
             >
-              +1
+              +{tapWeight}
             </motion.div>
           ))}
         </AnimatePresence>
