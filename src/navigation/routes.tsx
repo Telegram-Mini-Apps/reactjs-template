@@ -1,9 +1,9 @@
 import type { ComponentType, JSX } from 'react';
 
-import InvitePage from "@/pages/InvitePage/InvitePage.tsx";
-import LeaderboardPage from "@/pages/LeaderboardPage/LeaderboardPage.tsx";
-import BoostersPage from "@/pages/BoostersPage/BoostersPage.tsx";
-import HomePage from "@/pages/HomePage/HomePage.tsx";
+import InvitePage from '@/pages/InvitePage/InvitePage.tsx';
+import LeaderboardPage from '@/pages/LeaderboardPage/LeaderboardPage.tsx';
+import BoostersPage from '@/pages/BoostersPage/BoostersPage.tsx';
+import HomePage from '@/pages/HomePage/HomePage.tsx';
 
 interface Route {
   path: string;

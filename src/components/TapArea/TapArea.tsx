@@ -26,7 +26,7 @@ const TapArea: FC = () => {
 
     setTaps((prevTaps) => [...prevTaps, ...newTaps]);
     setTapCount((prevCount) => prevCount + e.touches.length);
-    onUserTap()
+    onUserTap();
 
     navigator.vibrate(50);
   };
@@ -46,18 +46,17 @@ const TapArea: FC = () => {
           <motion.div
             key={tap.id}
             className={styles.tapIndicator}
-            initial={{opacity: 1, scale: 1, y: 300}}
-            animate={{opacity: 0, scale: 2, y: 200}}
-            exit={{opacity: 0}}
-            transition={{duration: 0.6}}
-            style={{top: tap.y, left: tap.x - 15}}
+            initial={{ opacity: 1, scale: 1, y: 300 }}
+            animate={{ opacity: 0, scale: 2, y: 200 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6 }}
+            style={{ top: tap.y, left: tap.x - 15 }}
             onAnimationComplete={() => handleAnimationComplete(tap.id)}
           >
             +{tapWeight}
           </motion.div>
         ))}
       </AnimatePresence>
-
     </div>
   );
 };

@@ -13,7 +13,7 @@ const TapProgress: FC = () => {
     if (count >= levelLimit) {
       setProgressLevel((prev) => prev + 1);
       setProgressLimit((prev) => Math.round(prev * 1.5));
-      setCount(0)
+      setCount(0);
     }
   }, [count]);
 

@@ -1,7 +1,6 @@
 import { TelegramWebAppDataUserInput } from '@/utils';
 import { ReactNode } from 'react';
 
-
 export interface AccessTokenParams {
   query_id: string;
   user: TelegramWebAppDataUserInput;
