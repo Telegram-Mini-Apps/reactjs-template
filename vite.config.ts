@@ -7,8 +7,9 @@ const env = loadEnv('mode', process.cwd(), '');
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/reactjs-template',
+  base: '.',
   define: {
+    // TODO: migrate to import.meta.env.VITE_API_URL or import.meta.env.VITE_GRAPHQL_URL
     'process.env.APPOLO_CLIENT_URL': JSON.stringify(env.APPOLO_CLIENT_URL),
   },
   plugins: [
