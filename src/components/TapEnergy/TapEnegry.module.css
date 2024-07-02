@@ -24,7 +24,7 @@
 
 .energyProgress {
   height: 100%;
-  background: linear-gradient(to right, #fffacd, #ffe135, #ffd700, #ffb700, #ff8c00);;
+  background: linear-gradient(to right, #fffacd, #ffe135, #ffd700, #ffb700, #ff8c00);
   border-radius: 15px 0 0 15px;
   transition: width 0.3s ease-in-out;
 }

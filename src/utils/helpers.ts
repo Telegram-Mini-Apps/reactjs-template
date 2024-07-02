@@ -14,9 +14,16 @@ export function transformInitData(initData: string): string {
     .join('\n');
 }
 
-export function isGraphqlError(error: any, errorSlug?: string) {
+export function isGraphqlError(
+  error: any, // TODO: Fix this type.
+  errorSlug?: string,
+) {
   if (!errorSlug) {
-    return error?.graphQLErrors?.find((e: GraphQLError) => true);
+    return error?.graphQLErrors?.find(
+      (
+        _error: GraphQLError, // TODO: use underscore _ in beginning of variable name that are not used.
+      ) => true,
+    );
   }
 
   return error?.graphQLErrors?.find((e: GraphQLError) => {

@@ -1,6 +1,7 @@
 import { ApolloClient, ApolloLink, concat, HttpLink, InMemoryCache } from '@apollo/client';
+import { URL_GRAPHQL } from './config';
 
-const httpLink = new HttpLink({ uri: process.env.APPOLO_CLIENT_URL });
+const httpLink = new HttpLink({ uri: URL_GRAPHQL });
 
 const authLink = new ApolloLink((operation, forward) => {
   const token = localStorage.getItem('access_token');

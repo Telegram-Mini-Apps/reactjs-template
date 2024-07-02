@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type setFunctionType<T> = React.Dispatch<React.SetStateAction<T>>;
 
