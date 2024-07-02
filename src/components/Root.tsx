@@ -31,17 +31,17 @@ const Inner: FC = () => {
   }, [debug]);
 
   return (
-    <ApolloProvider client={client}>
-      <TonConnectUIProvider manifestUrl={manifestUrl}>
-        <SDKProvider acceptCustomStyles debug={debug}>
+    <TonConnectUIProvider manifestUrl={manifestUrl}>
+      <SDKProvider acceptCustomStyles debug={debug}>
+        <ApolloProvider client={client}>
           <SessionProvider>
             <BusinessLogicProvider>
               <App />
             </BusinessLogicProvider>
           </SessionProvider>
-        </SDKProvider>
-      </TonConnectUIProvider>
-    </ApolloProvider>
+        </ApolloProvider>
+      </SDKProvider>
+    </TonConnectUIProvider>
   );
 };
 
