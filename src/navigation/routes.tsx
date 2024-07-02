@@ -2,7 +2,7 @@ import type { ComponentType, JSX } from 'react';
 
 import InvitePage from '@/pages/InvitePage/InvitePage.tsx';
 import LeaderboardPage from '@/pages/LeaderboardPage/LeaderboardPage.tsx';
-import BoostersPage from '@/pages/BoostersPage/BoostersPage.tsx';
+import DebugPage from '@/pages/DebugPage/DebugPage.tsx';
 import HomePage from '@/pages/HomePage/HomePage.tsx';
 
 interface Route {
@@ -16,5 +16,5 @@ export const routes: Route[] = [
   { path: '/', Component: HomePage, title: 'Home Page' },
   { path: '/invite', Component: InvitePage, title: 'Invite Page' },
   { path: '/leaderboard', Component: LeaderboardPage, title: 'Leaderboard' },
-  { path: '/boosters', Component: BoostersPage, title: 'Boosters' },
+  { path: '/debug', Component: DebugPage, title: 'Debug' },
 ];
