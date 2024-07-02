@@ -40,7 +40,7 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
   useEffect(() => {
     const handleRequest = async (webAppData: AccessTokenParams) => {
       setIsLoading(true);
-
+      console.log('dsf', webAppData)
       const accessToken = localStorage.getItem('access_token');
 
       if (accessToken) {
