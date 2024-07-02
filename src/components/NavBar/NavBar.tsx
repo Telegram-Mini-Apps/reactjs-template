@@ -15,7 +15,7 @@ const NavBar: FC = () => {
         <span>Leaderboard</span>
       </Link>
       <Link to="/debug" className={styles.navButton}>
-        <span>Debug</span>
+        <span>Debug v2</span>
       </Link>
     </div>
   );
