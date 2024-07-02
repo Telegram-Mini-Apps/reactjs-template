@@ -1,9 +1,12 @@
-import {FC, useMemo} from 'react';
+import {FC, useMemo, useState} from 'react';
 import { useSession } from '@/hooks';
 import {DisplayData, DisplayDataRow} from "@/components/DisplayData/DisplayData.tsx";
 import {useInitData, useLaunchParams, User} from "@tma.js/sdk-react";
 import {List, Placeholder} from "@telegram-apps/telegram-ui";
 import {URL_GRAPHQL} from "@/config.ts";
+import {AccessTokenParams, LOGIN_WITH_ACCESS_TOKEN} from "@/providers";
+import {useMutation} from "@apollo/client";
+import {transformInitData} from "@/utils";
 
 
 function getUserRows(user: User): DisplayDataRow[] {
@@ -25,6 +28,8 @@ const DebugPage: FC = () => {
   const { sessionToken, error } = useSession();
   const initDataRaw = useLaunchParams().initDataRaw;
   const initData = useInitData();
+  const [request] = useMutation(LOGIN_WITH_ACCESS_TOKEN);
+  const [errorAPI, setError] = useState('')
 
   const initDataRows = useMemo<DisplayDataRow[] | undefined>(() => {
     if (!initData || !initDataRaw) {
@@ -76,6 +81,55 @@ const DebugPage: FC = () => {
       { title: 'photo_url', value: photoUrl },
     ];
   }, [initData]);
+  const transformedAuthDate = initData?.authDate ? Math.floor(initData.authDate.getTime() / 1000) : 0;
+
+  const data: AccessTokenParams = {
+    auth_date: transformedAuthDate,
+    checkDataString: (initDataRaw && transformInitData(initDataRaw)) ?? '',
+    hash: initData?.hash ?? '',
+    query_id: initData?.queryId ?? '',
+    user: {
+      id: initData?.user?.id || 0,
+      first_name: initData?.user?.firstName || '',
+      last_name: initData?.user?.lastName || '',
+      username: initData?.user?.username || '',
+      language_code: initData?.user?.languageCode || '',
+      allows_write_to_pm: initData?.user?.allowsWriteToPm || false,
+    },
+  };
+
+  const handleRequest = async (webAppData: AccessTokenParams) => {
+
+    const accessToken = localStorage.getItem('access_token');
+
+    if (accessToken) {
+      localStorage.setItem('access_token', accessToken);
+      return;
+    }
+
+    if (sessionToken) {
+      localStorage.setItem('access_token', sessionToken);
+      return;
+    }
+
+    try {
+      const response = await request({
+        variables: {
+          webAppData,
+        },
+      });
+
+      if (!response.data) {
+        throw new Error('Failed load session data');
+      }
+
+      localStorage.setItem('access_token', response.data.telegramUserLogin.access_token);
+    } catch (error) {
+      // const errorMessage = isGraphqlError(error, 'FULL_MAINTENANCE') ?? (error as unknown as Error).message;
+      setError(JSON.stringify(error, null, 2));
+    }
+  };
+
 
   if (!initDataRows) {
     return (
@@ -94,9 +148,12 @@ const DebugPage: FC = () => {
 
   return (
     <>
+      <button onClick={() => handleRequest(data)}>Click</button>
       <h1>Debug page</h1>
       <p>TOKEN: {sessionToken}</p>
       <p>TOKEN error: {error}</p>
+      <p>TOKEN errorAPI: {errorAPI}</p>
+      <p>WEB APP DATA: {JSON.stringify(data, null, 2)}</p>
       <p>URL: {URL_GRAPHQL}</p>
 
       <List>
