@@ -8,13 +8,13 @@ export const SessionContext = createContext<SessionContextProps | undefined>({
   sessionToken: null,
   setSessionToken: () => undefined,
   isLoading: false,
-  error: false,
+  error: '',
 });
 
 export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
   const [sessionToken, setSessionToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const [request] = useMutation(LOGIN_WITH_ACCESS_TOKEN);
 
@@ -40,7 +40,7 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
   useEffect(() => {
     const handleRequest = async (webAppData: AccessTokenParams) => {
       setIsLoading(true);
-      console.log('dsf', webAppData)
+      console.log('dsf', webAppData);
       const accessToken = localStorage.getItem('access_token');
 
       if (accessToken) {
@@ -68,8 +68,8 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
         setSessionToken(`Bearer ${response.data.telegramUserLogin.access_token}`);
         localStorage.setItem('access_token', response.data.telegramUserLogin.access_token);
       } catch (error) {
-        const errorMessage = isGraphqlError(error, 'FULL_MAINTENANCE') ?? (error as unknown as Error).message;
-        setError(errorMessage);
+        // const errorMessage = isGraphqlError(error, 'FULL_MAINTENANCE') ?? (error as unknown as Error).message;
+        setError(JSON.stringify(error, null, 2));
       } finally {
         setIsLoading(false);
       }

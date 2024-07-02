@@ -17,5 +17,5 @@ export interface SessionContextProps {
   sessionToken: string | null;
   setSessionToken: (session: string | null) => void;
   isLoading: boolean;
-  error: boolean;
+  error: string;
 }
