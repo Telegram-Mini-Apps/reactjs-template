@@ -21,7 +21,7 @@ function getUserRows(user: User): DisplayDataRow[] {
 }
 
 const DebugPage: FC = () => {
-  const { sessionToken } = useSession();
+  const { sessionToken, error } = useSession();
   const initDataRaw = useLaunchParams().initDataRaw;
   const initData = useInitData();
 
@@ -95,6 +95,7 @@ const DebugPage: FC = () => {
     <>
       <h1>Debug page</h1>
       <p>TOKEN: {sessionToken}</p>
+      <p>TOKEN error: {error}</p>
 
       <List>
         <DisplayData header={'Init Data'} rows={initDataRows}/>
