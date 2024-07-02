@@ -3,6 +3,7 @@ import { useSession } from '@/hooks';
 import {DisplayData, DisplayDataRow} from "@/components/DisplayData/DisplayData.tsx";
 import {useInitData, useLaunchParams, User} from "@tma.js/sdk-react";
 import {List, Placeholder} from "@telegram-apps/telegram-ui";
+import {URL_GRAPHQL} from "@/config.ts";
 
 
 function getUserRows(user: User): DisplayDataRow[] {
@@ -96,6 +97,7 @@ const DebugPage: FC = () => {
       <h1>Debug page</h1>
       <p>TOKEN: {sessionToken}</p>
       <p>TOKEN error: {error}</p>
+      <p>URL: {URL_GRAPHQL}</p>
 
       <List>
         <DisplayData header={'Init Data'} rows={initDataRows}/>
