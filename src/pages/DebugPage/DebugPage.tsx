@@ -6,7 +6,7 @@ import {List, Placeholder} from "@telegram-apps/telegram-ui";
 import {URL_GRAPHQL} from "@/config.ts";
 import {AccessTokenParams, LOGIN_WITH_ACCESS_TOKEN} from "@/providers";
 import {useMutation} from "@apollo/client";
-import {transformInitData} from "@/utils";
+import {getCurrentVersion, transformInitData} from "@/utils";
 
 
 function getUserRows(user: User): DisplayDataRow[] {
@@ -150,17 +150,19 @@ const DebugPage: FC = () => {
     <>
       <button onClick={() => handleRequest(data)}>Click</button>
       <h1>Debug page</h1>
+      <p>App version: {getCurrentVersion()}</p>
       <p>TOKEN: {sessionToken}</p>
       <p>TOKEN error: {error}</p>
       <p>TOKEN errorAPI: {errorAPI}</p>
       <p>WEB APP DATA: {JSON.stringify(data, null, 2)}</p>
       <p>URL: {URL_GRAPHQL}</p>
+      <p>Access token from LS: {localStorage.getItem('access_token')}</p>
 
       <List>
-        <DisplayData header={'Init Data'} rows={initDataRows}/>
-        {userRows && <DisplayData header={'User'} rows={userRows}/>}
-        {receiverRows && <DisplayData header={'Receiver'} rows={receiverRows}/>}
-        {chatRows && <DisplayData header={'Chat'} rows={chatRows}/>}
+        <DisplayData header={'Init Data'} rows={initDataRows} />
+        {userRows && <DisplayData header={'User'} rows={userRows} />}
+        {receiverRows && <DisplayData header={'Receiver'} rows={receiverRows} />}
+        {chatRows && <DisplayData header={'Chat'} rows={chatRows} />}
       </List>
     </>
   );
