@@ -1,30 +1,23 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { useGameData } from '@/hooks';
 import styles from './TapProgress.module.css';
 
 const TapProgress: FC = () => {
-  const [progressLevel, setProgressLevel] = useState(1);
-  const [levelLimit, setProgressLimit] = useState(10);
-  const { count, setCount } = useGameData();
+  const { level, currentBossHealth, currentBossMaxHealth } = useGameData();
 
-  const progressStyles = useMemo(() => ({ width: `${(count * 100) / levelLimit}%` }), [count, levelLimit]);
-
-  useEffect(() => {
-    if (count >= levelLimit) {
-      setProgressLevel((prev) => prev + 1);
-      setProgressLimit((prev) => Math.round(prev * 1.5));
-      setCount(0);
-    }
-  }, [count]);
+  const progressStyles = useMemo(
+    () => ({ width: `${(currentBossHealth * 100) / currentBossMaxHealth}%` }),
+    [currentBossMaxHealth],
+  );
 
   return (
     <div className={styles.tapProgressContainer}>
-      <span className={styles.tapProgressLevel}>{progressLevel}</span>
+      <span className={styles.tapProgressLevel}>{level}</span>
 
       <div className={styles.tapProgressBar}>
         <div className={styles.tapProgress} style={progressStyles} />
         <span className={styles.tapProgressStatus}>
-          {count}/{levelLimit}
+          {currentBossHealth}/{currentBossMaxHealth}
         </span>
       </div>
     </div>

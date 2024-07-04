@@ -1,5 +1,5 @@
 import { createContext, FC, useEffect, useState } from 'react';
-import { transformInitData } from '@/utils';
+import {isGraphqlError, transformInitData} from '@/utils';
 import { useMutation } from '@apollo/client';
 import { useInitData, useLaunchParams } from '@tma.js/sdk-react';
 import { AccessTokenParams, LOGIN_WITH_ACCESS_TOKEN, SessionContextProps, SessionProviderProps } from '@/providers';
@@ -12,7 +12,7 @@ export const SessionContext = createContext<SessionContextProps | undefined>({
 });
 
 export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
-  const [sessionToken, setSessionToken] = useState<string | null>(null);
+  const [sessionToken, setSessionToken] = useState<string | null>('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY2ODU0OGFkNzViYzM1MzhhNzhmZjMyNyIsInVzZXJuYW1lIjoiZXJ2aW5fa2hhbW9pZG8ifSwic2Vzc2lvbklkIjoiNjY4NTRiMDc3NWJjMzUzOGE3OGZmMzdhIiwic3ViIjoiNjY4NTQ4YWQ3NWJjMzUzOGE3OGZmMzI3IiwiaWF0IjoxNzIwMDExNTI3LCJleHAiOjE3MjI2MDM1Mjd9.g-FnEjI7Pmy0sWJgADNNwHCzqDYAqf-zGbR6rZt70eg');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
@@ -68,8 +68,8 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
         setSessionToken(`Bearer ${response.data.telegramUserLogin.access_token}`);
         localStorage.setItem('access_token', response.data.telegramUserLogin.access_token);
       } catch (error) {
-        // const errorMessage = isGraphqlError(error, 'FULL_MAINTENANCE') ?? (error as unknown as Error).message;
-        setError(JSON.stringify(error, null, 2));
+        const errorMessage = isGraphqlError(error, 'FULL_MAINTENANCE') ?? (error as unknown as Error).message;
+        setError(errorMessage);
       } finally {
         setIsLoading(false);
       }

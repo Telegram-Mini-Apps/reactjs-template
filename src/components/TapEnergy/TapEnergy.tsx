@@ -1,17 +1,11 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { useGameData } from '@/hooks';
 import styles from './TapEnegry.module.css';
 
 const TapEnergy: FC = () => {
-  const { energy, setEnergy, maxEnergy } = useGameData();
+  const { energy, maxEnergy } = useGameData();
 
   const progressStyles = useMemo(() => ({ width: `${(energy * 100) / maxEnergy}%` }), [energy]);
-
-  useEffect(() => {
-    const energyRecovery = setInterval(() => setEnergy((prev) => (prev < maxEnergy ? prev + 1 : prev)), 1000);
-
-    return () => clearInterval(energyRecovery);
-  }, []);
 
   return (
     <div className={styles.energyContainer}>
