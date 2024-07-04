@@ -1,13 +1,12 @@
-import {FC, useMemo, useState} from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useSession } from '@/hooks';
-import {DisplayData, DisplayDataRow} from "@/components/DisplayData/DisplayData.tsx";
-import {useInitData, useLaunchParams, User} from "@tma.js/sdk-react";
-import {List, Placeholder} from "@telegram-apps/telegram-ui";
-import {URL_GRAPHQL} from "@/config.ts";
-import {AccessTokenParams, LOGIN_WITH_ACCESS_TOKEN} from "@/providers";
-import {useMutation} from "@apollo/client";
-import {getCurrentVersion, transformInitData} from "@/utils";
-
+import { DisplayData, DisplayDataRow } from '@/components/DisplayData/DisplayData.tsx';
+import { useInitData, useLaunchParams, User } from '@tma.js/sdk-react';
+import { List, Placeholder } from '@telegram-apps/telegram-ui';
+import { URL_GRAPHQL } from '@/config.ts';
+import { AccessTokenParams, LOGIN_WITH_ACCESS_TOKEN } from '@/providers';
+import { useMutation } from '@apollo/client';
+import { getCurrentVersion, transformInitData } from '@/utils';
 
 function getUserRows(user: User): DisplayDataRow[] {
   return [
@@ -29,22 +28,13 @@ const DebugPage: FC = () => {
   const initDataRaw = useLaunchParams().initDataRaw;
   const initData = useInitData();
   const [request] = useMutation(LOGIN_WITH_ACCESS_TOKEN);
-  const [errorAPI, setError] = useState('')
+  const [errorAPI, setError] = useState('');
 
   const initDataRows = useMemo<DisplayDataRow[] | undefined>(() => {
     if (!initData || !initDataRaw) {
       return;
     }
-    const {
-      hash,
-      queryId,
-      chatType,
-      chatInstance,
-      authDate,
-      startParam,
-      canSendAfter,
-      canSendAfterDate,
-    } = initData;
+    const { hash, queryId, chatType, chatInstance, authDate, startParam, canSendAfter, canSendAfterDate } = initData;
     return [
       { title: 'raw', value: initDataRaw },
       { title: 'auth_date', value: authDate.toLocaleString() },
@@ -99,7 +89,6 @@ const DebugPage: FC = () => {
   };
 
   const handleRequest = async (webAppData: AccessTokenParams) => {
-
     const accessToken = localStorage.getItem('access_token');
 
     if (accessToken) {
@@ -130,20 +119,16 @@ const DebugPage: FC = () => {
     }
   };
 
-
   if (!initDataRows) {
     return (
-      <Placeholder
-        header="Oops"
-        description="Application was launched with missing init data"
-      >
+      <Placeholder header="Oops" description="Application was launched with missing init data">
         <img
           alt="Telegram sticker"
           src="https://xelene.me/telegram.gif"
           style={{ display: 'block', width: '144px', height: '144px' }}
         />
       </Placeholder>
-    )
+    );
   }
 
   return (

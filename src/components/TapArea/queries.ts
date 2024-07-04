@@ -7,11 +7,3 @@ export const SEND_TAP_COUNT = gql`
     }
   }
 `;
-
-export const GET_HASHED_USER_BALANCE = gql`
-  query TelegramGameGetConfig {
-    telegramGameGetConfig {
-      nonce
-    }
-  }
-`
