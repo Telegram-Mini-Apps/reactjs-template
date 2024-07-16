@@ -19,8 +19,7 @@ export default defineConfig({
   ],
   publicDir: './public',
   server: {
-    // Uncomment this line if you want to expose your dev server and access it from the devices
-    // in the same network.
+    // Exposes your dev server and makes it accessible for the devices in the same network.
     host: true,
   },
 });
