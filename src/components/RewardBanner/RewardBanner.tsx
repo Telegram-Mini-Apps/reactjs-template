@@ -8,7 +8,7 @@ const RewardBanner: FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.row}>
-        <img className={styles.goldIcon} src={'../../../assets/gold.png'} alt={'Gold icon'} />
+        <img className={styles.goldIcon} src={'/assets/gold.png'} alt={'Gold icon'} />
         <span className={styles.amount}>{earned}</span>
       </div>
 

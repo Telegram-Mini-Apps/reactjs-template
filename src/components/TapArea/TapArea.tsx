@@ -77,7 +77,7 @@ const TapArea: FC = () => {
 
   return (
     <div className={styles.tapAreaContainer} onTouchStart={handleTap}>
-      <img className={styles.tapArea} src={'../../../assets/eagle-coin.png'} alt={'Gold Eagle Coin Icon'} />
+      <img className={styles.tapArea} src={'/assets/eagle-coin.png'} alt={'Gold Eagle Coin Icon'} />
 
       <AnimatePresence>
         {taps.map((tap) => (

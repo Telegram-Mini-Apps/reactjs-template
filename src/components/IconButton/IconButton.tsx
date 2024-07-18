@@ -2,10 +2,10 @@ import { FC } from 'react';
 import styles from './IconButton.module.css';
 
 const ICON_SRCS = {
-  boost: '../../../assets/rocket.svg',
-  rewards: '../../../assets/reward.svg',
-  mine: '../../../assets/mine.svg',
-  fav: '../../../assets/star.svg',
+  boost: '/assets/rocket.svg',
+  rewards: '/assets/reward.svg',
+  mine: '/assets/mine.svg',
+  fav: '/assets/star.svg',
 };
 
 type IconType = 'boost' | 'rewards' | 'mine' | 'fav';
