@@ -1,0 +1,12 @@
+.energyBar {
+  margin: 0 auto;
+  padding: 4px 8px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 177px;
+  gap: 3px;
+  border: 2px solid #f3c47b;
+  border-radius: 14px;
+  background: linear-gradient(to right, #fddda1, #caa969);
+}

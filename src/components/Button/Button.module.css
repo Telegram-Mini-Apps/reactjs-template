@@ -1,0 +1,41 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 46px;
+  border: 1px solid #f3c47b;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.default {
+  border-width: 2px;
+  background: linear-gradient(to right, #fddda1, #caa969);
+}
+
+.default span {
+  color: #000000;
+}
+
+.outlined {
+  background: #151517;
+}
+
+.outlined span {
+  color: #f3c47b;
+}
+
+.rounded {
+  width: 132px;
+  height: 40px;
+  border-radius: 24px;
+  border-width: 2px;
+  background: linear-gradient(to right, #fddda1, #caa969);
+}
+
+.rounded span {
+  color: #000000;
+  font-size: 12px;
+}

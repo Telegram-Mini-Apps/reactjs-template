@@ -14,7 +14,7 @@ import { type FC, useEffect, useMemo } from 'react';
 import { Navigate, Route, Router, Routes } from 'react-router-dom';
 
 import { routes } from '@/navigation/routes.tsx';
-import { NavBar } from '@/components';
+import { Header, NavBar } from '@/components';
 
 export const App: FC = () => {
   const lp = useLaunchParams();
@@ -52,6 +52,8 @@ export const App: FC = () => {
       platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
     >
       <Router location={location} navigator={reactNavigator}>
+        <Header />
+
         <Routes>
           {routes.map((route) => (
             <Route key={route.path} {...route} />

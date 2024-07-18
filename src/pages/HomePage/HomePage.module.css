@@ -2,10 +2,33 @@
   height: 90dvh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 32px;
 }
 
 .title {
   margin-top: 1rem;
   text-align: center;
+}
+
+.tapAreaContainer {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btnsColumn {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-around;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 }

@@ -1,23 +1,16 @@
 .tapAreaContainer {
   width: 100%;
   height: 300px;
-  display: block;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .tapArea {
   margin: 0 auto;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-  height: 300px;
-  background-color: #f0f0f0;
-  overflow: hidden;
+  width: 320px;
+  height: 320px;
   touch-action: none;
-  border-radius: 100%;
 }
 
 .tapCount {
@@ -27,7 +20,12 @@
 
 .tapIndicator {
   position: absolute;
-  color: #00960d;
+  color: #f3c47b;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
   font-size: 24px;
   pointer-events: none;
   white-space: nowrap;

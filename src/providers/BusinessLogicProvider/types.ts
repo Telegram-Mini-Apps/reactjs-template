@@ -37,7 +37,7 @@ export interface BusinessLogicContextProps {
   setIsTapAreaDisabled: setFunctionType<boolean>;
 
   gameConfig: TelegramGameConfig;
-  refetchGameConfig: (variables?: Partial<OperationVariables> | undefined) => Promise<ApolloQueryResult<any>>;
+  refetchGameConfig: (variables?: Partial<OperationVariables> | undefined) => Promise<ApolloQueryResult<any>> | undefined;
   loadingGameConfig: boolean;
   errorGameConfig: ApolloError | undefined;
 }

@@ -1,0 +1,35 @@
+.container {
+  margin: 0 auto;
+  padding: 13px;
+  width: 330px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  border-radius: 24px;
+  background: linear-gradient(to right, #fddda1, #caa969);
+}
+
+.container p {
+  color: #000;
+  font-family: sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.subtitle {
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 12px;
+}

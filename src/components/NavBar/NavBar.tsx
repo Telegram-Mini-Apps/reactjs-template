@@ -1,22 +1,22 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './NavBar.module.css';
+import IconButton from '../IconButton';
 
 const NavBar: FC = () => {
+  const navigate = useNavigate();
+
+  const onDebugPage = () => {
+    navigate('/debug');
+  };
+
   return (
     <div className={styles.navbar}>
-      <Link to="/home" className={styles.navButton}>
-        <span>Home</span>
-      </Link>
-      <Link to="/invite" className={styles.navButton}>
-        <span>Invite</span>
-      </Link>
-      <Link to="/leaderboard" className={styles.navButton}>
-        <span>Leaderboard</span>
-      </Link>
-      <Link to="/debug" className={styles.navButton}>
-        <span>Debug</span>
-      </Link>
+      <IconButton icon={'rewards'} title={'Leaderboard'} />
+      <IconButton icon={'boost'} title={'Boost'} />
+      <IconButton icon={'mine'} title={'Mine'} />
+      <IconButton icon={'fav'} title={'SL8'} />
+      <IconButton icon={'fav'} title={'Debug'} onClick={onDebugPage} />
     </div>
   );
 };

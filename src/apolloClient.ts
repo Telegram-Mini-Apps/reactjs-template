@@ -5,7 +5,7 @@ const httpLink = new HttpLink({ uri: URL_GRAPHQL });
 
 const authLink = new ApolloLink((operation, forward) => {
   const token = localStorage.getItem('access_token');
-  console.log('token', token)
+
   operation.setContext({
     headers: {
       authorization: token ? `Bearer ${token}` : '',

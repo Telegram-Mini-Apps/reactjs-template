@@ -1,0 +1,49 @@
+.container {
+  margin-top: 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 48px;
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  background: #fddda1;
+  border-radius: 100%;
+}
+
+.badgeText {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1c1c1d;
+}
+
+.button {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid #fddda1;
+  background: linear-gradient(to right, #2b2a2a, #2e2d2c);
+}
+
+.title {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: sans-serif;
+  color: #fddda1;
+}

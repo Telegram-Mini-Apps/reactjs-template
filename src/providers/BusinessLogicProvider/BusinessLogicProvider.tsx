@@ -124,7 +124,7 @@ const BusinessLogicProvider: FC<PropsWithChildren> = ({ children }) => {
     const energyRecovery = setInterval(() => setEnergy((prev) => (prev < maxEnergy ? prev + 1 : prev)), 1000);
 
     return () => clearInterval(energyRecovery);
-  })
+  });
 
   useEffect(() => {
     if (energy <= 0) {
