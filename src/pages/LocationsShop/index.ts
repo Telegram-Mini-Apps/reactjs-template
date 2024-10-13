@@ -1,0 +1,1 @@
+export { LocationsShop } from './LocationsShop';

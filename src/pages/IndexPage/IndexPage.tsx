@@ -1,14 +1,12 @@
-import { Section, Cell, Image, List } from '@telegram-apps/telegram-ui';
+import { Section, Cell, List } from '@telegram-apps/telegram-ui';
 import type { FC } from 'react';
 
 import { Link } from '@/components/Link/Link.tsx';
 
-import tonSvg from './ton.svg';
-
 export const IndexPage: FC = () => {
   return (
     <List>
-      <Section
+      {/* <Section
         header='Features'
         footer='You can use these pages to learn more about features, provided by Telegram Mini Apps and other useful projects'
       >
@@ -20,12 +18,11 @@ export const IndexPage: FC = () => {
             TON Connect
           </Cell>
         </Link>
-      </Section>
+      </Section> */}
       <Section
-        header='Application Launch Data'
-        footer='These pages help developer to learn more about current launch information'
+        header='Application pages'
       >
-        <Link to='/init-data'>
+        {/* <Link to='/init-data'>
           <Cell subtitle='User data, chat information, technical data'>Init Data</Cell>
         </Link>
         <Link to='/launch-params'>
@@ -33,6 +30,21 @@ export const IndexPage: FC = () => {
         </Link>
         <Link to='/theme-params'>
           <Cell subtitle='Telegram application palette information'>Theme Parameters</Cell>
+        </Link> */}
+        <Link to='/home'>
+          <Cell>Home</Cell>
+        </Link>
+        <Link to='/profile'>
+          <Cell>profile</Cell>
+        </Link>
+        <Link to='/shop'>
+          <Cell>shop</Cell>
+        </Link>
+        <Link to='/shop/clothes'>
+          <Cell>shop clothes</Cell>
+        </Link>
+        <Link to='/shop/clothes'>
+          <Cell>shop clothes</Cell>
         </Link>
       </Section>
     </List>
