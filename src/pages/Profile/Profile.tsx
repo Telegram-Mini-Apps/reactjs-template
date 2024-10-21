@@ -1,7 +1,9 @@
+import { SideMenu } from "@/components/SideMenu";
+
 export const Profile = () => {
     return (
         <div>
-            Profile page
+            <SideMenu />
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { Link as BaseLink } from "../Link";
 
 export const Wrapper = styled.div`
   position: relative;
+  z-index: 100;
 `;
 
 export const Positioner = styled.div<{ isShown: boolean }>`
