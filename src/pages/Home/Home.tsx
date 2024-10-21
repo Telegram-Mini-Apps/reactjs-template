@@ -2,17 +2,19 @@ import { useState } from "react";
 
 import { Character } from "@/components/Character";
 import { SideMenu } from "@/components/SideMenu";
-import { MOCK_CHARACTERS, MOCK_CLOTHES } from "@/mock";
+import { MOCK_CHARACTERS, MOCK_CLOTHES, MOCK_LOCATIONS } from "@/mock";
 
 import * as S from './Home.styles';
 
 const allClothes = MOCK_CLOTHES;
+const defaultLocation = MOCK_LOCATIONS[0];
 
 export const Home = () => {
   const [activeClothes, setActiveClothes] = useState([MOCK_CLOTHES[0]]);
+  const [location, setLocation] = useState(defaultLocation);
 
     return (
-        <S.Wrapper>
+        <S.Wrapper location={location.photo}>
             <SideMenu />
             <Character photo={MOCK_CHARACTERS[0].photo} clothes={activeClothes}/>
             {/* TODO закинуть в модалку наверное */}
