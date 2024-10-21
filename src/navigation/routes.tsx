@@ -5,7 +5,7 @@ import { IndexPage } from '@/pages/IndexPage/IndexPage';
 // import { LaunchParamsPage } from '@/pages/LaunchParamsPage/LaunchParamsPage.tsx';
 // import { ThemeParamsPage } from '@/pages/ThemeParamsPage/ThemeParamsPage.tsx';
 // import { TONConnectPage } from '@/pages/TONConnectPage/TONConnectPage';
-import { ClothesShop, LocationsShop, Profile, Home, Shop } from '@/pages';
+import { Profile, Home, Shop } from '@/pages';
 
 interface Route {
   path: string;
@@ -19,8 +19,8 @@ export const routes: Route[] = [
   { path: '/home', Component: Home },
   { path: '/profile', Component: Profile },
   { path: '/shop', Component: Shop },
-  { path: '/shop/locations', Component: LocationsShop },
-  { path: '/shop/clothes', Component: ClothesShop },
+  // { path: '/shop/locations', Component: LocationsShop },
+  // { path: '/shop/clothes', Component: ClothesShop },
   // { path: '/init-data', Component: InitDataPage, title: 'Init Data' },
   // { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
   // { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },
