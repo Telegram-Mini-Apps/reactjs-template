@@ -18,8 +18,8 @@ export const Wrapper = styled.div`
 export const ClothesItem = styled.img<{ x: number; y: number }>`
   position: absolute;
 
-  width: 300px;
-  height: 150px;
+  width: 250px;
+  height: 100px;
 
   ${({ x, y }) => `
     left: ${x}px;
@@ -30,5 +30,5 @@ export const ClothesItem = styled.img<{ x: number; y: number }>`
 `;
 
 export const Character = styled.img`
-  width: 300px;
+  width: 400px;
 `;
