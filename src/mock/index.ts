@@ -49,6 +49,6 @@ export const MOCK_LOCATIONS = [
 export const MOCK_CHARACTERS = [
   {
     id: 1,
-    photo: 'assets/character.png'
+    photo: 'assets/characterTwo.png'
   }
 ];
