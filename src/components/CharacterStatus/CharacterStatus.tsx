@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { useCharactersById } from '@/api/user';
-import { HappinesStatuses } from '@/constants/bussiness';
+import { Happines } from '@/constants/bussiness';
 
 import * as S from './CharacterStatus.styles';
+import { getHappinessStatusByPercent } from '@/helpers';
 
 export const CharacterStatus = () => {
   const { data, isLoading, isError } = useCharactersById(1);
@@ -19,10 +20,7 @@ export const CharacterStatus = () => {
       {isLoading ? <p>Загрузка...</p> : (
         <S.Text>{
             happiness &&
-            HappinesStatuses
-            .reverse()
-            .find(status => status.edge <= happiness)
-            ?.status
+            getHappinessStatusByPercent(happiness)
           }</S.Text>
       )}
     </S.Wrapper>
