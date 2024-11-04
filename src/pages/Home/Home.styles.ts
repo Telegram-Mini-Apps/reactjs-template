@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div<{ location: string; }>`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   background: url(${({ location }) => location }) no-repeat;
   background-size: contain;

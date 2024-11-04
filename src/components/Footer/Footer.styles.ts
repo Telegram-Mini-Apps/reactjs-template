@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 export const Wrapper = styled.footer`
   background-color: #FCFAF7;
   padding: 4px;
+  width: 100%;
 `;
 
 export const Navbar = styled.nav`

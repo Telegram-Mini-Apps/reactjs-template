@@ -48,3 +48,8 @@ export const useLocationsByUserId = (id: number) => {
     queryFn: () => getUserLocationsById(id),
   });
 }
+
+export const useCharactersById = (id: number) => useQuery({
+  queryKey: ['user', 'characters'],
+  queryFn: () => getUserCharactersById(id),
+})

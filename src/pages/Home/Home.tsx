@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { ClothesModal } from "@/components/ClothesModal";
 
 import * as S from './Home.styles';
+import { CharacterStatus } from "@/components/CharacterStatus";
 
 const defaultLocation = MOCK_LOCATIONS[0];
 
@@ -46,6 +47,7 @@ export const Home = () => {
 
   return (
     <S.Wrapper location={location.photo}>
+      <CharacterStatus />
       <Character photo={MOCK_CHARACTERS[0].photo} clothes={activeClothes} />
       <S.Button onClick={openModal}>
         <Clothes />
