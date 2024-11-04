@@ -11,9 +11,27 @@ export const Wrapper = styled.div`
 `;
 
 export const Item = styled.div`
+  position: relative;
+
+  width: 100%;
+
   display: flex;
   justify-content: space-between;
   gap: 8px;
+
+  &:not(:last-child) {
+    &::after {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+
+      height: 1px;
+      width: 100%;
+      background-color: ${Color.RainyDay};
+    }
+  }
 `;
 
 export const ItemPhoto = styled.img`

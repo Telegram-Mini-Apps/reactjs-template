@@ -5,4 +5,5 @@ export const Color = {
   DarkBrown: "#866740",
   Clinker: "#4D3B24",
   BlackMagic: "#3A2C1B",
+  RainyDay: "#d0c8bd",
 }

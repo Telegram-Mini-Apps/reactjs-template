@@ -21,7 +21,10 @@ export const StyledLink = styled(Link)`
 `;
 
 export const Title = styled.h1`
+  background: ${Color.RainyDay};
+  border-radius: 8px;
+  padding: 8px;
+
   font-size: 32px;
   color: ${Color.Brown};
 `;
-
