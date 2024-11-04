@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 
   width: 100%;
-  height: 70%;
+  height: calc(100vh -84px);
   min-height: 600px;
   max-height: 800px;
 
@@ -30,5 +30,5 @@ export const ClothesItem = styled.img<{ x: number; y: number }>`
 `;
 
 export const Character = styled.img`
-  width: 400px;
+  width: 340px;
 `;
