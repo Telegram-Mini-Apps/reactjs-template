@@ -22,7 +22,7 @@ export const ClothesItem = styled.img<{ x: number; y: number }>`
   height: 100px;
 
   ${({ x, y }) => `
-    left: ${x}px;
+    // left: ${x}px;
     top: ${y}px;
   `}
 

@@ -40,17 +40,20 @@ export const App: FC = () => {
   }, [navigator]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppRoot appearance={miniApp.isDark ? "dark" : "light"} platform={["macos", "ios"].includes(lp.platform) ? "ios" : "base"}>
-        <Router location={location} navigator={reactNavigator}>
-          <Routes>
-            {routes.map((route) => (
-              <Route key={route.path} {...route} />
-            ))}
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </Router>
-      </AppRoot>
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <AppRoot appearance={miniApp.isDark ? "dark" : "light"} platform={["macos", "ios"].includes(lp.platform) ? "ios" : "base"}>
+          <Router location={location} navigator={reactNavigator}>
+            <Routes>
+              {routes.map((route) => (
+                <Route key={route.path} {...route} />
+              ))}
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Router>
+        </AppRoot>
+      </QueryClientProvider>
+      <div id="modalRoot" />
+    </>
   );
 };
