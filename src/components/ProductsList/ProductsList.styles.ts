@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 import {Color} from "@/styles";
 
@@ -42,4 +43,15 @@ export const ItemDescription = styled.p`
   overflow: hidden;
 
   color: ${Color.Brown};
+`;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  color: ${Color.Brown};
+
+  &:hover {
+    color: ${Color.DarkBrown};
+  }
 `;
