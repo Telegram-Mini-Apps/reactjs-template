@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query"
 import { baseInstance } from "./baseClient"
 import { CharacterResponseModel, ClothesResponseModel, LocationResponseModel, UserResponseModel } from "./interfaces"
 
@@ -25,4 +26,25 @@ export const getUserClothesById = (userId: number) => {
 
 export const getUserCharactersById = (userId: number) => {
   return baseInstance.get<CharacterResponseModel[]>(`user/${userId}/character/`)
+}
+
+export const useUserById = (id: number) => {
+  return useQuery({
+    queryKey: ["user", "info"],
+    queryFn: () => getUserById(id),
+  });
+}
+
+export const useClothesByUserId = (id: number) => {
+  return useQuery({
+    queryKey: ["user", "clothes"],
+    queryFn: () => getUserClothesById(id),
+  });
+}
+
+export const useLocationsByUserId = (id: number) => {
+  return useQuery({
+    queryKey: ["user", "locations"],
+    queryFn: () => getUserLocationsById(id),
+  });
 }
