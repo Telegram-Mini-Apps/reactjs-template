@@ -17,6 +17,9 @@ export const Product = () => {
 
   return (
     <S.Wrapper>
+      <S.BackLinkWrapper>
+        <S.StyledLink to="/shop">Назад</S.StyledLink>
+      </S.BackLinkWrapper>
       <S.Title>{product.name}</S.Title>
       <S.ItemPhoto src={product.photo} alt={`Фоточка ${product.name}`} />
       <S.Description>{product.description}</S.Description>
