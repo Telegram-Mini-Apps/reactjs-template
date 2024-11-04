@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import {Color} from "@/styles";
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,6 +30,8 @@ export const ItemText = styled.div`
 export const ItemName = styled.h2`
   font-size: 24px;
   margin: 8px 0;
+
+  color: ${Color.Brown};
 `;
 
 export const ItemDescription = styled.p`
@@ -36,4 +40,6 @@ export const ItemDescription = styled.p`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  color: ${Color.Brown};
 `;

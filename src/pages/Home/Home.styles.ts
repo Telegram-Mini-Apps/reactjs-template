@@ -8,12 +8,6 @@ export const Wrapper = styled.div<{ location: string; }>`
   background-size: contain;
 `;
 
-export const ButtonsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
 export const Button = styled.button`
   width: fit-content;
   padding: 22px;

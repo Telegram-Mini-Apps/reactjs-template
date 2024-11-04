@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { MOCK_CHARACTERS, MOCK_CLOTHES, MOCK_LOCATIONS } from "@/mock";
 import { Character } from "@/components/Character";
@@ -15,8 +15,9 @@ export const Home = () => {
   const [location, setLocation] = useState(defaultLocation);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = (e) => {
+  const openModal = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+
     setIsModalOpen(true);
   };
 

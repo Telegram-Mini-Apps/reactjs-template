@@ -1,11 +1,8 @@
-import * as S from './styles'
+import React from "react";
 
-interface Clothes {
-    id: string | number;
-    photo: string;
-    name: string;
-    description?: string;
-}
+import {Clothes} from "@/interfaces";
+
+import * as S from './styles'
 
 interface ClothesListProps {
     clothes: Clothes[];

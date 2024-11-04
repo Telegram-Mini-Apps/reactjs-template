@@ -21,7 +21,7 @@ export const Block = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 28px 60px;
+  padding: 28px 48px;
   gap: 48px;
 
   background: #FCFAF7;
