@@ -12,7 +12,7 @@ const defaultLocation = MOCK_LOCATIONS[0];
 
 export const Home = () => {
   const [activeClothes, setActiveClothes] = useState([MOCK_CLOTHES[0]]);
-  const [location, setLocation] = useState(defaultLocation);
+  const [location, _] = useState(defaultLocation);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (e: React.MouseEvent<HTMLElement>) => {
@@ -29,12 +29,17 @@ export const Home = () => {
     setActiveClothes(prevClothes => {
       const isActive = prevClothes.some(c => c.id === clothesId);
 
+      const newClothes = MOCK_CLOTHES.find(c => c.id === clothesId);
+
+      if (!newClothes) return prevClothes;
+
       if (isActive) {
         return prevClothes.filter(c => c.id !== clothesId);
       } else {
-        const newClothes = MOCK_CLOTHES.find(c => c.id === clothesId);
-
-        return newClothes ? [...prevClothes, newClothes] : prevClothes;
+        return [
+          ...prevClothes.filter(c => c.clothes_type_id !== newClothes.clothes_type_id),
+          newClothes,
+        ];
       }
     });
   };

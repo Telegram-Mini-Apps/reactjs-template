@@ -1,25 +1,19 @@
-import * as S from './ProductsList.styles';
+import {Product} from "@/interfaces";
+import {MOCK_CLOTHES} from "@/mock";
 
-interface Product {
-  file_name?: string;
-  name: string;
-  description?: string;
-}
+import * as S from './ProductsList.styles';
 
 export const ProductsList = ({products} : {products: Product[]}) => {
   return (
     <S.Wrapper>
-      {products.map((p, index) => (
-        <S.Item key={index}>
-          <S.ItemPhoto src={p.file_name} alt='Фоточка продукта' />
-          <S.ItemText>
-            <S.ItemName>
-              {p.name}
-            </S.ItemName>
-            <S.ItemDescription>
-              {p?.description}
-            </S.ItemDescription>
-          </S.ItemText>
+      {products.map((p) => (
+        <S.Item key={p.id}>
+          <S.StyledLink to={`/shop/${products === MOCK_CLOTHES ? 'clothes' : 'locations'}/${p.id}`}>
+          <S.ItemPhoto src={p.photo} alt="Фоточка продукта" />
+            <S.ItemText>
+              <S.ItemName>{p.name}</S.ItemName>
+            </S.ItemText>
+          </S.StyledLink>
         </S.Item>
       ))}
     </S.Wrapper>
