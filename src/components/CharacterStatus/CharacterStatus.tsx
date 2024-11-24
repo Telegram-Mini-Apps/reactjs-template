@@ -1,7 +1,4 @@
-import React from 'react';
-
 import { useCharactersById } from '@/api/user';
-import { Happines } from '@/constants/bussiness';
 
 import * as S from './CharacterStatus.styles';
 import { getHappinessStatusByPercent } from '@/helpers';

@@ -5,7 +5,7 @@ import { useClothesByUserId, useLocationsByUserId, useUserById } from "@/api/use
 import * as S from "./Profile.styles";
 
 export const Profile = () => {
-  const [id, setId] = useState(1);
+  const [id, _] = useState(1);
 
   const {
     data: userData,

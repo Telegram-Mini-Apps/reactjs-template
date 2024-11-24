@@ -1,6 +1,6 @@
 export interface Product {
   id?: number | string;
-  photo?: string;
+  file_name?: string;
   name: string;
   description: string;
 }
