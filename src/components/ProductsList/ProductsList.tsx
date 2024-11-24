@@ -8,8 +8,9 @@ export const ProductsList = ({products} : {products: Product[]}) => {
     <S.Wrapper>
       {products.map((p) => (
         <S.Item key={p.id}>
-          <S.StyledLink to={`/shop/${products === MOCK_CLOTHES ? 'clothes' : 'locations'}/${p.id}`}>
-          <S.ItemPhoto src={p.photo} alt="Фоточка продукта" />
+          <S.StyledLink to={`/shop/${'clothes'}/${p.id}`}>
+          {/* <S.StyledLink to={`/shop/${p?.clothes_type_id ? 'clothes' : 'locations'}/${p.id}`}> */}
+          <S.ItemPhoto src={'assets/' + p.file_name} alt="Фоточка продукта" />
             <S.ItemText>
               <S.ItemName>{p.name}</S.ItemName>
             </S.ItemText>
