@@ -4,6 +4,7 @@ import { MOCK_CHARACTERS } from '@/mock';
 import { getHappinessStatusByPercent } from '@/helpers';
 interface Clothes {
   photo: string;
+  clothes_type_id: number;
   x: number;
   y: number;
 }
@@ -30,7 +31,13 @@ export const Character = ({ clothes }: CharacterProps) => {
     <S.Wrapper >
       <S.Character src={currentCharacter?.photo}/>
       {clothes?.map((clothesItem, index) => (
-        <S.ClothesItem key={index} src={clothesItem.photo} x={clothesItem.x} y={clothesItem.y}/>
+        <S.ClothesItem
+          key={index}
+          src={clothesItem.photo}
+          x={clothesItem.x}
+          y={clothesItem.y}
+          clothes_type_id={clothesItem.clothes_type_id}
+          />
       ))}
     </S.Wrapper>
   );

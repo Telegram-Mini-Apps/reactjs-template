@@ -15,18 +15,39 @@ export const Wrapper = styled.div`
   background-repeat: no-repeat;
 `;
 
-export const ClothesItem = styled.img<{ x: number; y: number }>`
+const getClothesSizes = ({ clothes_type_id }: {clothes_type_id: number}) => {
+  switch (clothes_type_id) {
+    case 1:
+      return `
+        width: 250px;
+        height: 100px;
+        z-index: 10;
+      `;
+
+    case 2:
+      return `
+        width: 174px;
+        height: 100px;
+        z-index: 10;
+      `;
+
+    case 3:
+      return `
+        width: 134px;
+        height: 110px;
+        z-index: 100;
+      `;
+  }
+}
+
+export const ClothesItem = styled.img<{ x: number; y: number, clothes_type_id: number }>`
   position: absolute;
 
-  width: 250px;
-  height: 100px;
+  ${getClothesSizes}
 
-  ${({ x, y }) => `
-    // left: ${x}px;
+  ${({ y }) => `
     top: ${y}px;
   `}
-
-  z-index: 10;
 `;
 
 export const Character = styled.img`

@@ -5,11 +5,16 @@ import {Color} from "@/styles";
 export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 135px 100px;
+  gap: 24px 8px;
+
+  max-height: 300px;
+  overflow: scroll;
 `;
 
 export const Item = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 8px;
 `;
 

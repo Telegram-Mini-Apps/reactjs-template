@@ -15,7 +15,7 @@ import * as S from './Home.styles';
 const defaultLocation = MOCK_LOCATIONS[0];
 
 export const Home = () => {
-  const [activeClothes, setActiveClothes] = useState([MOCK_CLOTHES[0]]);
+  const [activeClothes, setActiveClothes] = useState([MOCK_CLOTHES[1],MOCK_CLOTHES[5]]);
   const [location, _] = useState(defaultLocation);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: characters } = useCharactersById(1);
