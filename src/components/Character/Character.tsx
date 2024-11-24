@@ -1,5 +1,7 @@
+import { useCharactersById } from '@/api/user';
 import * as S from './Character.styles';
-
+import { MOCK_CHARACTERS } from '@/mock';
+import { getHappinessStatusByPercent } from '@/helpers';
 interface Clothes {
   photo: string;
   x: number;
@@ -11,10 +13,22 @@ interface CharacterProps {
   clothes?: Clothes[];
 }
 
-export const Character = ({ photo, clothes }: CharacterProps) => {
+export const Character = ({ clothes }: CharacterProps) => {
+  const { data, isLoading, isError } = useCharactersById(1);
+
+  if (isLoading || isError) {
+    return null;
+  }
+
+  const happiness = data!.data[0].happiness_percent;
+  const happinessStatus = getHappinessStatusByPercent(happiness);
+
+  const currentCharacter = MOCK_CHARACTERS
+    .find(({ status }) => status === happinessStatus)
+
   return (
     <S.Wrapper >
-      <S.Character src={photo}/>
+      <S.Character src={currentCharacter?.photo}/>
       {clothes?.map((clothesItem, index) => (
         <S.ClothesItem key={index} src={clothesItem.photo} x={clothesItem.x} y={clothesItem.y}/>
       ))}

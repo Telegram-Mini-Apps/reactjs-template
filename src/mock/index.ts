@@ -1,3 +1,5 @@
+import { HapinessStatuses } from "@/constants/bussiness";
+
 export const MOCK_CLOTHES = [
   {
     id: 1,
@@ -9,24 +11,6 @@ export const MOCK_CLOTHES = [
     price: 150,
     clothes_type_id: 1,
   },
-  {
-    id: 2,
-    name: "Шапка крутая ошибочная",
-    description: "Такая шапка крутая жесть ваще. А тут очень много разного текста нужно написать, чтоб посмотреть как будет обрезаться лишнее для слишком длинного текст, такого, как этот, например, или, может быть, любой другой настоящий или ненастоящий текст, текст-рыба, ну, в общем, вы поняли.",
-    photo: "assets/ssl-warning.png",
-    x: 100,
-    y: 100,
-    price: 100,
-    clothes_type_id: 1,
-  },
-  // {
-  //   id: 3,
-  //   name: "Шапка крутая",
-  //   description: "Такая шапка крутая жесть ваще. А тут очень много разного текста нужно написать, чтоб посмотреть как будет обрезаться лишнее для слишком длинного текст, такого, как этот, например, или, может быть, любой другой настоящий или ненастоящий текст, текст-рыба, ну, в общем, вы поняли.",
-  //   photo: "assets/ssl-warning.png",
-  //   x: 100,
-  //   y: 100,
-  // },
 ];
 
 export const MOCK_LOCATIONS = [
@@ -56,6 +40,17 @@ export const MOCK_LOCATIONS = [
 export const MOCK_CHARACTERS = [
   {
     id: 1,
-    photo: 'assets/characterTwo.png'
+    status: HapinessStatuses.Good,
+    photo: 'assets/char_good.png'
+  },
+  {
+    id: 2,
+    status: HapinessStatuses.Bad,
+    photo: 'assets/char_sad.png'
+  },
+  {
+    id: 3,
+    status: HapinessStatuses.Cool,
+    photo: 'assets/char_happy.png'
   }
 ];

@@ -30,5 +30,5 @@ export const ClothesItem = styled.img<{ x: number; y: number }>`
 `;
 
 export const Character = styled.img`
-  width: 340px;
+  width: 170px;
 `;

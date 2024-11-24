@@ -10,11 +10,11 @@ export const Happines = [
     status: HapinessStatuses.Bad,
   },
   {
-    edge: 50,
+    edge: 65,
     status: HapinessStatuses.Good,
   },
   {
-    edge: 70,
+    edge: 100,
     status: HapinessStatuses.Cool
   },
 ];
