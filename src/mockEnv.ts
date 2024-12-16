@@ -37,6 +37,7 @@ if (import.meta.env.DEV) {
         ['start_param', 'debug'],
         ['chat_type', 'sender'],
         ['chat_instance', '8428209589180549439'],
+        ['signature', '6fbdaab833d39f54518bd5c3eb3f511d035e68cb'],
       ]).toString();
 
       lp = {
