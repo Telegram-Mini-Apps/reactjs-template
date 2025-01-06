@@ -7,6 +7,7 @@
   "scripts": {
     "deploy": "gh-pages -d dist",
     "dev": "vite",
+    "dev:https": "cross-env HTTPS=true vite",
     "build": "tsc --noEmit && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
@@ -30,6 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "@vitejs/plugin-react-swc": "^3.6.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",
     "gh-pages": "^6.1.1",
