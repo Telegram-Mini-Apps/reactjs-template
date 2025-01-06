@@ -60,6 +60,11 @@ To run the application in the development mode, use the `dev` script:
 npm run dev
 ```
 
+> [!INFO]
+> As long as we use [vite-plugin-mkcert](https://www.npmjs.com/package/vite-plugin-mkcert),
+> launching the dev mode for the first time, you may see sudo password request.
+> The plugin requires it to properly configure SSL-certificates.
+
 After this, you will see a similar message in your terminal:
 
 ```bash
