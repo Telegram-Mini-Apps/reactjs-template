@@ -4,8 +4,11 @@ import type { FC, ReactNode } from 'react';
 
 import { RGB } from '@/components/RGB/RGB.tsx';
 import { Link } from '@/components/Link/Link.tsx';
+import { bem } from '@/css/bem.ts';
 
 import './DisplayData.css';
+
+const [, e] = bem('display-data');
 
 export type DisplayDataRow =
   & { title: string }
@@ -43,13 +46,13 @@ export const DisplayData: FC<DisplayDataProps> = ({ header, rows }) => (
 
       return (
         <Cell
-          className='display-data__line'
+          className={e('line')}
           subhead={item.title}
           readOnly
           multiline={true}
           key={idx}
         >
-          <span className='display-data__line-value'>
+          <span className={e('line-value')}>
             {valueNode}
           </span>
         </Cell>

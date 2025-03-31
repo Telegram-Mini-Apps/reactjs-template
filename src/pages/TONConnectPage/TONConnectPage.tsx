@@ -14,8 +14,11 @@ import type { FC } from 'react';
 
 import { DisplayData } from '@/components/DisplayData/DisplayData.tsx';
 import { Page } from '@/components/Page.tsx';
+import { bem } from '@/css/bem.ts';
 
 import './TONConnectPage.css';
+
+const [, e] = bem('ton-connect-page');
 
 export const TONConnectPage: FC = () => {
   const wallet = useTonWallet();
@@ -24,7 +27,7 @@ export const TONConnectPage: FC = () => {
     return (
       <Page>
         <Placeholder
-          className="ton-connect-page__placeholder"
+          className={e('placeholder')}
           header="TON Connect"
           description={
             <>
@@ -32,7 +35,7 @@ export const TONConnectPage: FC = () => {
                 To display the data related to the TON Connect, it is required to connect your
                 wallet
               </Text>
-              <TonConnectButton className="ton-connect-page__button"/>
+              <TonConnectButton className={e('button')}/>
             </>
           }
         />
@@ -71,7 +74,7 @@ export const TONConnectPage: FC = () => {
                 <Title level="3">{wallet.name}</Title>
               </Cell>
             </Section>
-            <TonConnectButton className="ton-connect-page__button-connected"/>
+            <TonConnectButton className={e('button-connected')}/>
           </>
         )}
         <DisplayData

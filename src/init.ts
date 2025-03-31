@@ -1,49 +1,73 @@
 import {
-  backButton,
-  viewport,
-  themeParams,
-  miniApp,
-  initData,
-  $debug,
+  setDebug,
+  mountBackButton,
+  restoreInitData,
   init as initSDK,
+  mountMiniApp,
+  bindThemeParamsCssVars,
+  mountViewport,
+  bindViewportCssVars,
+  mockTelegramEnv,
+  type ThemeParams,
+  themeParamsState,
+  retrieveLaunchParams,
+  emitEvent,
 } from '@telegram-apps/sdk-react';
 
 /**
  * Initializes the application and configures its dependencies.
  */
-export function init(debug: boolean): void {
-  // Set @telegram-apps/sdk-react debug mode.
-  $debug.set(debug);
-
-  // Initialize special event handlers for Telegram Desktop, Android, iOS, etc.
-  // Also, configure the package.
+export async function init(options: {
+  debug: boolean;
+  eruda: boolean;
+  mockForMacOS: boolean;
+}): Promise<void> {
+  // Set @telegram-apps/sdk-react debug mode and initialize it.
+  setDebug(options.debug);
   initSDK();
 
   // Add Eruda if needed.
-  debug && import('eruda')
-    .then((lib) => lib.default.init())
-    .catch(console.error);
+  options.eruda && void import('eruda').then(({ default: eruda }) => {
+    eruda.init();
+    eruda.position({ x: window.innerWidth - 50, y: 0 });
+  });
 
-  // Check if all required components are supported.
-  if (!backButton.isSupported() || !miniApp.isSupported()) {
-    throw new Error('ERR_NOT_SUPPORTED');
+  // Telegram for macOS has a ton of bugs, including cases, when the client doesn't
+  // even response to the "web_app_request_theme" method. It also generates an incorrect
+  // event for the "web_app_request_safe_area" method.
+  if (options.mockForMacOS) {
+    let firstThemeSent = false;
+    mockTelegramEnv({
+      onEvent(event, next) {
+        if (event[0] === 'web_app_request_theme') {
+          let tp: ThemeParams = {};
+          if (firstThemeSent) {
+            tp = themeParamsState();
+          } else {
+            firstThemeSent = true;
+            tp ||= retrieveLaunchParams().tgWebAppThemeParams;
+          }
+          return emitEvent('theme_changed', { theme_params: tp });
+        }
+
+        if (event[0] === 'web_app_request_safe_area') {
+          return emitEvent('safe_area_changed', { left: 0, top: 0, right: 0, bottom: 0 });
+        }
+
+        next();
+      },
+    });
   }
 
   // Mount all components used in the project.
-  backButton.mount();
-  miniApp.mount();
-  themeParams.mount();
-  initData.restore();
-  void viewport
-    .mount()
-    .catch(e => {
-      console.error('Something went wrong mounting the viewport', e);
-    })
-    .then(() => {
-      viewport.bindCssVars();
-    });
-
-  // Define components-related CSS variables.
-  miniApp.bindCssVars();
-  themeParams.bindCssVars();
+  mountBackButton.ifAvailable();
+  restoreInitData();
+  await Promise.all([
+    mountMiniApp.isAvailable() && mountMiniApp().then(() => {
+      bindThemeParamsCssVars();
+    }),
+    mountViewport.isAvailable() && mountViewport().then(() => {
+      bindViewportCssVars();
+    }),
+  ]);
 }
