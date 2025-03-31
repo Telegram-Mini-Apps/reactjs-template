@@ -34,6 +34,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^9.23.0",
     "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "gh-pages": "^6.1.1",
     "globals": "^15.2.0",
     "typescript": "^5.8.2",
