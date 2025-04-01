@@ -22,7 +22,6 @@ if (import.meta.env.DEV) {
     } as const;
     const noInsets = { left: 0, top: 0, bottom: 0, right: 0 } as const;
 
-    console.log(new Date().getTime() / 1000 | 0);
     mockTelegramEnv({
       onEvent(e) {
         // Here you can write your own handlers for all known Telegram MIni Apps methods.
