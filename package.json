@@ -15,7 +15,7 @@
     "predeploy": "npm run build"
   },
   "dependencies": {
-    "@telegram-apps/sdk-react": "^3.1.7",
+    "@telegram-apps/sdk-react": "^3.3.1",
     "@telegram-apps/telegram-ui": "^2.1.8",
     "@tonconnect/ui-react": "^2.1.0",
     "eruda": "^3.4.1",
