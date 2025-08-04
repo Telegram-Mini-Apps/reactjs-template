@@ -208,7 +208,7 @@ export function AddLocationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-gray-900 pb-4">
       {/* Header */}
       <div className="sticky top-0 z-20 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
         <div className="flex items-center justify-between p-4">
@@ -236,7 +236,7 @@ export function AddLocationPage() {
       </div>
 
       {/* Map */}
-      <div className="relative h-[calc(100vh-120px)]">
+      <div className="relative h-[50vh] min-h-[300px]">
         <LeafletMapContainer
           center={[mapCenter.lat, mapCenter.lng]}
           zoom={15}
@@ -267,10 +267,10 @@ export function AddLocationPage() {
         {/* Instructions overlay */}
         {!selectedLocation && (
           <div className="absolute top-4 left-4 right-4 z-10">
-            <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 border border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-3">
-                <MapPin className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                <p className="text-sm font-medium text-gray-900 dark:text-white">
+            <div className="bg-blue-600 text-white rounded-xl p-3 shadow-lg">
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                <p className="text-sm font-medium">
                   Tap anywhere on the map to add a location
                 </p>
               </div>
@@ -282,19 +282,25 @@ export function AddLocationPage() {
       {/* Form Modal */}
       {showForm && selectedLocation && (
         <div className="fixed inset-0 z-30 bg-black/50 flex items-end">
-          <div className="w-full bg-white dark:bg-gray-800 rounded-t-3xl p-6 space-y-4 max-h-[80vh] overflow-y-auto">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                Add New Location
-              </h2>
-              <Button 
-                onClick={() => setShowForm(false)} 
-                variant="outline" 
-                size="sm"
-              >
-                <X className="h-4 w-4" />
-              </Button>
+          <div className="w-full bg-white dark:bg-gray-800 rounded-t-3xl max-h-[70vh] overflow-y-auto">
+            {/* Drag handle */}
+            <div className="flex justify-center py-3">
+              <div className="w-12 h-1 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
             </div>
+            
+            <div className="px-6 pb-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                    Add New Location
+                  </h2>
+                  <Button 
+                    onClick={() => setShowForm(false)} 
+                    variant="outline" 
+                    size="sm"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
 
             <div className="space-y-4">
               <div>
@@ -327,7 +333,7 @@ export function AddLocationPage() {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Category
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-3">
                   {[
                     { value: 'grocery', label: '🛒 Grocery', icon: '🛒' },
                     { value: 'restaurant-bar', label: '🍕 Food & Drink', icon: '🍕' },
@@ -336,7 +342,7 @@ export function AddLocationPage() {
                     <button
                       key={category.value}
                       onClick={() => setLocationData(prev => ({ ...prev, category: category.value as any }))}
-                      className={`p-3 rounded-xl border text-sm font-medium transition-colors ${
+                      className={`p-4 rounded-xl border text-sm font-medium transition-colors ${
                         locationData.category === category.value
                           ? 'bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
                           : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300'
@@ -353,7 +359,7 @@ export function AddLocationPage() {
                 </div>
               </div>
 
-              <div className="pt-4 space-y-3">
+              <div className="pt-6 space-y-3 pb-4">
                 <Button
                   onClick={handleSubmit}
                   disabled={!locationData.name || isSubmitting}
@@ -376,6 +382,7 @@ export function AddLocationPage() {
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
                   Location will be reviewed before appearing on the map
                 </p>
+                </div>
               </div>
             </div>
           </div>
