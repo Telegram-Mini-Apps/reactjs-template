@@ -39,7 +39,6 @@ function MapClickHandler({ onLocationSelect }: MapClickHandlerProps) {
 
 export function AddLocationPage() {
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
-  const [showForm, setShowForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [mapCenter, setMapCenter] = useState<{ lat: number; lng: number } | null>(null);
@@ -88,7 +87,6 @@ export function AddLocationPage() {
 
   const handleLocationSelect = (lat: number, lng: number) => {
     setSelectedLocation({ lat, lng });
-    setShowForm(true);
     setLocationData(prev => ({ ...prev, latitude: lat, longitude: lng }));
   };
 
