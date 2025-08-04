@@ -1,0 +1,28 @@
+{
+  "name": "tma-bot-backend",
+  "version": "1.0.0",
+  "description": "Telegram Bot Backend for OpenFreeMap Mini App",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "build": "echo 'No build step needed for Node.js'",
+    "vercel-build": "echo 'Vercel build complete'",
+    "set-webhook": "node scripts/set-webhook.js"
+  },
+  "dependencies": {
+    "telegraf": "^4.15.6",
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.2",
+    "@supabase/supabase-js": "^2.38.4",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["telegram", "bot", "miniapp", "openfreeemap", "vercel"],
+  "author": "",
+  "license": "MIT"
+}
