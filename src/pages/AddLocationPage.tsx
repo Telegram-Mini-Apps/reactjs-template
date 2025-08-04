@@ -4,7 +4,7 @@ import { MapContainer as LeafletMapContainer, TileLayer, Marker, Popup, useMapEv
 import { MapPin, Plus, X, Search, Navigation2, Check } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useGeolocation } from '@/hooks/useGeolocation';
-import { useTelegram } from '@telegram-apps/sdk-react';
+import { initDataState, useSignal } from '@telegram-apps/sdk-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -56,8 +56,8 @@ export function AddLocationPage() {
     maximumAge: 60000,
   });
 
-  const telegram = useTelegram();
   const navigate = useNavigate();
+  const initData = useSignal(initDataState);
 
   useEffect(() => {
     if (latitude && longitude && !mapCenter) {
@@ -97,7 +97,7 @@ export function AddLocationPage() {
 
     setIsSubmitting(true);
     try {
-      const telegramUser = telegram?.initDataUnsafe?.user;
+      const telegramUser = initData?.user;
       if (!telegramUser) {
         throw new Error('Telegram user data not available');
       }
@@ -118,7 +118,7 @@ export function AddLocationPage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               telegramId: telegramUser.id.toString(),
-              nickname: telegramUser.username || `${telegramUser.first_name} ${telegramUser.last_name || ''}`.trim(),
+              nickname: telegramUser.username || `${telegramUser.firstName} ${telegramUser.lastName || ''}`.trim(),
               avatarUrl: null
             })
           });

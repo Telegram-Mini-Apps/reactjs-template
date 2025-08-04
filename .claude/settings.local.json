@@ -10,7 +10,8 @@
       "WebFetch(domain:github.com)",
       "Bash(rm:*)",
       "Bash(npm ci:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(cd:*)"
     ],
     "deny": []
   }
