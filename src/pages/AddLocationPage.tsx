@@ -235,159 +235,152 @@ export function AddLocationPage() {
         </div>
       </div>
 
-      {/* Map */}
-      <div className="relative h-[50vh] min-h-[300px]">
-        <LeafletMapContainer
-          center={[mapCenter.lat, mapCenter.lng]}
-          zoom={15}
-          style={{ height: '100%', width: '100%' }}
-          zoomControl={true}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          
-          <MapClickHandler onLocationSelect={handleLocationSelect} />
-          
-          {selectedLocation && (
-            <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
-              <Popup>
-                <div className="text-center">
-                  <p className="font-medium">New Location</p>
-                  <p className="text-sm text-gray-600">
-                    {selectedLocation.lat.toFixed(6)}, {selectedLocation.lng.toFixed(6)}
+      {/* Full Screen Modal with Map and Form */}
+      <div className="fixed inset-0 z-30 bg-white dark:bg-gray-900 flex flex-col">
+        {/* Modal Header */}
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+            {selectedLocation ? 'Add Location Details' : 'Select Location'}
+          </h2>
+          <Button 
+            onClick={() => navigate('/')} 
+            variant="outline" 
+            size="sm"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Map Section */}
+        <div className="relative flex-1 min-h-[250px]">
+          <LeafletMapContainer
+            center={[mapCenter.lat, mapCenter.lng]}
+            zoom={15}
+            style={{ height: '100%', width: '100%' }}
+            zoomControl={true}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            
+            <MapClickHandler onLocationSelect={handleLocationSelect} />
+            
+            {selectedLocation && (
+              <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
+                <Popup>
+                  <div className="text-center">
+                    <p className="font-medium">New Location</p>
+                    <p className="text-sm text-gray-600">
+                      {selectedLocation.lat.toFixed(6)}, {selectedLocation.lng.toFixed(6)}
+                    </p>
+                  </div>
+                </Popup>
+              </Marker>
+            )}
+          </LeafletMapContainer>
+
+          {/* Instructions overlay */}
+          {!selectedLocation && (
+            <div className="absolute top-4 left-4 right-4 z-10">
+              <div className="bg-blue-600 text-white rounded-xl p-3 shadow-lg">
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4" />
+                  <p className="text-sm font-medium">
+                    Tap anywhere on the map to add a location
                   </p>
                 </div>
-              </Popup>
-            </Marker>
-          )}
-        </LeafletMapContainer>
-
-        {/* Instructions overlay */}
-        {!selectedLocation && (
-          <div className="absolute top-4 left-4 right-4 z-10">
-            <div className="bg-blue-600 text-white rounded-xl p-3 shadow-lg">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <p className="text-sm font-medium">
-                  Tap anywhere on the map to add a location
-                </p>
               </div>
+            </div>
+          )}
+        </div>
+
+        {/* Form Section - Always visible at bottom */}
+        {selectedLocation && (
+          <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 space-y-4 max-h-[50vh] overflow-y-auto">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Location Name *
+              </label>
+              <input
+                type="text"
+                value={locationData.name || ''}
+                onChange={(e) => setLocationData(prev => ({ ...prev, name: e.target.value }))}
+                placeholder="e.g., Central Coffee Shop"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Description
+              </label>
+              <textarea
+                value={locationData.description || ''}
+                onChange={(e) => setLocationData(prev => ({ ...prev, description: e.target.value }))}
+                placeholder="Brief description of this place..."
+                rows={2}
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Category
+              </label>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { value: 'grocery', label: '🛒 Grocery', icon: '🛒' },
+                  { value: 'restaurant-bar', label: '🍕 Food & Drink', icon: '🍕' },
+                  { value: 'other', label: '📦 Other', icon: '📦' }
+                ].map((category) => (
+                  <button
+                    key={category.value}
+                    onClick={() => setLocationData(prev => ({ ...prev, category: category.value as any }))}
+                    className={`p-3 rounded-xl border text-sm font-medium transition-colors ${
+                      locationData.category === category.value
+                        ? 'bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
+                        : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <div className="text-lg mb-1">{category.icon}</div>
+                      <div className="text-xs">
+                        {category.label.replace(/^.+ /, '')}
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-4 space-y-3">
+              <Button
+                onClick={handleSubmit}
+                disabled={!locationData.name || isSubmitting}
+                className="w-full"
+                size="lg"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+                    Adding Location...
+                  </>
+                ) : (
+                  <>
+                    <Check className="h-4 w-4 mr-2" />
+                    Add Location
+                  </>
+                )}
+              </Button>
+              
+              <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                Location will be reviewed before appearing on the map
+              </p>
             </div>
           </div>
         )}
       </div>
-
-      {/* Form Modal */}
-      {showForm && selectedLocation && (
-        <div className="fixed inset-0 z-30 bg-black/50 flex items-end">
-          <div className="w-full bg-white dark:bg-gray-800 rounded-t-3xl max-h-[70vh] overflow-y-auto">
-            {/* Drag handle */}
-            <div className="flex justify-center py-3">
-              <div className="w-12 h-1 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-            </div>
-            
-            <div className="px-6 pb-6 space-y-4">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                    Add New Location
-                  </h2>
-                  <Button 
-                    onClick={() => setShowForm(false)} 
-                    variant="outline" 
-                    size="sm"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Location Name *
-                </label>
-                <input
-                  type="text"
-                  value={locationData.name || ''}
-                  onChange={(e) => setLocationData(prev => ({ ...prev, name: e.target.value }))}
-                  placeholder="e.g., Central Coffee Shop"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Description
-                </label>
-                <textarea
-                  value={locationData.description || ''}
-                  onChange={(e) => setLocationData(prev => ({ ...prev, description: e.target.value }))}
-                  placeholder="Brief description of this place..."
-                  rows={3}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Category
-                </label>
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    { value: 'grocery', label: '🛒 Grocery', icon: '🛒' },
-                    { value: 'restaurant-bar', label: '🍕 Food & Drink', icon: '🍕' },
-                    { value: 'other', label: '📦 Other', icon: '📦' }
-                  ].map((category) => (
-                    <button
-                      key={category.value}
-                      onClick={() => setLocationData(prev => ({ ...prev, category: category.value as any }))}
-                      className={`p-4 rounded-xl border text-sm font-medium transition-colors ${
-                        locationData.category === category.value
-                          ? 'bg-blue-100 dark:bg-blue-900/40 border-blue-300 dark:border-blue-600 text-blue-700 dark:text-blue-300'
-                          : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300'
-                      }`}
-                    >
-                      <div className="text-center">
-                        <div className="text-xl mb-1">{category.icon}</div>
-                        <div className="text-xs">
-                          {category.label.replace(/^.+ /, '')}
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-6 space-y-3 pb-4">
-                <Button
-                  onClick={handleSubmit}
-                  disabled={!locationData.name || isSubmitting}
-                  className="w-full"
-                  size="lg"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
-                      Adding Location...
-                    </>
-                  ) : (
-                    <>
-                      <Check className="h-4 w-4 mr-2" />
-                      Add Location
-                    </>
-                  )}
-                </Button>
-                
-                <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                  Location will be reviewed before appearing on the map
-                </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
