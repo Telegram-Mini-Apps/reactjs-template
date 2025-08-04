@@ -118,7 +118,7 @@ export function AddLocationPage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               telegramId: telegramUser.id.toString(),
-              nickname: telegramUser.username || `${telegramUser.firstName} ${telegramUser.lastName || ''}`.trim(),
+              nickname: telegramUser.username || `${telegramUser.first_name} ${telegramUser.last_name || ''}`.trim(),
               avatarUrl: null
             })
           });

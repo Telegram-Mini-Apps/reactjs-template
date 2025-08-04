@@ -54,7 +54,7 @@ export function ProfilePage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             telegramId: telegramUser.id.toString(),
-            nickname: telegramUser.username || `${telegramUser.firstName} ${telegramUser.lastName || ''}`.trim(),
+            nickname: telegramUser.username || `${telegramUser.first_name} ${telegramUser.last_name || ''}`.trim(),
             avatarUrl: null
           })
         });
@@ -184,7 +184,7 @@ export function ProfilePage() {
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/40 dark:to-purple-900/40 flex items-center justify-center">
                   {(editData.avatar_url || profile.avatar_url) ? (
                     <img
-                      src={editData.avatar_url || profile.avatar_url}
+                      src={editData.avatar_url || profile.avatar_url || undefined}
                       alt="Profile"
                       className="w-full h-full object-cover"
                       onError={(e) => {
