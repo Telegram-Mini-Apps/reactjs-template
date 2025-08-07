@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { MapContainer as LeafletMapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer as LeafletMapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import { cn } from '@/utils/cn';
 import 'leaflet/dist/leaflet.css';
@@ -44,6 +44,10 @@ interface MapContainerProps {
    * Text to display in the marker popup
    */
   markerText?: string;
+  /**
+   * Callback function when map is clicked
+   */
+  onMapClick?: (lat: number, lng: number) => void;
 }
 
 /**
@@ -55,6 +59,21 @@ function MapUpdater({ latitude, longitude, zoom }: { latitude: number; longitude
   useEffect(() => {
     map.setView([latitude, longitude], zoom);
   }, [map, latitude, longitude, zoom]);
+  
+  return null;
+}
+
+/**
+ * Component to handle map click events
+ */
+function MapClickHandler({ onMapClick }: { onMapClick?: (lat: number, lng: number) => void }) {
+  useMapEvents({
+    click: (e) => {
+      if (onMapClick) {
+        onMapClick(e.latlng.lat, e.latlng.lng);
+      }
+    }
+  });
   
   return null;
 }
@@ -82,7 +101,8 @@ export function MapContainer({
   height = "400px",
   className,
   showMarker = true,
-  markerText = "Your location"
+  markerText = "Your location",
+  onMapClick
 }: MapContainerProps) {
   return (
     <div 
@@ -105,6 +125,7 @@ export function MapContainer({
         />
         
         <MapUpdater latitude={latitude} longitude={longitude} zoom={zoom} />
+        <MapClickHandler onMapClick={onMapClick} />
         
         {showMarker && (
           <Marker position={[latitude, longitude]}>

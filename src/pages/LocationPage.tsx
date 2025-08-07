@@ -9,8 +9,10 @@ import {
   Modal, 
   Banner, 
   Input,
-  FixedLayout,
+  Avatar,
+  IconButton
 } from '@telegram-apps/telegram-ui';
+import { useInitData } from '@telegram-apps/sdk-react';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { MapContainer } from '@/components/Map/MapContainer';
 import { Page } from '@/components/Page';
@@ -30,8 +32,16 @@ export function LocationPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [mapCenter, setMapCenter] = useState<{ lat: number; lng: number } | null>(null);
-  const [showLocationModal, setShowLocationModal] = useState(false);
-  const [showBotInfo, setShowBotInfo] = useState(true);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [clickedLocation, setClickedLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [showAddLocationModal, setShowAddLocationModal] = useState(false);
+  const [newLocationName, setNewLocationName] = useState('');
+  const [newLocationDescription, setNewLocationDescription] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
+  const [userProfile, setUserProfile] = useState<any>(null);
+  
+  const initData = useInitData();
+  const telegramUser = initData?.user;
   
   const location = useGeolocation({
     enableHighAccuracy: true,
@@ -41,10 +51,20 @@ export function LocationPage() {
 
   const { loading, error, latitude, longitude } = location;
   const navigate = useNavigate();
+  
+  const getUserInitials = () => {
+    if (telegramUser?.firstName) {
+      return telegramUser.firstName.charAt(0).toUpperCase();
+    }
+    return 'U';
+  };
 
   useEffect(() => {
     loadLocations();
-  }, []);
+    if (telegramUser) {
+      loadUserProfile();
+    }
+  }, [telegramUser]);
 
   useEffect(() => {
     if (latitude && longitude && !mapCenter) {
@@ -62,6 +82,110 @@ export function LocationPage() {
       }
     } catch (error) {
       console.error('Error loading locations:', error);
+    }
+  };
+
+  const loadUserProfile = async () => {
+    try {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const response = await fetch(`${BACKEND_URL}/api/users/${telegramUser.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        setUserProfile(data);
+        setAvatarUrl(data.avatar_url || '');
+      } else if (response.status === 404) {
+        // Create user if not exists
+        await createUser();
+      }
+    } catch (error) {
+      console.error('Error loading user profile:', error);
+    }
+  };
+
+  const createUser = async () => {
+    if (!telegramUser) return;
+    
+    try {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const response = await fetch(`${BACKEND_URL}/api/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          telegramId: telegramUser.id.toString(),
+          nickname: telegramUser.firstName + (telegramUser.lastName ? ` ${telegramUser.lastName}` : ''),
+          avatarUrl: null
+        })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setUserProfile(data);
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
+  };
+
+  const handleMapClick = (lat: number, lng: number) => {
+    setClickedLocation({ lat, lng });
+    setShowAddLocationModal(true);
+  };
+
+  const handleAddLocation = async () => {
+    if (!clickedLocation || !newLocationName.trim() || !userProfile) return;
+    
+    try {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const response = await fetch(`${BACKEND_URL}/api/locations`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: newLocationName,
+          description: newLocationDescription,
+          latitude: clickedLocation.lat,
+          longitude: clickedLocation.lng,
+          category: 'user-added',
+          userId: userProfile.id
+        })
+      });
+      
+      if (response.ok) {
+        setShowAddLocationModal(false);
+        setNewLocationName('');
+        setNewLocationDescription('');
+        setClickedLocation(null);
+        loadLocations(); // Refresh locations
+      }
+    } catch (error) {
+      console.error('Error adding location:', error);
+    }
+  };
+
+  const updateUserProfile = async () => {
+    if (!userProfile) return;
+    
+    try {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const response = await fetch(`${BACKEND_URL}/api/users/update/${userProfile.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          avatar_url: avatarUrl
+        })
+      });
+      
+      if (response.ok) {
+        setShowProfileModal(false);
+        loadUserProfile(); // Refresh user profile
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
     }
   };
 
@@ -86,13 +210,6 @@ export function LocationPage() {
     }
   };
 
-  const openAddLocation = () => {
-    navigate('/add-location');
-  };
-
-  const openProfile = () => {
-    navigate('/profile');
-  };
 
   // Loading state
   if (loading) {
@@ -166,189 +283,191 @@ export function LocationPage() {
     const displayLng = mapCenter?.lng || longitude!;
     
     return (
-      <>
-        <Page>
-          {/* Bot Info Modal - similar to your screenshots */}
-          {showBotInfo && (
-            <Modal
-              header="What this bot can do"
-              trigger={undefined}
-              open={showBotInfo}
-              onOpenChange={setShowBotInfo}
-            >
-              <List>
-                <Section>
-                  <Cell
-                    before="🗺️"
-                    after="✓"
-                    subtitle="Explore maps with community-driven locations. Add new locations and leave comments and feedback."
-                  >
-                    Explore cities
-                  </Cell>
-                  <Cell
-                    before="📍"
-                    after="100"
-                    subtitle="Create events and rate your experiences. Click here to run it."
-                  >
-                    Share your location
-                  </Cell>
-                  <Cell
-                    before="➕"
-                    after="100"
-                    subtitle="Create events and rate your experiences. Click here to run it."
-                  >
-                    Add locations
-                  </Cell>
-                </Section>
-              </List>
-            </Modal>
-          )}
+      <Page>
+        {/* Profile Modal */}
+        {showProfileModal && (
+          <Modal
+            header="Profile Settings"
+            trigger={undefined}
+            open={showProfileModal}
+            onOpenChange={setShowProfileModal}
+          >
+            <List>
+              <Section>
+                <Cell>
+                  <Input
+                    header="Avatar URL"
+                    value={avatarUrl}
+                    onChange={(e) => setAvatarUrl(e.target.value)}
+                    placeholder="https://example.com/avatar.jpg"
+                  />
+                </Cell>
+              </Section>
+            </List>
+            <div style={{ padding: '16px', display: 'flex', gap: '8px' }}>
+              <Button size="l" stretched onClick={updateUserProfile}>
+                Save
+              </Button>
+              <Button size="l" stretched mode="plain" onClick={() => setShowProfileModal(false)}>
+                Cancel
+              </Button>
+            </div>
+          </Modal>
+        )}
 
-          {/* Location Sharing Modal */}
-          {showLocationModal && (
-            <Modal
-              header="Share your location ?"
-              trigger={undefined}
-              open={showLocationModal}
-              onOpenChange={setShowLocationModal}
-            >
-              <div style={{ padding: '16px', textAlign: 'center' }}>
-                <div style={{ marginBottom: '24px' }}>
-                  <Button
-                    size="l"
-                    stretched
-                    onClick={() => {
-                      setShowLocationModal(false);
-                      // Handle location sharing
-                    }}
-                  >
-                    Yes
-                  </Button>
-                </div>
-                <Button
-                  mode="plain"
-                  size="l"
-                  stretched
-                  onClick={() => setShowLocationModal(false)}
+        {/* Add Location Modal */}
+        {showAddLocationModal && clickedLocation && (
+          <Modal
+            header="Add Location"
+            trigger={undefined}
+            open={showAddLocationModal}
+            onOpenChange={setShowAddLocationModal}
+          >
+            <List>
+              <Section>
+                <Cell>
+                  <Input
+                    header="Location Name"
+                    value={newLocationName}
+                    onChange={(e) => setNewLocationName(e.target.value)}
+                    placeholder="Enter location name"
+                  />
+                </Cell>
+                <Cell>
+                  <Input
+                    header="Description"
+                    value={newLocationDescription}
+                    onChange={(e) => setNewLocationDescription(e.target.value)}
+                    placeholder="Optional description"
+                  />
+                </Cell>
+                <Cell
+                  before={<MapPin size={20} />}
+                  subtitle={`Lat: ${clickedLocation.lat.toFixed(6)}, Lng: ${clickedLocation.lng.toFixed(6)}`}
                 >
-                  Cancel
-                </Button>
-              </div>
-            </Modal>
-          )}
+                  Selected Location
+                </Cell>
+              </Section>
+            </List>
+            <div style={{ padding: '16px', display: 'flex', gap: '8px' }}>
+              <Button size="l" stretched onClick={handleAddLocation} disabled={!newLocationName.trim()}>
+                Add Location
+              </Button>
+              <Button size="l" stretched mode="plain" onClick={() => {
+                setShowAddLocationModal(false);
+                setNewLocationName('');
+                setNewLocationDescription('');
+                setClickedLocation(null);
+              }}>
+                Cancel
+              </Button>
+            </div>
+          </Modal>
+        )}
 
-          {/* Search Input */}
-          <List>
-            <Section>
-              <Cell>
+        {/* Header with User Profile */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          padding: '16px',
+          borderBottom: '1px solid var(--tg-theme-section-separator-color)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '600' }}>OpenFreeMap</h1>
+          </div>
+          {telegramUser && (
+            <IconButton
+              size="l"
+              onClick={() => setShowProfileModal(true)}
+            >
+              <Avatar
+                size={40}
+                src={userProfile?.avatar_url}
+                fallbackIcon={getUserInitials()}
+              />
+            </IconButton>
+          )}
+        </div>
+
+        {/* Search Input */}
+        <List>
+          <Section>
+            <Cell>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                 <Input
-                  header="Search location"
+                  style={{ flex: 1 }}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                   placeholder="Search for places..."
                 />
-              </Cell>
-            </Section>
-          </List>
-
-          {/* Location Info - only show for GPS location */}
-          {latitude && longitude && (
-            <List>
-              <Section header="Current Location">
-                <Cell
-                  before={<MapPin size={20} />}
-                  subtitle={`${displayLat.toFixed(6)}, ${displayLng.toFixed(6)}`}
-                  after={latitude && longitude ? "📍 GPS" : undefined}
+                <IconButton
+                  size="m"
+                  onClick={handleSearch}
+                  disabled={isSearching}
                 >
-                  Your Position
-                </Cell>
-              </Section>
-            </List>
-          )}
-          
-          {/* Map Section */}
-          <List>
-            <Section header={`Interactive Map - ${locations.length} places`}>
-              <Cell>
-                <div style={{ width: '100%', height: '400px' }}>
-                  <MapContainer
-                    latitude={displayLat}
-                    longitude={displayLng}
-                    zoom={mapCenter ? 13 : 16}
-                    height="400px"
-                    markerText={latitude && longitude ? "📍 You are here!" : "📍 Search location"}
-                  />
-                </div>
-              </Cell>
-            </Section>
-          </List>
-
-          {/* Action Buttons */}
-          <List>
-            <Section>
-              <Cell
-                Component="button"
-                onClick={() => setShowLocationModal(true)}
-                before={<MapPin size={20} />}
-              >
-                Share your location
-              </Cell>
-              <Cell
-                Component="button"
-                onClick={openAddLocation}
-                before={<Plus size={20} />}
-              >
-                Add locations
-              </Cell>
-              <Cell
-                Component="button"
-                onClick={openProfile}
-                before={<User size={20} />}
-              >
-                Profile
-              </Cell>
-            </Section>
-          </List>
-
-          {/* Recent Locations List */}
-          {locations.length > 0 && (
-            <List>
-              <Section header="Recent Locations">
-                {locations.slice(0, 5).map((loc) => (
-                  <Cell
-                    key={loc.id}
-                    before={<MapPin size={20} />}
-                    subtitle={`${loc.category.replace('-', ' ')} • ${new Date(loc.created_at).toLocaleDateString()}`}
-                  >
-                    {loc.name}
-                  </Cell>
-                ))}
-              </Section>
-            </List>
-          )}
-        </Page>
+                  {isSearching ? <RefreshCw size={20} className="animate-spin" /> : <Search size={20} />}
+                </IconButton>
+              </div>
+            </Cell>
+          </Section>
+        </List>
         
-        {/* Bottom Action Buttons */}
-        <FixedLayout vertical="bottom">
-          <div style={{ padding: '12px', display: 'flex', gap: '8px' }}>
-            <Button
-              size="l"
-              stretched
-              onClick={() => navigate('/map')}
-            >
-              Open Map
-            </Button>
-            <Button
-              size="l"
-              stretched
-              onClick={() => setShowBotInfo(true)}
-            >
-              Explore cities
-            </Button>
-          </div>
-        </FixedLayout>
-      </>
+        {/* Map Section */}
+        <List>
+          <Section header={`Interactive Map - Click to add locations (${locations.length} places)`}>
+            <Cell>
+              <div style={{ width: '100%', height: '400px' }}>
+                <MapContainer
+                  latitude={displayLat}
+                  longitude={displayLng}
+                  zoom={mapCenter ? 13 : 16}
+                  height="400px"
+                  markerText={latitude && longitude ? "📍 You are here!" : "📍 Search location"}
+                  onMapClick={handleMapClick}
+                />
+              </div>
+            </Cell>
+          </Section>
+        </List>
+
+        {/* Current Location Info */}
+        {latitude && longitude && (
+          <List>
+            <Section header="Current Location">
+              <Cell
+                before={<Navigation2 size={20} />}
+                subtitle={`${displayLat.toFixed(6)}, ${displayLng.toFixed(6)}`}
+                after="📍 GPS"
+              >
+                Your Position
+              </Cell>
+            </Section>
+          </List>
+        )}
+
+        {/* Recent Locations List */}
+        {locations.length > 0 && (
+          <List>
+            <Section header="Recent Locations">
+              {locations.slice(0, 10).map((loc) => (
+                <Cell
+                  key={loc.id}
+                  Component="button"
+                  before={<MapPin size={20} />}
+                  subtitle={`${loc.category.replace('-', ' ')} • ${new Date(loc.created_at).toLocaleDateString()}`}
+                  onClick={() => {
+                    setMapCenter({ lat: loc.latitude, lng: loc.longitude });
+                  }}
+                >
+                  {loc.name}
+                </Cell>
+              ))}
+            </Section>
+          </List>
+        )}
+      </Page>
     );
   }
 
