@@ -51,8 +51,8 @@ export function LocationPage() {
   const { loading, error, latitude, longitude } = location;
   
   const getUserInitials = () => {
-    if (telegramUser?.firstName) {
-      return telegramUser.firstName.charAt(0).toUpperCase();
+    if (telegramUser?.first_name) {
+      return telegramUser.first_name.charAt(0).toUpperCase();
     }
     return 'U';
   };
@@ -86,7 +86,7 @@ export function LocationPage() {
   const loadUserProfile = async () => {
     try {
       const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
-      const response = await fetch(`${BACKEND_URL}/api/users/${telegramUser.id}`);
+      const response = await fetch(`${BACKEND_URL}/api/users/${telegramUser?.id}`);
       if (response.ok) {
         const data = await response.json();
         setUserProfile(data);
@@ -111,8 +111,8 @@ export function LocationPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          telegramId: telegramUser.id.toString(),
-          nickname: telegramUser.firstName + (telegramUser.lastName ? ` ${telegramUser.lastName}` : ''),
+          telegramId: telegramUser?.id?.toString(),
+          nickname: telegramUser?.first_name + (telegramUser?.last_name ? ` ${telegramUser.last_name}` : ''),
           avatarUrl: null
         })
       });
