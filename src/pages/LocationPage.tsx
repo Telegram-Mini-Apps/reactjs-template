@@ -85,8 +85,7 @@ export function LocationPage() {
 
   const loadUserProfile = async () => {
     try {
-      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
-      const response = await fetch(`${BACKEND_URL}/api/users/${telegramUser?.id}`);
+      const response = await fetch(`/api/proxy/users/${telegramUser?.id}`);
       if (response.ok) {
         const data = await response.json();
         setUserProfile(data);
@@ -104,8 +103,7 @@ export function LocationPage() {
     if (!telegramUser) return;
     
     try {
-      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
-      const response = await fetch(`${BACKEND_URL}/api/users`, {
+      const response = await fetch(`/api/proxy/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -167,8 +165,7 @@ export function LocationPage() {
     if (!userProfile) return;
     
     try {
-      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
-      const response = await fetch(`${BACKEND_URL}/api/users/update/${userProfile.id}`, {
+      const response = await fetch(`/api/proxy/users/update/${userProfile.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

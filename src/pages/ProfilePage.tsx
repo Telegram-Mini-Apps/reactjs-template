@@ -37,11 +37,9 @@ export function ProfilePage() {
     if (!telegramUser) return;
 
     try {
-      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
-      
       let profileData;
       try {
-        const response = await fetch(`${BACKEND_URL}/api/users/${telegramUser.id}`);
+        const response = await fetch(`/api/proxy/users/${telegramUser.id}`);
         if (response.ok) {
           profileData = await response.json();
         } else {
@@ -49,7 +47,7 @@ export function ProfilePage() {
         }
       } catch (error) {
         // Create new user if not found
-        const createResponse = await fetch(`${BACKEND_URL}/api/users`, {
+        const createResponse = await fetch(`/api/proxy/users`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -78,9 +76,7 @@ export function ProfilePage() {
 
     setIsSaving(true);
     try {
-      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
-      
-      const response = await fetch(`${BACKEND_URL}/api/users/update/${profile.id}`, {
+      const response = await fetch(`/api/proxy/users/update/${profile.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

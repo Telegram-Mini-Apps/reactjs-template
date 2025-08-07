@@ -100,18 +100,15 @@ export function AddLocationPage() {
         throw new Error('Telegram user data not available');
       }
 
-      // Get backend URL from environment or default
-      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
-
       // Get or create user
       let user;
       try {
-        const userResponse = await fetch(`${BACKEND_URL}/api/users/${telegramUser.id}`);
+        const userResponse = await fetch(`/api/proxy/users/${telegramUser.id}`);
         if (userResponse.ok) {
           user = await userResponse.json();
         } else {
           // Create new user
-          const createUserResponse = await fetch(`${BACKEND_URL}/api/users`, {
+          const createUserResponse = await fetch(`/api/proxy/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -128,7 +125,7 @@ export function AddLocationPage() {
       }
 
       // Create location
-      const locationResponse = await fetch(`${BACKEND_URL}/api/locations`, {
+      const locationResponse = await fetch(`/api/proxy/locations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
