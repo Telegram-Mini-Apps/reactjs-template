@@ -1,6 +1,5 @@
-import { MapPin, RefreshCw, Navigation2, Plus, User, Search } from 'lucide-react';
+import { MapPin, RefreshCw, Navigation2, Search } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { 
   Button, 
   Cell, 
@@ -12,7 +11,7 @@ import {
   Avatar,
   IconButton
 } from '@telegram-apps/telegram-ui';
-import { useInitData } from '@telegram-apps/sdk-react';
+import { initDataState, useSignal } from '@telegram-apps/sdk-react';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { MapContainer } from '@/components/Map/MapContainer';
 import { Page } from '@/components/Page';
@@ -40,8 +39,8 @@ export function LocationPage() {
   const [avatarUrl, setAvatarUrl] = useState('');
   const [userProfile, setUserProfile] = useState<any>(null);
   
-  const initData = useInitData();
-  const telegramUser = initData?.user;
+  const initDataState_ = useSignal(initDataState);
+  const telegramUser = initDataState_?.user;
   
   const location = useGeolocation({
     enableHighAccuracy: true,
@@ -50,7 +49,6 @@ export function LocationPage() {
   });
 
   const { loading, error, latitude, longitude } = location;
-  const navigate = useNavigate();
   
   const getUserInitials = () => {
     if (telegramUser?.firstName) {
