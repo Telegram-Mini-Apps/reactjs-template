@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "bot-backend/api/**/*.js": {
-      "runtime": "@vercel/node"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
