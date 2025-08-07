@@ -10,11 +10,9 @@ import {
   Banner, 
   Input,
   FixedLayout,
-  IconButton
 } from '@telegram-apps/telegram-ui';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { MapContainer } from '@/components/Map/MapContainer';
-import { LocationCard } from '@/components/LocationCard';
 import { Page } from '@/components/Page';
 
 interface Location {
