@@ -85,7 +85,7 @@ export function LocationPage() {
 
   const loadUserProfile = async () => {
     try {
-      const response = await fetch(`/api/proxy/users/${telegramUser?.id}`);
+      const response = await fetch(`https://tma-ofm-react-template.vercel.app/api/users/${telegramUser?.id}`);
       if (response.ok) {
         const data = await response.json();
         setUserProfile(data);
@@ -103,7 +103,7 @@ export function LocationPage() {
     if (!telegramUser) return;
     
     try {
-      const response = await fetch(`/api/proxy/users`, {
+      const response = await fetch(`https://tma-ofm-react-template.vercel.app/api/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ export function LocationPage() {
     if (!userProfile) return;
     
     try {
-      const response = await fetch(`/api/proxy/users/update/${userProfile.id}`, {
+      const response = await fetch(`https://tma-ofm-react-template.vercel.app/api/users/update/${userProfile.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
