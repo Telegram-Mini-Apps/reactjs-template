@@ -26,13 +26,40 @@ export default async function handler(req, res) {
     try {
       const { telegramId, nickname, avatarUrl } = req.body;
       
+      // First try to get existing user
+      const { data: existingUser, error: findError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('telegram_id', telegramId)
+        .single();
+
+      if (existingUser && !findError) {
+        // User already exists, return it
+        return res.status(200).json(existingUser);
+      }
+
+      // User doesn't exist, create new one
       const { data, error } = await supabase
         .from('users')
         .insert([{ telegram_id: telegramId, nickname, avatar_url: avatarUrl }])
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        // If still a duplicate error, try to fetch the user again
+        if (error.code === '23505') {
+          const { data: retryUser } = await supabase
+            .from('users')
+            .select('*')
+            .eq('telegram_id', telegramId)
+            .single();
+          
+          if (retryUser) {
+            return res.status(200).json(retryUser);
+          }
+        }
+        throw error;
+      }
 
       res.status(201).json(data);
     } catch (error) {
