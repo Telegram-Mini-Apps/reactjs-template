@@ -9,35 +9,11 @@
       }
     },
     {
-      "src": "bot-backend/api/health.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "bot-backend/api/locations/index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "bot-backend/api/users/index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "bot-backend/api/users/[id].js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "bot-backend/api/users/update/[id].js",
+      "src": "api/**/*.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/bot-backend/api/$1"
-    },
-    {
-      "src": "/health",
-      "dest": "/bot-backend/api/health"
-    },
     {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
