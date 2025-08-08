@@ -9,7 +9,23 @@
       }
     },
     {
-      "src": "bot-backend/api/**/*.js",
+      "src": "bot-backend/api/health.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "bot-backend/api/locations/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "bot-backend/api/users/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "bot-backend/api/users/[id].js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "bot-backend/api/users/update/[id].js",
       "use": "@vercel/node"
     }
   ],
