@@ -76,7 +76,7 @@ export function ProfilePage() {
 
     setIsSaving(true);
     try {
-      const response = await fetch(`/api/proxy/users/update/${profile.id}`, {
+      const response = await fetch(`https://tma-ofm-react-template.vercel.app/api/users/update/${profile.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

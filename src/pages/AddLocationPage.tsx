@@ -103,12 +103,12 @@ export function AddLocationPage() {
       // Get or create user
       let user;
       try {
-        const userResponse = await fetch(`/api/proxy/users/${telegramUser.id}`);
+        const userResponse = await fetch(`https://tma-ofm-react-template.vercel.app/api/users/${telegramUser.id}`);
         if (userResponse.ok) {
           user = await userResponse.json();
         } else {
           // Create new user
-          const createUserResponse = await fetch(`/api/proxy/users`, {
+          const createUserResponse = await fetch(`https://tma-ofm-react-template.vercel.app/api/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -125,7 +125,7 @@ export function AddLocationPage() {
       }
 
       // Create location
-      const locationResponse = await fetch(`/api/proxy/locations`, {
+      const locationResponse = await fetch(`https://tma-ofm-react-template.vercel.app/api/locations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
