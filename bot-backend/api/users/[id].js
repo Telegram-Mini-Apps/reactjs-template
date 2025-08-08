@@ -1,8 +1,18 @@
 import { supabase } from '../../lib/supabase.js';
 
 export default async function handler(req, res) {
-  // Enable CORS - allow all origins
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Enable CORS - allow frontend origins
+  const allowedOrigins = [
+    'https://openfreemap-frontend.vercel.app',
+    'https://tma-ofm-react-template.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ];
+  
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -12,7 +22,8 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const { telegramId } = req.query;
+  const { id } = req.query;
+  const telegramId = id;
 
   if (req.method === 'GET') {
     try {
