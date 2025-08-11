@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { MapContainer as LeafletMapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
-import { cn } from '@/utils/cn';
 
 // Fix for default markers in react-leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -68,10 +67,10 @@ function MapUpdater({ latitude, longitude, zoom }: { latitude: number; longitude
         zoom: map.getZoom(),
         bounds: map.getBounds(),
         size: map.getSize(),
-        ready: map._loaded,
+        ready: (map as any)._loaded,
         tileContainers: tileContainers.length,
         tiles: tiles.length,
-        tilesLoaded: Array.from(tiles).filter(t => t.complete).length
+        tilesLoaded: Array.from(tiles).filter(t => (t as HTMLImageElement).complete).length
       });
     }, 2000);
   }, [map, latitude, longitude, zoom]);
@@ -115,7 +114,6 @@ export function MapContainer({
   longitude,
   zoom = 13,
   height = "400px",
-  className,
   showMarker = true,
   markerText = "Your location",
   onMapClick

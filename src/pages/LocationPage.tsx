@@ -531,8 +531,8 @@ export function LocationPage() {
                     onClick={() => setShowProfileModal(true)}
                   >
                     <Avatar
-                      size={32}
-                      src={userProfile?.avatar_url}
+                      size={24}
+                      src={userProfile?.avatar_url || undefined}
                       fallbackIcon={getUserInitials()}
                     />
                   </IconButton>

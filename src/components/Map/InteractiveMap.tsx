@@ -29,7 +29,6 @@ export function InteractiveMap({
   const tileCache = useRef<Map<string, HTMLImageElement>>(new Map());
 
   // Map projection functions
-  const deg2rad = (deg: number) => deg * (Math.PI / 180);
   const rad2deg = (rad: number) => rad * (180 / Math.PI);
 
   const latLngToPixel = (lat: number, lng: number, zoom: number) => {
