@@ -13,39 +13,76 @@ import {
 } from '@telegram-apps/telegram-ui';
 import { initDataState, useSignal } from '@telegram-apps/sdk-react';
 import { useGeolocation } from '@/hooks/useGeolocation';
-import { MapContainer } from '@/components/Map/MapContainer';
+import { InteractiveMap } from '@/components/Map/InteractiveMap';
 import { Page } from '@/components/Page';
 
+/**
+ * Represents a location in the system
+ */
 interface Location {
   id: number;
   name: string;
   description: string;
   latitude: number;
   longitude: number;
-  category: string;
+  category: 'grocery' | 'restaurant-bar' | 'other';
+  created_at: string;
+  user_id?: number;
+  is_approved?: boolean;
+}
+
+/**
+ * User profile data from Telegram
+ */
+interface UserProfile {
+  id: number;
+  telegram_id: string;
+  nickname: string;
+  avatar_url: string | null;
+  role: string;
   created_at: string;
 }
 
+/**
+ * Map center coordinates
+ */
+interface MapCenter {
+  lat: number;
+  lng: number;
+}
+
+/**
+ * Main location page component that displays an interactive map and location management UI
+ * Features:
+ * - Interactive map with pan/zoom capabilities
+ * - Location search functionality
+ * - Add new locations by clicking on map
+ * - View and navigate to existing locations
+ * - User profile management
+ */
 export function LocationPage() {
   const [locations, setLocations] = useState<Location[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [mapCenter, setMapCenter] = useState<{ lat: number; lng: number } | null>(null);
+  const [mapCenter, setMapCenter] = useState<MapCenter | null>(null);
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const [clickedLocation, setClickedLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [clickedLocation, setClickedLocation] = useState<MapCenter | null>(null);
   const [showAddLocationModal, setShowAddLocationModal] = useState(false);
   const [newLocationName, setNewLocationName] = useState('');
   const [newLocationDescription, setNewLocationDescription] = useState('');
+  const [newLocationCategory, setNewLocationCategory] = useState<'grocery' | 'restaurant-bar' | 'other'>('other');
   const [avatarUrl, setAvatarUrl] = useState('');
-  const [userProfile, setUserProfile] = useState<any>(null);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
   
   const initDataState_ = useSignal(initDataState);
   const telegramUser = initDataState_?.user;
   
   const location = useGeolocation({
-    enableHighAccuracy: true,
-    timeout: 15000,
-    maximumAge: 60000,
+    enableHighAccuracy: false,
+    timeout: 5000, // Much shorter timeout
+    maximumAge: 300000,
   });
 
   const { loading, error, latitude, longitude } = location;
@@ -55,6 +92,34 @@ export function LocationPage() {
       return telegramUser.first_name.charAt(0).toUpperCase();
     }
     return 'U';
+  };
+
+  // Helper functions for UI
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'grocery': return '#34D399';
+      case 'restaurant-bar': return '#F59E0B'; 
+      default: return '#8B5CF6';
+    }
+  };
+
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'grocery': return '🛒';
+      case 'restaurant-bar': return '🍽️';
+      default: return '🏪';
+    }
+  };
+
+  const formatCategory = (category: string) => {
+    return category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric'
+    });
   };
 
   useEffect(() => {
@@ -67,8 +132,22 @@ export function LocationPage() {
   useEffect(() => {
     if (latitude && longitude && !mapCenter) {
       setMapCenter({ lat: latitude, lng: longitude });
+    } else if (error && !mapCenter) {
+      // Fallback to a default location (London) if geolocation fails
+      setMapCenter({ lat: 51.5074, lng: -0.1278 });
     }
-  }, [latitude, longitude, mapCenter]);
+  }, [latitude, longitude, mapCenter, error]);
+
+  // Force fallback after 8 seconds if still loading
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      if (loading && !mapCenter) {
+        setMapCenter({ lat: 51.5074, lng: -0.1278 });
+      }
+    }, 8000);
+
+    return () => clearTimeout(fallbackTimer);
+  }, [loading, mapCenter]);
 
   const loadLocations = async () => {
     try {
@@ -85,7 +164,8 @@ export function LocationPage() {
 
   const loadUserProfile = async () => {
     try {
-      const response = await fetch(`https://tma-ofm-react-template.vercel.app/api/users/${telegramUser?.id}`);
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const response = await fetch(`${BACKEND_URL}/api/users/${telegramUser?.id}`);
       if (response.ok) {
         const data = await response.json();
         setUserProfile(data);
@@ -103,7 +183,8 @@ export function LocationPage() {
     if (!telegramUser) return;
     
     try {
-      const response = await fetch(`https://tma-ofm-react-template.vercel.app/api/users`, {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const response = await fetch(`${BACKEND_URL}/api/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -132,6 +213,9 @@ export function LocationPage() {
   const handleAddLocation = async () => {
     if (!clickedLocation || !newLocationName.trim() || !userProfile) return;
     
+    setIsLoading(true);
+    setApiError(null);
+    
     try {
       const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
       const response = await fetch(`${BACKEND_URL}/api/locations`, {
@@ -144,7 +228,7 @@ export function LocationPage() {
           description: newLocationDescription,
           latitude: clickedLocation.lat,
           longitude: clickedLocation.lng,
-          category: 'user-added',
+          category: newLocationCategory,
           userId: userProfile.id
         })
       });
@@ -153,11 +237,18 @@ export function LocationPage() {
         setShowAddLocationModal(false);
         setNewLocationName('');
         setNewLocationDescription('');
+        setNewLocationCategory('other');
         setClickedLocation(null);
-        loadLocations(); // Refresh locations
+        await loadLocations(); // Refresh locations
+      } else {
+        const errorData = await response.json();
+        setApiError(errorData.error || 'Failed to add location');
       }
     } catch (error) {
+      setApiError('Network error. Please check your connection.');
       console.error('Error adding location:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -165,7 +256,8 @@ export function LocationPage() {
     if (!userProfile) return;
     
     try {
-      const response = await fetch(`https://tma-ofm-react-template.vercel.app/api/users/update/${userProfile.id}`, {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const response = await fetch(`${BACKEND_URL}/api/users/update/${userProfile.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -207,7 +299,7 @@ export function LocationPage() {
 
 
   // Loading state
-  if (loading) {
+  if (loading && !mapCenter) {
     return (
       <Page>
         <Banner
@@ -221,6 +313,13 @@ export function LocationPage() {
               subtitle="GPS signal scanning..."
             >
               Getting location
+            </Cell>
+            <Cell
+              Component="button"
+              onClick={() => setMapCenter({ lat: 51.5074, lng: -0.1278 })}
+              before={<MapPin size={20} />}
+            >
+              Skip - Use London as default
             </Cell>
           </Section>
         </List>
@@ -336,6 +435,29 @@ export function LocationPage() {
                     placeholder="Optional description"
                   />
                 </Cell>
+                <Cell>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', marginBottom: '8px' }}>
+                      Category
+                    </label>
+                    <select
+                      value={newLocationCategory}
+                      onChange={(e) => setNewLocationCategory(e.target.value as 'grocery' | 'restaurant-bar' | 'other')}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        borderRadius: '8px',
+                        border: '1px solid #ccc',
+                        fontSize: '16px',
+                        background: 'white'
+                      }}
+                    >
+                      <option value="other">🏪 Other</option>
+                      <option value="grocery">🛒 Grocery Store</option>
+                      <option value="restaurant-bar">🍽️ Restaurant/Bar</option>
+                    </select>
+                  </div>
+                </Cell>
                 <Cell
                   before={<MapPin size={20} />}
                   subtitle={`Lat: ${clickedLocation.lat.toFixed(6)}, Lng: ${clickedLocation.lng.toFixed(6)}`}
@@ -344,14 +466,40 @@ export function LocationPage() {
                 </Cell>
               </Section>
             </List>
+            {apiError && (
+              <div style={{
+                padding: '12px',
+                margin: '0 16px',
+                background: 'var(--tg-theme-destructive-text-color, #ff3b3b)',
+                color: 'white',
+                borderRadius: '8px',
+                fontSize: '14px',
+                textAlign: 'center'
+              }}>
+                {apiError}
+              </div>
+            )}
             <div style={{ padding: '16px', display: 'flex', gap: '8px' }}>
-              <Button size="l" stretched onClick={handleAddLocation} disabled={!newLocationName.trim()}>
-                Add Location
+              <Button 
+                size="l" 
+                stretched 
+                onClick={handleAddLocation} 
+                disabled={!newLocationName.trim() || isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <RefreshCw size={16} className="animate-spin" style={{ marginRight: '8px' }} />
+                    Adding...
+                  </>
+                ) : (
+                  'Add Location'
+                )}
               </Button>
               <Button size="l" stretched mode="plain" onClick={() => {
                 setShowAddLocationModal(false);
                 setNewLocationName('');
                 setNewLocationDescription('');
+                setNewLocationCategory('other');
                 setClickedLocation(null);
               }}>
                 Cancel
@@ -361,49 +509,69 @@ export function LocationPage() {
         )}
 
         {/* Header with User Profile */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          padding: '16px',
-          borderBottom: '1px solid var(--tg-theme-section-separator-color)'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '600' }}>OpenFreeMap</h1>
-          </div>
-          {telegramUser && (
-            <IconButton
-              size="l"
-              onClick={() => setShowProfileModal(true)}
+        <List>
+          <Section>
+            <Cell
+              before={
+                <div style={{ 
+                  background: 'var(--tg-theme-button-color, #0088cc)',
+                  borderRadius: '12px',
+                  padding: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <MapPin size={20} style={{ color: 'white' }} />
+                </div>
+              }
+              after={
+                telegramUser && (
+                  <IconButton
+                    size="s"
+                    onClick={() => setShowProfileModal(true)}
+                  >
+                    <Avatar
+                      size={32}
+                      src={userProfile?.avatar_url}
+                      fallbackIcon={getUserInitials()}
+                    />
+                  </IconButton>
+                )
+              }
+              subtitle={`${locations.length} locations available`}
             >
-              <Avatar
-                size={40}
-                src={userProfile?.avatar_url}
-                fallbackIcon={getUserInitials()}
-              />
-            </IconButton>
-          )}
-        </div>
+              <span style={{ fontSize: '18px', fontWeight: '600' }}>
+                OpenFreeMap
+              </span>
+            </Cell>
+          </Section>
+        </List>
 
         {/* Search Input */}
         <List>
-          <Section>
-            <Cell>
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                <Input
-                  style={{ flex: 1 }}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  placeholder="Search for places..."
-                />
-                <IconButton
+          <Section header="🔍 Search Location">
+            <Cell
+              Component="label"
+              multiline
+            >
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-end', width: '100%' }}>
+                <div style={{ flex: 1 }}>
+                  <Input
+                    header=""
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                    placeholder="Search for places..."
+                  />
+                </div>
+                <Button
+                  mode={isSearching ? 'plain' : 'filled'}
                   size="m"
                   onClick={handleSearch}
-                  disabled={isSearching}
+                  disabled={isSearching || !searchQuery.trim()}
                 >
-                  {isSearching ? <RefreshCw size={20} className="animate-spin" /> : <Search size={20} />}
-                </IconButton>
+                  {isSearching ? <RefreshCw size={16} className="animate-spin" /> : <Search size={16} />}
+                </Button>
               </div>
             </Cell>
           </Section>
@@ -411,15 +579,24 @@ export function LocationPage() {
         
         {/* Map Section */}
         <List>
-          <Section header={`Interactive Map - Click to add locations (${locations.length} places)`}>
-            <Cell>
-              <div style={{ width: '100%', height: '400px' }}>
-                <MapContainer
+          <Section header="🗺️ Interactive Map">
+            <Cell
+              subtitle="Tap anywhere on the map to add a new location"
+              multiline
+            >
+              <div style={{ 
+                width: '100%', 
+                height: '350px',
+                marginTop: '8px',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                border: '1px solid var(--tg-theme-section-separator-color)'
+              }}>
+                <InteractiveMap
                   latitude={displayLat}
                   longitude={displayLng}
                   zoom={mapCenter ? 13 : 16}
-                  height="400px"
-                  markerText={latitude && longitude ? "📍 You are here!" : "📍 Search location"}
+                  height="350px"
                   onMapClick={handleMapClick}
                 />
               </div>
@@ -430,13 +607,31 @@ export function LocationPage() {
         {/* Current Location Info */}
         {latitude && longitude && (
           <List>
-            <Section header="Current Location">
+            <Section header="📍 Your Location">
               <Cell
-                before={<Navigation2 size={20} />}
+                before={
+                  <div style={{
+                    background: 'var(--tg-theme-accent-text-color, #0088cc)',
+                    borderRadius: '8px',
+                    padding: '6px'
+                  }}>
+                    <Navigation2 size={16} style={{ color: 'white' }} />
+                  </div>
+                }
                 subtitle={`${displayLat.toFixed(6)}, ${displayLng.toFixed(6)}`}
-                after="📍 GPS"
+                after={
+                  <span style={{ 
+                    fontSize: '12px', 
+                    color: 'var(--tg-theme-hint-color)',
+                    background: 'var(--tg-theme-secondary-bg-color)',
+                    padding: '4px 8px',
+                    borderRadius: '12px'
+                  }}>
+                    GPS
+                  </span>
+                }
               >
-                Your Position
+                Current Position
               </Cell>
             </Section>
           </List>
@@ -445,18 +640,45 @@ export function LocationPage() {
         {/* Recent Locations List */}
         {locations.length > 0 && (
           <List>
-            <Section header="Recent Locations">
-              {locations.slice(0, 10).map((loc) => (
+            <Section header="📍 Recent Locations">
+              {locations.slice(0, 8).map((loc) => (
                 <Cell
                   key={loc.id}
                   Component="button"
-                  before={<MapPin size={20} />}
-                  subtitle={`${loc.category.replace('-', ' ')} • ${new Date(loc.created_at).toLocaleDateString()}`}
+                  before={
+                    <div style={{
+                      background: getCategoryColor(loc.category),
+                      borderRadius: '8px',
+                      padding: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      {getCategoryIcon(loc.category)}
+                    </div>
+                  }
+                  subtitle={`${formatCategory(loc.category)} • ${formatDate(loc.created_at)}`}
                   onClick={() => {
                     setMapCenter({ lat: loc.latitude, lng: loc.longitude });
                   }}
+                  after={
+                    <div style={{ 
+                      fontSize: '11px', 
+                      color: 'var(--tg-theme-hint-color)',
+                      textAlign: 'right'
+                    }}>
+                      <div>{loc.latitude.toFixed(4)}</div>
+                      <div>{loc.longitude.toFixed(4)}</div>
+                    </div>
+                  }
                 >
-                  {loc.name}
+                  <div style={{ 
+                    overflow: 'hidden', 
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    {loc.name}
+                  </div>
                 </Cell>
               ))}
             </Section>

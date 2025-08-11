@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { MapContainer as LeafletMapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import { cn } from '@/utils/cn';
-import 'leaflet/dist/leaflet.css';
 
 // Fix for default markers in react-leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -57,7 +56,24 @@ function MapUpdater({ latitude, longitude, zoom }: { latitude: number; longitude
   const map = useMap();
   
   useEffect(() => {
+    console.log('🗺️ MapUpdater setting view:', { latitude, longitude, zoom });
     map.setView([latitude, longitude], zoom);
+    
+    // Debug map state
+    setTimeout(() => {
+      const tileContainers = document.querySelectorAll('.leaflet-tile-container');
+      const tiles = document.querySelectorAll('.leaflet-tile');
+      console.log('🗺️ Map state after update:', {
+        center: map.getCenter(),
+        zoom: map.getZoom(),
+        bounds: map.getBounds(),
+        size: map.getSize(),
+        ready: map._loaded,
+        tileContainers: tileContainers.length,
+        tiles: tiles.length,
+        tilesLoaded: Array.from(tiles).filter(t => t.complete).length
+      });
+    }, 2000);
   }, [map, latitude, longitude, zoom]);
   
   return null;
@@ -104,24 +120,48 @@ export function MapContainer({
   markerText = "Your location",
   onMapClick
 }: MapContainerProps) {
+  console.log('🗺️ MapContainer render:', { latitude, longitude, zoom, height, showMarker });
+  
   return (
     <div 
-      className={cn("relative overflow-hidden rounded-lg", className)}
-      style={{ height }}
+      className="map-isolation-wrapper"
+      style={{ 
+        height, 
+        width: '100%', 
+        position: 'relative',
+        isolation: 'isolate',
+        transform: 'translateZ(0)'
+      }}
     >
       <LeafletMapContainer
         center={[latitude, longitude]}
         zoom={zoom}
-        style={{ height: '100%', width: '100%' }}
+        style={{ 
+          height: '100%', 
+          width: '100%',
+          minHeight: height,
+          zIndex: 1
+        }}
         zoomControl={true}
         dragging={true}
         touchZoom={true}
         doubleClickZoom={true}
         scrollWheelZoom={true}
       >
+        {/* OpenTopoMap - reliable alternative */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+          url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+          subdomains={['a', 'b', 'c']}
+          maxZoom={17}
+          errorTileUrl="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+          eventHandlers={{
+            loading: () => console.log('🟡 OpenTopoMap tiles loading...'),
+            load: () => console.log('🟢 OpenTopoMap tiles loaded successfully'),
+            tileerror: (e) => console.log('🔴 OpenTopoMap tile error:', e.tile?.src || e),
+            tileload: (e) => console.log('🟢 OpenTopoMap tile loaded:', e.tile?.src || 'tile loaded'),
+            tileloadstart: (e) => console.log('🔵 OpenTopoMap tile load start:', e.tile?.src || 'tile loading')
+          }}
         />
         
         <MapUpdater latitude={latitude} longitude={longitude} zoom={zoom} />

@@ -39,7 +39,8 @@ export function ProfilePage() {
     try {
       let profileData;
       try {
-        const response = await fetch(`https://tma-ofm-react-template.vercel.app/api/users/${telegramUser.id}`);
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+        const response = await fetch(`${BACKEND_URL}/api/users/${telegramUser.id}`);
         if (response.ok) {
           profileData = await response.json();
         } else {
@@ -47,7 +48,8 @@ export function ProfilePage() {
         }
       } catch (error) {
         // Create new user if not found
-        const createResponse = await fetch(`https://tma-ofm-react-template.vercel.app/api/users`, {
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+        const createResponse = await fetch(`${BACKEND_URL}/api/users`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -76,7 +78,8 @@ export function ProfilePage() {
 
     setIsSaving(true);
     try {
-      const response = await fetch(`https://tma-ofm-react-template.vercel.app/api/users/update/${profile.id}`, {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const response = await fetch(`${BACKEND_URL}/api/users/update/${profile.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/Button';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { initDataState, useSignal } from '@telegram-apps/sdk-react';
 import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 
 // Fix for default markers
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -103,12 +102,14 @@ export function AddLocationPage() {
       // Get or create user
       let user;
       try {
-        const userResponse = await fetch(`https://tma-ofm-react-template.vercel.app/api/users/${telegramUser.id}`);
+        const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+        const userResponse = await fetch(`${BACKEND_URL}/api/users/${telegramUser.id}`);
         if (userResponse.ok) {
           user = await userResponse.json();
         } else {
           // Create new user
-          const createUserResponse = await fetch(`https://tma-ofm-react-template.vercel.app/api/users`, {
+          const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+          const createUserResponse = await fetch(`${BACKEND_URL}/api/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -125,7 +126,8 @@ export function AddLocationPage() {
       }
 
       // Create location
-      const locationResponse = await fetch(`https://tma-ofm-react-template.vercel.app/api/locations`, {
+      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const locationResponse = await fetch(`${BACKEND_URL}/api/locations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
