@@ -1,6 +1,6 @@
-// Include Telegram UI styles first to allow our code override the package CSS.
+// Telegram UI styles (loaded first for overrides)
 import '@telegram-apps/telegram-ui/dist/styles.css';
-// Include Leaflet CSS after Telegram UI to prevent conflicts
+// Leaflet map styles
 import 'leaflet/dist/leaflet.css';
 
 import ReactDOM from 'react-dom/client';
@@ -13,7 +13,7 @@ import { init } from '@/init.ts';
 
 import './index.css';
 
-// Mock the environment in case, we are outside Telegram.
+// Mock environment for development outside Telegram
 import './mockEnv.ts';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
@@ -24,7 +24,7 @@ try {
   const debug = (launchParams.tgWebAppStartParam || '').includes('platformer_debug')
     || import.meta.env.DEV;
 
-  // Configure all application dependencies.
+  // Initialize app dependencies
   await init({
     debug,
     eruda: debug && ['ios', 'android'].includes(platform),

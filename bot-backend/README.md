@@ -4,10 +4,10 @@ This is the Telegram bot backend for the OpenFreeMap Mini App. It provides API e
 
 ## Features
 
-- 🤖 **Simple Telegram Bot**: Launches the mini app with a clean interface
-- 🗄️ **REST API**: Handles users and locations data
-- 🗃️ **Supabase Integration**: Stores data in PostgreSQL database
-- 🚀 **Easy Deployment**: Ready for Railway, Heroku, or any Node.js host
+- **Telegram Bot**: Launches the mini app with a clean interface
+- **REST API**: Handles users and locations data  
+- **Supabase Integration**: Stores data in PostgreSQL database
+- **Easy Deployment**: Ready for Railway, Heroku, or any Node.js host
 
 ## Quick Start
 
