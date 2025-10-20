@@ -7,7 +7,7 @@ and libraries:
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
-- [@telegram-apps SDK](https://docs.telegram-mini-apps.com/packages/telegram-apps-sdk/2-x)
+- [@tma.js SDK](https://docs.telegram-mini-apps.com/packages/tma-js-sdk)
 - [Telegram UI](https://github.com/Telegram-Mini-Apps/TelegramUI)
 - [Vite](https://vitejs.dev/)
 
@@ -88,7 +88,7 @@ browser:
 ![Application](assets/application.png)
 
 It is important to note that some libraries in this template, such as
-`@telegram-apps/sdk`, are not intended for use outside of Telegram.
+`@tma.js/sdk`, are not intended for use outside of Telegram.
 
 Nevertheless, they appear to function properly. This is because the
 `src/mockEnv.ts` file, which is imported in the application's entry point (
@@ -208,5 +208,5 @@ file according to your project's information.
 ## Useful Links
 
 - [Platform documentation](https://docs.telegram-mini-apps.com/)
-- [@telegram-apps/sdk-react documentation](https://docs.telegram-mini-apps.com/packages/telegram-apps-sdk-react)
-- [Telegram developers community chat](https://t.me/devs)
+- [@tma.js/sdk-react documentation](https://docs.telegram-mini-apps.com/packages/tma-js-sdk-react)
+- [Telegram developers community chat](https://t.me/devs_cis)

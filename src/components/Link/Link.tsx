@@ -1,4 +1,4 @@
-import { openLink } from '@telegram-apps/sdk-react';
+import { openLink } from '@tma.js/sdk-react';
 import { type FC, type MouseEventHandler, useCallback } from 'react';
 import { Link as RouterLink, type LinkProps } from 'react-router-dom';
 

@@ -1,13 +1,12 @@
-import { useMemo } from 'react';
 import { Navigate, Route, Routes, HashRouter } from 'react-router-dom';
-import { retrieveLaunchParams, useSignal, isMiniAppDark } from '@telegram-apps/sdk-react';
+import { useLaunchParams, useSignal, miniApp } from '@tma.js/sdk-react';
 import { AppRoot } from '@telegram-apps/telegram-ui';
 
 import { routes } from '@/navigation/routes.tsx';
 
 export function App() {
-  const lp = useMemo(() => retrieveLaunchParams(), []);
-  const isDark = useSignal(isMiniAppDark);
+  const lp = useLaunchParams();
+  const isDark = useSignal(miniApp.isDark);
 
   return (
     <AppRoot
