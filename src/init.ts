@@ -8,7 +8,8 @@ import {
   type ThemeParams,
   retrieveLaunchParams,
   emitEvent,
-  miniApp, backButton,
+  miniApp,
+  backButton,
 } from '@tma.js/sdk-react';
 
 /**
